@@ -58,6 +58,7 @@ class IBusMessage
     @processedData = @data.clone
     bytesCheck = []
     byteCounter = 0
+    methodType = ""
     # Check and see whether this device has any methods in the hash, and if not, skip to the end.
     if DeviceFunctionsIN.key?(@destinationName) == true
       # Iterate through the message, starting with on byte. If we don't find a valid method, add the next byte to the end and try again
@@ -66,8 +67,33 @@ class IBusMessage
         byteCounter = byteCounter + 1
         if DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck) == true
           puts "Known Message Type: #{bytesCheck}!"
-          puts "----> Message in FunctionDetailsDecode?: #{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck))}"
-          puts "----> Message in StaticMessages?: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck))}"
+          # Check if message type is inside the FunctionDetailsDecode hash
+          begin
+             if FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck)) == true
+               methodType = "function"
+               puts "Message Type is in the functions Hash"
+             else
+               methodType = "none"
+               puts "Message Type was not in the functions hash"
+             end
+          rescue
+              methodType = "none"
+              puts "Message Type threw an error, so it's not in the hash that's for shiz."
+          end
+          begin
+            if StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck)) == true
+              methodType = "static"
+              puts "Message Type is in the StaticMessages Hash"
+            else
+              methodType = "none"
+              [uts "Message Type was not in the StaticMessages Hash"
+            end
+          rescue
+            methodType = "none"
+            puts "Message Type threw a wobbly, so it's not in there either."
+          end
+          #puts "----> Message in FunctionDetailsDecode?: #{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck))}"
+          #puts "----> Message in StaticMessages?: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck))}"
           if DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck).is_a?(Array)
             puts "Bytes Used: #{byteCounter}"
             for i in 1..byteCounter do
