@@ -20,6 +20,7 @@ class IBusListener
       @message = @message.scan(/.{1,2}/)
       @message = IBusMessage.new(@message) # Shove them into a new ibus message object
       @message.printMessage
+      @message.printDecodedMessage
       @message = nil # destroy the message, ready for the next one.
     end
     ibusListener.close             # close socket when done
