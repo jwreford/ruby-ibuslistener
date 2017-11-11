@@ -82,7 +82,7 @@ class IBusMessage
               staticMessage = StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
               puts "Static Message: #{staticMessage}"
               return staticMessage
-            end  
+            end
           else
             puts "Unknown Message. Fetching Descriptor: #{DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)}"
             return DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)
@@ -439,7 +439,9 @@ FunctionDetailsDecode = {
  }
 
 StaticMessages = {
-   "UnknownLocationStatusMessage" => "Unknown Location Status Message (ID 1)"
+   "UnknownLocationStatusMessage" => "Unknown Location Status Message (ID 1)",
+   "CDChangerConnectedQuery" => "Is a CD Changer Connected?",
+   "CDChangerConnectedQuery" = "Yes, CD Changer is Connected",
 }
 
 
@@ -472,9 +474,7 @@ StaticMessages = {
       ["48", "07"] => "AuxHeatingPress",
 
       # This is sent from the Radio (BM53, BM54, and a couple of others)
-      ["02", "00"] => "Is a CD Changer connected?",
-      # This is sent from the CD Changer
-      ["02", "01"] => "CD Changer is connected."
+      ["02", "00"] => "CDChangerConnectedQuery",
     },
 
     # Messages that devices can send to the 'OBC'
@@ -584,7 +584,10 @@ StaticMessages = {
       ["32", "61"] => "KnobRotateRightSpeed6",
       ["32", "71"] => "KnobRotateRightSpeed7",
       ["32", "81"] => "KnobRotateRightSpeed8",
-      ["32", "91"] => "KnobRotateRightSpeed9"
+      ["32", "91"] => "KnobRotateRightSpeed9",
+      # CD Changer connected query
+      # This is sent from the CD Changer
+      ["02", "01"] => "CDChangerConnectedResponse"
     },
 
     # Hash containing messages that other devices can send the Telephone Module (ULF)
