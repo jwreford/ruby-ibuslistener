@@ -441,7 +441,7 @@ FunctionDetailsDecode = {
 StaticMessages = {
    "UnknownLocationStatusMessage" => "Unknown Location Status Message (ID 1)",
    "CDChangerConnectedQuery" => "Is a CD Changer Connected?",
-   "CDChangerConnectedQuery" = "Yes, CD Changer is Connected",
+   "CDChangerConnectedQuery" => "Yes, CD Changer is Connected",
 }
 
 
