@@ -72,6 +72,8 @@ class IBusMessage
               @processedData.shift
             end
             # Check if this message type needs converting (the whole or part) of the message into ASCII
+            puts "----> Message in FunctionDetailsDecode?: #{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck))}"
+            puts "----> Message in StaticMessages?: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck))}"
             if FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck)) == true
               functionToPerform = FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))[1]
               puts "Function: #{functionToPerform}"
