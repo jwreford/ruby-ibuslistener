@@ -28,6 +28,10 @@ class IBusMessage
     puts "#{@sourceName} -> #{@destinationName}, Length: #{@length}, Data: #{@data}, Checksum: #{@checksum}."
   end
 
+  def printRawMessage
+    puts "Sorce: #{@source} -> Destination: #{@destination}, Length: #{@length}, Data: #{@data}, Checksum: #{@checksum}."
+  end
+
   def printMessageFriendly
     "#{@destinationNameFriendly} -> #{@sourceNameFriendly}, Length: #{@length}, Data: #{@data}, Checksum: #{@checksum}."
   end

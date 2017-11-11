@@ -19,7 +19,7 @@ class IBusListener
       # Split the string into groups of two characters in an array.
       @message = @message.scan(/.{1,2}/)
       @message = IBusMessage.new(@message) # Shove them into a new ibus message object
-      @message.printMessage
+      @message.printRawMessage
       @message.printDecodedMessage
       @message = nil # destroy the message, ready for the next one.
     end
