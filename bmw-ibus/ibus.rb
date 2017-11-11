@@ -6,7 +6,7 @@
 class IBusMessage
   # What happens when a new iBusMessage object is created
   def initialize(rawMessage)
-    puts "In Initialise"
+    #puts "In Initialise"
     # Instance variables
     @source = rawMessage.shift
     @length = rawMessage.shift
@@ -20,7 +20,7 @@ class IBusMessage
     ## Find the destination device's Module Name
     @destinationName = self.findDevice(@destination)
     @destinationNameFriendly = self.findDeviceFriendly(@destination)
-    puts "Here's what I have for the IBusMessage: #{@source} #{@destination} #{@checksum} #{@data}"
+    #puts "Here's what I have for the IBusMessage: #{@source} #{@destination} #{@checksum} #{@data}"
   end
 
   # Print the message, but the data will be in hex.
@@ -48,7 +48,7 @@ class IBusMessage
 
   # Decode the data part of the message.
   def decodeData
-    puts "In Decode Data"
+    #puts "In Decode Data"
     @processedData = @data.clone
     bytesCheck = []
     byteCounter = 0

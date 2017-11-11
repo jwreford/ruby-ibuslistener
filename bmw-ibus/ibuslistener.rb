@@ -5,7 +5,7 @@ require_relative 'ibus'
 class IBusListener
   # What happens when we make a listener
   def initialize
-    puts "In Initialise for IBusListener"
+    #puts "In Initialise for IBusListener"
     # Instance variables
     @ibusListener = TCPSocket.new '127.0.0.1', 55537
   end
@@ -19,7 +19,7 @@ class IBusListener
       # Split the string into groups of two characters in an array.
       @message = @message.scan(/.{1,2}/)
       @message = IBusMessage.new(@message) # Shove them into a new ibus message object
-      @message.printMessageFriendly
+      @message.printMessage
       @message = nil # destroy the message, ready for the next one.
     end
     ibusListener.close             # close socket when done
