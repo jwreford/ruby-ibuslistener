@@ -50,6 +50,8 @@ class IBusMessage
     return hex.pack('H*')
   end
 
+
+
   # Decode the data part of the message.
   def decodeData
     #puts "In Decode Data"
@@ -63,18 +65,26 @@ class IBusMessage
         bytesCheck.push(currentByte)
         byteCounter = byteCounter + 1
         if DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck) == true
-          puts "We know this message: #{bytesCheck}!"
+          puts "Known Message Type: #{bytesCheck}!"
           if DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck).is_a?(Array)
             puts "Bytes Used: #{byteCounter}"
             for i in 1..byteCounter do
               @processedData.shift
             end
-            functionToPerform = FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))[1]
-            puts "Function: #{functionToPerform}"
-            puts send(functionToPerform, @processedData)
-            return send(functionToPerform, @processedData)
+            # Check if this message type needs converting (the whole or part) of the message into ASCII
+            if FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck)) == true
+              functionToPerform = FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))[1]
+              puts "Function: #{functionToPerform}"
+              puts send(functionToPerform, @processedData)
+              return send(functionToPerform, @processedData)
+            # Check if this message type is just some form of identifier that we have statically recorded
+            elsif StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck)) == true
+              staticMessage = StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
+              puts "Static Message: #{staticMessage}"
+              return staticMessage
+            end  
           else
-            puts "It's just words: #{DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)}"
+            puts "Unknown Message. Fetching Descriptor: #{DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)}"
             return DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)
           end
         end
@@ -423,8 +433,15 @@ FunctionDetailsEncode = {
    "MessageType1" => ["Message Type 1", "toHex"]
  }
 FunctionDetailsDecode = {
-   "MessageType1" => ["Message Type 1", "toAscii2"]
+   "MessageType1" => ["Message Type 1", "toAscii2"],
+   "CurrentLocationSuburb" => ["Current Suburb", "toAscii2"],
+   "CurrentLocationStreetAndNumber" => ["Current Street and Number", "toAscii"]
  }
+
+StaticMessages = {
+   "UnknownLocationStatusMessage" => "Unknown Location Status Message (ID 1)"
+}
+
 
   # Hash containing individual hashes for each of the devices
   DeviceFunctionsIN = {
@@ -575,7 +592,10 @@ FunctionDetailsDecode = {
       # From the Steering Wheel Controls
       ["3B", "80"] => "SpeechKeyPress",
       ["3B", "A0"] => "SpeechKeyRelease",
-      ["3B", "40"] => "RTPress"
+      ["3B", "40"] => "RTPress",
+      ["A2", "00", "00", "37", "51", "23", "51", "01", "45", "06", "24", "10", "00", "00", "00", "FF", "FF", "00"] => "UnknownLocationStatusMessage",
+      ["A4", "00", "01", "4D", "2E", "2D"] => "CurrentLocationSuburb",
+      ["A4", "00", "02"] => "CurrentLocationStreetAndNumber",
     },
 
     # Messages that other devices can send the Navigation Computer
@@ -613,18 +633,6 @@ FunctionDetailsDecode = {
 
     }
   }
-
-
-   def toAscii(hex)
-     hexFlattened = hex.join("")
-     hexFlattened = [hexFlattened]
-     puts "Flat Hex: #{hexFlattened}"
-     return hexFlattened.pack('H*')
-   end
-
-def toHex(ascii)
-  return ascii.to_s.unpack('H*')
-end
 
 # This method will calculate the message's length and return the value in Hex.
 def calculateMessageLength(data)
