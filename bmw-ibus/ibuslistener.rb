@@ -5,6 +5,7 @@ require_relative 'ibus'
 class IBusListener
   # What happens when we make a listener
   def initialize
+    puts "In Initialise for IBusListener"
     # Instance variables
     @ibusListener = TCPSocket.new '127.0.0.1', 55537
   end

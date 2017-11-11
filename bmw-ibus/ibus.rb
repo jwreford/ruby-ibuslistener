@@ -6,6 +6,7 @@
 class IBusMessage
   # What happens when a new iBusMessage object is created
   def initialize(rawMessage)
+    puts "In Initialise"
     # Instance variables
     @source = rawMessage.shift
     @length = rawMessage.shift
@@ -46,6 +47,7 @@ class IBusMessage
 
   # Decode the data part of the message.
   def decodeData
+    puts "In Decode Data"
     @processedData = @data.clone
     bytesCheck = []
     byteCounter = 0
