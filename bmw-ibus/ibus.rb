@@ -8,7 +8,7 @@ class IBusMessage
   def initialize(rawMessage)
     # Instance variables
     @source = rawMessage.shift
-    @length = rawMessage.shift.toAscii2
+    @length = rawMessage.shift
     @destination = rawMessage.shift
     @checksum = rawMessage.pop
     @data = rawMessage
