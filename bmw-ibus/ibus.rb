@@ -78,7 +78,7 @@ class IBusMessage
              end
           rescue
               methodType = "none"
-              puts "Message Type threw an error, so it's not in the hash that's for shiz."
+              puts "Message Type not found in the functions hash"
           end
           begin
             if StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck)) == true
@@ -90,7 +90,7 @@ class IBusMessage
             end
           rescue
             methodType = "none"
-            puts "Message Type threw a wobbly, so it's not in there either."
+            puts "Message Type not in the staticMessages hash"
           end
           #puts "----> Message in FunctionDetailsDecode?: #{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck))}"
           #puts "----> Message in StaticMessages?: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck))}"
@@ -100,13 +100,13 @@ class IBusMessage
               @processedData.shift
             end
             # Check if this message type needs converting (the whole or part) of the message into ASCII
-            if FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck)) == true
+            if methodType = "function"
               functionToPerform = FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))[1]
               puts "Function: #{functionToPerform}"
               puts send(functionToPerform, @processedData)
               return send(functionToPerform, @processedData)
             # Check if this message type is just some form of identifier that we have statically recorded
-            elsif StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck)) == true
+            elsif methodType = "static"
               staticMessage = StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
               puts "Static Message: #{staticMessage}"
               return staticMessage
