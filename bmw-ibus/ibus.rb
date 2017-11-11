@@ -86,7 +86,7 @@ class IBusMessage
               puts "Message Type is in the StaticMessages Hash"
             else
               methodType = "none"
-              [uts "Message Type was not in the StaticMessages Hash"
+              puts "Message Type was not in the StaticMessages Hash"
             end
           rescue
             methodType = "none"
