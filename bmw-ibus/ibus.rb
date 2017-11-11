@@ -100,13 +100,13 @@ class IBusMessage
               @processedData.shift
             end
             # Check if this message type needs converting (the whole or part) of the message into ASCII
-            if methodType = "function"
+            if methodType == "function"
               functionToPerform = FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))[1]
               puts "Function: #{functionToPerform}"
               puts send(functionToPerform, @processedData)
               return send(functionToPerform, @processedData)
             # Check if this message type is just some form of identifier that we have statically recorded
-            elsif methodType = "static"
+            elsif methodType == "static"
               staticMessage = StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
               puts "Static Message: #{staticMessage}"
               return staticMessage
