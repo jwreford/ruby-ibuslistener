@@ -20,6 +20,7 @@ class IBusMessage
     ## Find the destination device's Module Name
     @destinationName = self.findDevice(@destination)
     @destinationNameFriendly = self.findDeviceFriendly(@destination)
+    puts "Here's what I have for the IBusMessage: #{@source, @destination, @checksum, @data}"
   end
 
   # Print the message, but the data will be in hex.
