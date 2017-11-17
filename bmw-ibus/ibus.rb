@@ -65,32 +65,33 @@ class IBusMessage
       @processedData.each { |currentByte|
         bytesCheck.push(currentByte)
         byteCounter = byteCounter + 1
+        puts "[ ] In DecodeData Method"
         if DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck) == true
-          puts "Known Message Type: #{bytesCheck}!"
+          puts "--> Known Message Type: #{bytesCheck}!"
           # Check if message type is inside the FunctionDetailsDecode hash
           begin
              if FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck)) == true
                methodType = "function"
-               puts "Message Type is in the functions Hash"
+               puts "  --> Message Type is in the functions Hash"
              else
                methodType = "none"
-               puts "Message Type was not in the functions hash"
+               puts "  --> Message Type was not in the functions hash"
              end
           rescue
               methodType = "none"
-              puts "Message Type not found in the functions hash"
+              puts "  --> Message Type not found in the functions hash"
           end
           begin
             if StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck)) == true
               methodType = "static"
-              puts "Message Type is in the StaticMessages Hash"
+              puts "  --> Message Type is in the StaticMessages Hash"
             else
               methodType = "none"
-              puts "Message Type was not in the StaticMessages Hash"
+              puts "  --> Message Type was not in the StaticMessages Hash"
             end
           rescue
             methodType = "none"
-            puts "Message Type not in the staticMessages hash"
+            puts "  --> Message Type not in the staticMessages hash"
           end
           #puts "----> Message in FunctionDetailsDecode?: #{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck))}"
           #puts "----> Message in StaticMessages?: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck))}"
@@ -469,201 +470,240 @@ FunctionDetailsDecode = {
 StaticMessages = {
    "UnknownLocationStatusMessage" => "Unknown Location Status Message (ID 1)",
    "CDChangerConnectedQuery" => "Is a CD Changer Connected?",
-   "CDChangerConnectedQuery" => "Yes, CD Changer is Connected",
+   "CDChangerConnectedReply" => "Yes, CD Changer is Connected",
 }
 
+IKEMessages = {
+    # There are a number of combinations for Instrument Cluster messages.
+    # Display: No Text, Text, and Text with Flashing Triangles.
+    # Gong: No Gong, T3 (single), T2 (double) T3 (triple), T3 (continuous), T2, T1
 
-  # Hash containing individual hashes for each of the devices
-  DeviceFunctionsIN = {
-    # Messages that devices can send to the Instrument CLuster
-    # Note: For custom messages, add message content after the hex below.
-    "IKE" => {
-        ["1A", "35", "00"] => "MessageType1"
-    },
+    # Confirmed
+    ["00", "00"] => "MessageClear",
+    ["35", "00"] => "MessageTextNoGong",
 
-    # Messages tht other devices can send the LCM
-    "LCM" => {
-      # From the Instrument Cluster usually
-      ["13", "00", "13", "00", "00", "00", "00"] => "ReversingSignal",
-      ["18", "06", "0E"] => "TVNotPermittedWhileMoving",
-      ["18", "00", "07"] => "TVPermitted"
-    },
+    # Not Confirmed
+    ["00", "00"] => "MessageTextT1",
+    ["00", "00"] => "MessageTextT2",
+    ["00", "00"] => "MessageTextT3Single",
+    ["00", "00"] => "MessageTextT3Double",
+    ["00", "00"] => "MessageTextT3Triple",
+    ["00", "00"] => "MessageTextT3Continuous",
+    ["00", "00"] => "MessageFlashingTextT1",
+    ["00", "00"] => "MessageFlashingTextT2",
+    ["00", "00"] => "MessageFlashingTextT3Single",
+    ["00", "00"] => "MessageFlashingTextT3Double",
+    ["00", "00"] => "MessageFlashingTextT3Triple",
+    ["00", "00"] => "MessageFlashingTextT3Continuous"
 
-    # Broadcast Messages (sent globally)
-    "GLO" => {
-      # From the Board Monitor.
-      ["48", "08"] => "PhonePress",
-      ["48", "48"] => "PhoneHold",
-      ["48", "88"] => "PhoneRelease",
-      ["48", "45"] => "MenuPress",
-      ["48", "85"] => "MenuHold",
-      ["48", "85"] => "MenuRelease",
-      # I think this is from the IHKA
-      ["48", "07"] => "AuxHeatingPress",
+}
 
-      # This is sent from the Radio (BM53, BM54, and a couple of others)
-      ["02", "00"] => "CDChangerConnectedQuery",
-    },
+# Hash containing individual hashes for each of the devices
+DeviceFunctionsIN = {
+  # Messages that devices can send to the Instrument CLuster
+  # Note: For custom messages, add message content after the hex below.
+  "IKE" => {
+      ["1A"] => "Message",
+      ["10"] => "RequestTerminalStatus",
+      ["12"] => "SensorRequest"
+  },
 
-    # Messages that devices can send to the 'OBC'
-    "OBC" => {
-      ["24", "01", "00"] => "Time",
-      ["24", "02", "00"] => "Date",
-      ["24", "03", "00"] => "OutsideTemperature",
-      ["24", "04", "00"] => "Consumption1",
-      ["24", "05", "00"] => "Consumption2",
-      ["24", "06", "00"] => "Range",
-      ["24", "07", "00"] => "DistanceToDestination",
-      ["24", "08", "00"] => "TimeToDestination",
-      ["24", "09", "00"] => "SpeedLimit",
-      ["24", "0A", "00"] => "AverageSpeed",
-      ["24", "0E", "00"] => "Timer",
-      ["24", "0F", "00"] => "AuxHeatingTimer1",
-      ["24", "10", "00"] => "AuxHeatingTimer2",
-      ["24", "1A", "00"] => "UnknownFunction"
-    },
+  # Messages tht other devices can send the LCM
+  "LCM" => {
+    # From the Instrument Cluster usually
+    ["13", "00", "13", "00", "00", "00", "00"] => "ReversingSignal",
+    ["18", "06", "0E"] => "TVNotPermittedWhileMoving",
+    ["18", "00", "07"] => "TVPermitted"
+  },
 
-    # Messages that other devices can send to the Radio
-    "RAD" => {
-      # From the Steering Wheel Controls
-      ["32", "10"] => "VolumeDownPress",
-      ["32", "11"] => "VolumeUpPress",
-      ["3B", "01"] => "NextTrackPress",
-      ["3B", "21"] => "NextTrackRelease",
-      ["3B", "08"] => "PreviousTrackPress",
-      ["3B", "28"] => "PreviousTrackRelease",
+  # Broadcast Messages (sent globally)
+  "GLO" => {
+    # From the Instrument Cluster
+    ## Terminal Status
+    # KL 0 = OFF (ignition off position)
+    # KL R = ignition position 1 ("run" - some electonics & modules are powered up)
+    # KL 15 = ignition position 2 ("accessory" - all electronics & modules are powered)
+    # KL 30 = ignition position 3 (where the ignition defauts after starting the engine)
+    # KL 50 = ignition start position
+    ["11", "00"] => "TerminalKL30",
+    ["11", "01"] => "TerminalKLR",
+    ["11", "03"] => "TerminalKLRAndKL15",
+    ["11", "07"] => "TerminalKLRAndKL15AndKL50",
 
-      # From the Board Monitor
-      ## Buttons
-      ["48", "14"] => "ReverseTapePress",
-      ["48", "11"] => "1Press",
-      ["48", "12"] => "3Press",
-      ["48", "13"] => "5Press",
-      ["48", "32"] => "TPPress",
-      ["48", "31"] => "FMPress",
-      ["48", "33"] => "DolbyPress",
-      ["48", "04"] => "TonePress",
-      ["48", "10"] => "PreviousTrackPress",
-      ["48", "30"] => "MenuPress",
-      ["48", "54"] => "ReverseTapeHold",
-      ["48", "51"] => "1Hold",
-      ["48", "52"] => "3Hold",
-      ["48", "53"] => "5Hold",
-      ["48", "72"] => "TPHold",
-      ["48", "71"] => "FMHold",
-      ["48", "73"] => "DolbyHold",
-      ["48", "44"] => "ToneHold",
-      ["48", "50"] => "PreviousTrackHold",
-      ["48", "70"] => "MenuHold",
-      ["48", "94"] => "ReverseTapeRelease",
-      ["48", "91"] => "1Release",
-      ["48", "92"] => "3Release",
-      ["48", "93"] => "5Release",
-      ["48", "B2"] => "TPRelease",
-      ["48", "B1"] => "FMRelease",
-      ["48", "84"] => "DolbyRelease",
-      ["48", "90"] => "NextTrackRelease",
-      ["48", "B0"] => "MenuRelease",
-      ["48", "24"] => "EjectPress",
-      ["48", "01"] => "2Press",
-      ["48", "02"] => "4Press",
-      ["48", "03"] => "6Press",
-      ["48", "22"] => "RDSPress",
-      ["48", "21"] => "AMPress",
-      ["48", "23"] => "ModePress",
-      ["48", "20"] => "SelectPress",
-      ["48", "00"] => "NextTrackPress",
-      ["48", "64"] => "EjectHold",
-      ["48", "41"] => "2Hold",
-      ["48", "42"] => "4Hold",
-      ["48", "43"] => "6Hold",
-      ["48", "62"] => "RDSHold",
-      ["48", "61"] => "AMHold",
-      ["48", "63"] => "ModeHold",
-      ["48", "60"] => "SelectHold",
-      ["48", "40"] => "NextTrackHold",
-      ["48", "A4"] => "EjectRelease",
-      ["48", "81"] => "2Release",
-      ["48", "82"] => "4Release",
-      ["48", "83"] => "6Release",
-      ["48", "A2"] => "RDSRelease",
-      ["48", "A1"] => "AMRelease",
-      ["48", "A3"] => "ModeRelease",
-      ["48", "A0"] => "SelectRelease",
-      ["48", "80"] => "NextTrackRelease",
-      ## Knob
-      ["48", "06"] => "KnobPress",
-      ["48", "46"] => "KnobHold",
-      ["48", "86"] => "KnobRelease",
-      ["32", "10"] => "KnobRotateLeftSpeed1",
-      ["32", "20"] => "KnobRotateLeftSpeed2",
-      ["32", "30"] => "KnobRotateLeftSpeed3",
-      ["32", "40"] => "KnobRotateLeftSpeed4",
-      ["32", "50"] => "KnobRotateLeftSpeed5",
-      ["32", "60"] => "KnobRotateLeftSpeed6",
-      ["32", "70"] => "KnobRotateLeftSpeed7",
-      ["32", "80"] => "KnobRotateLeftSpeed8",
-      ["32", "90"] => "KnobRotateLeftSpeed9",
-      ["32", "11"] => "KnobRotateRightSpeed1",
-      ["32", "21"] => "KnobRotateRightSpeed2",
-      ["32", "31"] => "KnobRotateRightSpeed3",
-      ["32", "41"] => "KnobRotateRightSpeed4",
-      ["32", "51"] => "KnobRotateRightSpeed5",
-      ["32", "61"] => "KnobRotateRightSpeed6",
-      ["32", "71"] => "KnobRotateRightSpeed7",
-      ["32", "81"] => "KnobRotateRightSpeed8",
-      ["32", "91"] => "KnobRotateRightSpeed9",
-      # CD Changer connected query
-      # This is sent from the CD Changer
-      ["02", "01"] => "CDChangerConnectedResponse"
-    },
+    # From the Board Monitor.
+    ["48", "08"] => "PhonePress",
+    ["48", "48"] => "PhoneHold",
+    ["48", "88"] => "PhoneRelease",
+    ["48", "45"] => "MenuPress",
+    ["48", "85"] => "MenuHold",
+    ["48", "85"] => "MenuRelease",
 
-    # Hash containing messages that other devices can send the Telephone Module (ULF)
-    "TEL" => {
-      # From the Steering Wheel Controls
-      ["3B", "80"] => "SpeechKeyPress",
-      ["3B", "A0"] => "SpeechKeyRelease",
-      ["3B", "40"] => "RTPress",
-      ["A2", "00", "00", "37", "51", "23", "51", "01", "45", "06", "24", "10", "00", "00", "00", "FF", "FF", "00"] => "UnknownLocationStatusMessage",
-      ["A4", "00", "01", "4D", "2E", "2D"] => "CurrentLocationSuburb",
-      ["A4", "00", "02"] => "CurrentLocationStreetAndNumber",
-    },
+    # I think this is from the IHKA
+    ["48", "07"] => "AuxHeatingPress",
 
-    # Messages that other devices can send the Navigation Computer
-    "NAV" => {
-      # From the Board Monitor
-      # Knob
-      ["48", "05"] => "KnobPress",
-      ["48", "45"] => "KnobHold",
-      ["48", "85"] => "KnobRelease",
-      ["49", "10"] => "KnobRotateLeftSpeed1",
-      ["49", "20"] => "KnobRotateLeftSpeed2",
-      ["49", "30"] => "KnobRotateLeftSpeed3",
-      ["49", "40"] => "KnobRotateLeftSpeed4",
-      ["49", "50"] => "KnobRotateLeftSpeed5",
-      ["49", "60"] => "KnobRotateLeftSpeed6",
-      ["49", "70"] => "KnobRotateLeftSpeed7",
-      ["49", "80"] => "KnobRotateLeftSpeed8",
-      ["49", "90"] => "KnobRotateLeftSpeed9",
-      ["49", "11"] => "KnobRotateRightSpeed1",
-      ["49", "21"] => "KnobRotateRightSpeed2",
-      ["49", "31"] => "KnobRotateRightSpeed3",
-      ["49", "41"] => "KnobRotateRightSpeed4",
-      ["49", "51"] => "KnobRotateRightSpeed5",
-      ["49", "61"] => "KnobRotateRightSpeed6",
-      ["49", "71"] => "KnobRotateRightSpeed7",
-      ["49", "81"] => "KnobRotateRightSpeed8",
-      ["49", "91"] => "KnobRotateRightSpeed9"
-    },
+    # This is sent from the Radio (BM53, BM54, and a couple of others)
+    ["02", "00"] => "CDChangerConnectedQuery",
+  },
 
-      "GT" => {
-      ["23", "62", "30"] => "WriteToTitle",
-      ["A5", "62", "01"] => "WriteToHeading",
-      ["21", "60", "00"] => "WriteToLowerField",
-      ["A5", "60", "01", "00"] => "ClearLowerFields"
+  # Messages that devices can send to the 'OBC'
+  "OBC" => {
+    ["24", "01", "00"] => "Time",
+    ["24", "02", "00"] => "Date",
+    ["24", "03", "00"] => "OutsideTemperature",
+    ["24", "04", "00"] => "Consumption1",
+    ["24", "05", "00"] => "Consumption2",
+    ["24", "06", "00"] => "Range",
+    ["24", "07", "00"] => "DistanceToDestination",
+    ["24", "08", "00"] => "TimeToDestination",
+    ["24", "09", "00"] => "SpeedLimit",
+    ["24", "0A", "00"] => "AverageSpeed",
+    ["24", "0E", "00"] => "Timer",
+    ["24", "0F", "00"] => "AuxHeatingTimer1",
+    ["24", "10", "00"] => "AuxHeatingTimer2",
+    ["24", "1A", "00"] => "UnknownFunction"
+  },
 
-    }
+  # Messages that other devices can send to the Radio
+  "RAD" => {
+    # From the Steering Wheel Controls
+    ["32", "10"] => "VolumeDownPress",
+    ["32", "11"] => "VolumeUpPress",
+    ["3B", "01"] => "NextTrackPress",
+    ["3B", "21"] => "NextTrackRelease",
+    ["3B", "08"] => "PreviousTrackPress",
+    ["3B", "28"] => "PreviousTrackRelease",
+
+    # From the Board Monitor
+    ## Buttons
+    ["48", "14"] => "ReverseTapePress",
+    ["48", "11"] => "1Press",
+    ["48", "12"] => "3Press",
+    ["48", "13"] => "5Press",
+    ["48", "32"] => "TPPress",
+    ["48", "31"] => "FMPress",
+    ["48", "33"] => "DolbyPress",
+    ["48", "04"] => "TonePress",
+    ["48", "10"] => "PreviousTrackPress",
+    ["48", "30"] => "MenuPress",
+    ["48", "54"] => "ReverseTapeHold",
+    ["48", "51"] => "1Hold",
+    ["48", "52"] => "3Hold",
+    ["48", "53"] => "5Hold",
+    ["48", "72"] => "TPHold",
+    ["48", "71"] => "FMHold",
+    ["48", "73"] => "DolbyHold",
+    ["48", "44"] => "ToneHold",
+    ["48", "50"] => "PreviousTrackHold",
+    ["48", "70"] => "MenuHold",
+    ["48", "94"] => "ReverseTapeRelease",
+    ["48", "91"] => "1Release",
+    ["48", "92"] => "3Release",
+    ["48", "93"] => "5Release",
+    ["48", "B2"] => "TPRelease",
+    ["48", "B1"] => "FMRelease",
+    ["48", "84"] => "DolbyRelease",
+    ["48", "90"] => "NextTrackRelease",
+    ["48", "B0"] => "MenuRelease",
+    ["48", "24"] => "EjectPress",
+    ["48", "01"] => "2Press",
+    ["48", "02"] => "4Press",
+    ["48", "03"] => "6Press",
+    ["48", "22"] => "RDSPress",
+    ["48", "21"] => "AMPress",
+    ["48", "23"] => "ModePress",
+    ["48", "20"] => "SelectPress",
+    ["48", "00"] => "NextTrackPress",
+    ["48", "64"] => "EjectHold",
+    ["48", "41"] => "2Hold",
+    ["48", "42"] => "4Hold",
+    ["48", "43"] => "6Hold",
+    ["48", "62"] => "RDSHold",
+    ["48", "61"] => "AMHold",
+    ["48", "63"] => "ModeHold",
+    ["48", "60"] => "SelectHold",
+    ["48", "40"] => "NextTrackHold",
+    ["48", "A4"] => "EjectRelease",
+    ["48", "81"] => "2Release",
+    ["48", "82"] => "4Release",
+    ["48", "83"] => "6Release",
+    ["48", "A2"] => "RDSRelease",
+    ["48", "A1"] => "AMRelease",
+    ["48", "A3"] => "ModeRelease",
+    ["48", "A0"] => "SelectRelease",
+    ["48", "80"] => "NextTrackRelease",
+    ## Control Knob
+    ["48", "06"] => "KnobPress",
+    ["48", "46"] => "KnobHold",
+    ["48", "86"] => "KnobRelease",
+    ["32", "10"] => "KnobRotateLeftSpeed1",
+    ["32", "20"] => "KnobRotateLeftSpeed2",
+    ["32", "30"] => "KnobRotateLeftSpeed3",
+    ["32", "40"] => "KnobRotateLeftSpeed4",
+    ["32", "50"] => "KnobRotateLeftSpeed5",
+    ["32", "60"] => "KnobRotateLeftSpeed6",
+    ["32", "70"] => "KnobRotateLeftSpeed7",
+    ["32", "80"] => "KnobRotateLeftSpeed8",
+    ["32", "90"] => "KnobRotateLeftSpeed9",
+    ["32", "11"] => "KnobRotateRightSpeed1",
+    ["32", "21"] => "KnobRotateRightSpeed2",
+    ["32", "31"] => "KnobRotateRightSpeed3",
+    ["32", "41"] => "KnobRotateRightSpeed4",
+    ["32", "51"] => "KnobRotateRightSpeed5",
+    ["32", "61"] => "KnobRotateRightSpeed6",
+    ["32", "71"] => "KnobRotateRightSpeed7",
+    ["32", "81"] => "KnobRotateRightSpeed8",
+    ["32", "91"] => "KnobRotateRightSpeed9",
+    # CD Changer connected query
+    # This is sent from the CD Changer
+    ["02", "01"] => "CDChangerConnectedResponse"
+  },
+
+  # Hash containing messages that other devices can send the Telephone Module (ULF)
+  "TEL" => {
+    # From the Steering Wheel Controls
+    ["3B", "80"] => "SpeechKeyPress",
+    ["3B", "A0"] => "SpeechKeyRelease",
+    ["3B", "40"] => "RTPress",
+    ["A2", "00", "00", "37", "51", "23", "51", "01", "45", "06", "24", "10", "00", "00", "00", "FF", "FF", "00"] => "UnknownLocationStatusMessage",
+    ["A4", "00", "01", "4D", "2E", "2D"] => "CurrentLocationSuburb",
+    ["A4", "00", "02"] => "CurrentLocationStreetAndNumber",
+  },
+
+  # Messages that other devices can send the Navigation Computer
+  "NAV" => {
+    # From the Board Monitor
+    # Knob
+    ["48", "05"] => "KnobPress",
+    ["48", "45"] => "KnobHold",
+    ["48", "85"] => "KnobRelease",
+    ["49", "10"] => "KnobRotateLeftSpeed1",
+    ["49", "20"] => "KnobRotateLeftSpeed2",
+    ["49", "30"] => "KnobRotateLeftSpeed3",
+    ["49", "40"] => "KnobRotateLeftSpeed4",
+    ["49", "50"] => "KnobRotateLeftSpeed5",
+    ["49", "60"] => "KnobRotateLeftSpeed6",
+    ["49", "70"] => "KnobRotateLeftSpeed7",
+    ["49", "80"] => "KnobRotateLeftSpeed8",
+    ["49", "90"] => "KnobRotateLeftSpeed9",
+    ["49", "11"] => "KnobRotateRightSpeed1",
+    ["49", "21"] => "KnobRotateRightSpeed2",
+    ["49", "31"] => "KnobRotateRightSpeed3",
+    ["49", "41"] => "KnobRotateRightSpeed4",
+    ["49", "51"] => "KnobRotateRightSpeed5",
+    ["49", "61"] => "KnobRotateRightSpeed6",
+    ["49", "71"] => "KnobRotateRightSpeed7",
+    ["49", "81"] => "KnobRotateRightSpeed8",
+    ["49", "91"] => "KnobRotateRightSpeed9"
+  },
+
+    "GT" => {
+    ["23", "62", "30"] => "WriteToTitle",
+    ["A5", "62", "01"] => "WriteToHeading",
+    ["21", "60", "00"] => "WriteToLowerField",
+    ["A5", "60", "01", "00"] => "ClearLowerFields"
+
   }
+}
 
 # This method will calculate the message's length and return the value in Hex.
 def calculateMessageLength(data)
