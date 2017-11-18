@@ -772,18 +772,18 @@ DeviceFunctionsIN = {
 
     # Sent from the TV Module (VID)
     ["02", "00", "D0"] => "VideoModuleStatusReply"
-  }
+  },
 
   "BM" => {
     # Sent from the Video Controller (GT)
     ["01", "C9"] => "BoardMonitorStatusRequest"
 
-  }
+  },
   "CDC" => {
     # This is sent from the Radio (BM53, BM54, and a couple of others)
     ["38", "00", "00", "4D"] => "CDChangerStatusRequest"
-  }
-  "VID" =>{
+  },
+  "VID" => {
     ["01", "D4"] => "VideoModuleStatusRequest"
   }
 }
