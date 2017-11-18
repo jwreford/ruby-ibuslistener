@@ -71,19 +71,19 @@ class IBusMessage
           begin
              FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
                methodType = "function"
-               puts "  --> [✓] Message Found in Functions Hash. It says: #{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
+               #puts "  --> [✓] Message Found in Functions Hash. It says: #{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
           rescue Exception => ex
               methodType = "none"
-              puts "  --> [x] Problem looking for this message in the Functions Hash. #{ex.class}: #{ex.message}"
+              #puts "  --> [x] Problem looking for this message in the Functions Hash. #{ex.class}: #{ex.message}"
           end
           if methodType == "none"
             begin
               StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
                 methodType = "static"
-                puts "  --> [✓] Message Found in Static Hash. It says: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
+                #puts "  --> [✓] Message Found in Static Hash. It says: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
             rescue Exception => ex
               methodType = "none"
-              puts "  --> [x] Problem looking for this message in the Staic Hash. #{ex.class}: #{ex.message}"
+              #puts "  --> [x] Problem looking for this message in the Staic Hash. #{ex.class}: #{ex.message}"
             end
           end
           puts "  ---> Bytes Used: #{byteCounter}"
@@ -101,7 +101,7 @@ class IBusMessage
           # Check if this message type is just some form of identifier that we have statically recorded
           elsif methodType == "static"
             staticMessage = StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
-            puts "Static Message: #{staticMessage}"
+            #puts "Static Message: #{staticMessage}"
             return staticMessage
           end
           #else
