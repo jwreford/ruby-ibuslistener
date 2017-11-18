@@ -29,7 +29,7 @@ class IBusMessage
   end
 
   def printRawMessage
-    puts "Sorce: #{@source} -> Destination: #{@destination}, Length: #{@length}, Data: #{@data}, Checksum: #{@checksum}."
+    puts "Source: #{@source} -> Destination: #{@destination}, Length: #{@length}, Data: #{@data}, Checksum: #{@checksum}."
   end
 
   def printMessageFriendly
@@ -89,6 +89,7 @@ class IBusMessage
             @processedData.shift
           end
           # Check if this message type needs converting (the whole or part) of the message into ASCII
+          puts " ---> Method Type: #{methodType}"
           if methodType == "function"
             functionToPerform = FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))[1]
             puts "Function: #{functionToPerform}"
