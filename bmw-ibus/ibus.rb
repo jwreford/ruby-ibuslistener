@@ -52,7 +52,9 @@ class IBusMessage
 
   # Decode Current Speed and RPM
   def speedAndRPM(hex)
-    cleanOutput = "Speed: #{hex[0].toAscii2}, RPM: #{hex[1].toAscii2}"
+    speed = hex[0]
+    rpm = hex[1]
+    cleanOutput = "Speed: #{speed}, RPM: #{rpm}"
     return cleanOutput
   end
 
