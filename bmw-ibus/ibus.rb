@@ -87,7 +87,7 @@ class IBusMessage
         bytesCheck.push(currentByte)
         byteCounter = byteCounter + 1
         if DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck) == true
-          puts "--> Known Message Type: #{bytesCheck}!"
+          #puts "--> Known Message Type: #{bytesCheck}!"
           # Check if message type is inside the FunctionDetailsDecode hash
           begin
              FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
