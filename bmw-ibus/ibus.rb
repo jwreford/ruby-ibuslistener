@@ -510,7 +510,7 @@ StaticMessages = {
    "RadioStatusRequest" => "Is there a Radio Connected?",
    "RadioStatusReply" => "Radio Connected and Ready",
    "ClusterStatusRequest" => "Is there a Cluster Connected?",
-   "ClusterStatusReply" => "Cluster Connected and Ready",
+   "GeneralDeviceStatusReply" => "Connected and Ready",
    "CurrentPhoneStatusRequest" => "Is a Phone Connected?",
    "CurrentNetworkConnectedStatusRequest" => "Is the Cell Network Connected?",
    "VideoModuleStatusReply" => "Is there a TV Module Connected?",
@@ -595,8 +595,10 @@ DeviceFunctionsIN = {
     # From the Radio broadcasting that it's ready.
     ["02", "01", "D1"] => "RadioStatusReply",
 
+    # From Various Devices
+    ["02", "00"] => "GeneralDeviceStatusReply",
+
     # From the Cluster
-    ["02", "00"] => "ClusterStatusReply",
     ["19", "80", "80"] => "TemperatureStatus"
 
 
@@ -783,7 +785,7 @@ DeviceFunctionsIN = {
   },
   "CDC" => {
     # This is sent from the Radio (BM53, BM54, and a couple of others)
-    ["38", "00", "00", "4D"] => "CDChangerStatusRequest"
+    ["38", "00", "00"] => "CDChangerStatusRequest"
   },
   "VID" => {
     ["01"] => "VideoModuleStatusRequest"
