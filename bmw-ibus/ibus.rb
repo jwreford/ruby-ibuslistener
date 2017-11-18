@@ -770,6 +770,7 @@ DeviceFunctionsIN = {
     ["A5", "62", "01"] => "WriteToHeading",
     ["21", "60", "00"] => "WriteToLowerField",
     ["A5", "60", "01", "00"] => "ClearLowerFields",
+    ["01"] => "GTStatusRequest",
 
     # Sent from the Board Monitor
     ["02", "30", "FD"] => "BoardMonitorStatusReply",
