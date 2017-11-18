@@ -514,7 +514,8 @@ StaticMessages = {
    "CurrentPhoneStatusRequest" => "Is a Phone Connected?",
    "CurrentNetworkConnectedStatusRequest" => "Is the Cell Network Connected?",
    "VideoModuleStatusReply" => "Is there a TV Module Connected?",
-   "VideoModuleStatusReply" => "TV Module Connected and Ready"
+   "VideoModuleStatusReply" => "TV Module Connected and Ready",
+   "BoardMonitorStatusRequest" => "Is there a Board Monitor Connected?"
 }
 
 IKEMessages = {
@@ -771,6 +772,7 @@ DeviceFunctionsIN = {
     ["21", "60", "00"] => "WriteToLowerField",
     ["A5", "60", "01", "00"] => "ClearLowerFields",
     ["01"] => "GTStatusRequest",
+    ["02", "30"] => "GeneralDeviceStatusReply",
 
     # Sent from the Board Monitor
     ["02", "30", "FD"] => "BoardMonitorStatusReply",
