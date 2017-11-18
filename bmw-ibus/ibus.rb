@@ -76,8 +76,8 @@ class IBusMessage
               methodType = "none"
               puts "  --> [x] Problem looking for this message in the Functions Hash. #{ex.class}: #{ex.message}"
           end
-          begin
-            if methodType == "none"
+          if methodType == "none"
+            begin
               StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
                 methodType = "static"
                 puts "  --> [✓] Message Found in Static Hash. It says: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
