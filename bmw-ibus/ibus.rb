@@ -70,28 +70,22 @@ class IBusMessage
           puts "--> Known Message Type: #{bytesCheck}!"
           # Check if message type is inside the FunctionDetailsDecode hash
           begin
-             if FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck)) == true
+             FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
                methodType = "function"
-               puts "  --> Message Type is in the functions Hash"
-             else
-               methodType = "none"
-               puts "  --> Message Type was not in the functions hash"
-             end
-          rescue
+               puts "  --> [v] Message Type is in the functions Hash"
+          rescue Exception => ex
               methodType = "none"
-              puts "  --> Message Type not found in the functions hash"
+              puts "  --> An error of type #{ex.class} happened, message is #{ex.message}"
+              puts "  --> [x] Message Type not found in the functions hash"
           end
           begin
-            if StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck)) == true
+            StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
               methodType = "static"
-              puts "  --> Message Type is in the StaticMessages Hash"
-            else
-              methodType = "none"
-              puts "  --> Message Type was not in the StaticMessages Hash"
-            end
-          rescue
+              puts "  --> [v] Message Type is in the StaticMessages Hash!"
+          rescue Exception => ex
             methodType = "none"
-            puts "  --> Message Type not in the staticMessages hash"
+            puts "  --> An error of type #{ex.class} happened, message is #{ex.message}"
+            puts "  --> [x] Message Type not in the staticMessages hash"
           end
           #puts "----> Message in FunctionDetailsDecode?: #{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck))}"
           #puts "----> Message in StaticMessages?: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck))}"
