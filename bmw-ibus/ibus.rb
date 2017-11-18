@@ -71,7 +71,8 @@ class IBusMessage
           begin
              FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
                methodType = "function"
-               puts "  --> [v] Message Type is in the functions Hash"
+               puts "  --> [✓] Message Type is in the functions Hash"
+               puts "  ------> Message in FunctionDetailsDecode?: #{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
                break
           rescue Exception => ex
               methodType = "none"
@@ -81,15 +82,14 @@ class IBusMessage
           begin
             StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
               methodType = "static"
-              puts "  --> [v] Message Type is in the StaticMessages Hash!"
+              puts "  --> [✓] Message Type is in the StaticMessages Hash!"
+              puts "  ------> Message in StaticMessages?: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
               break
           rescue Exception => ex
             methodType = "none"
             puts "  --> An error of type #{ex.class} happened, message is #{ex.message}"
             puts "  --> [x] Message Type not in the staticMessages hash"
           end
-          #puts "----> Message in FunctionDetailsDecode?: #{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck))}"
-          #puts "----> Message in StaticMessages?: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck))}"
           if DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck).is_a?(Array)
             puts "Bytes Used: #{byteCounter}"
             for i in 1..byteCounter do
