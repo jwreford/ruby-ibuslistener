@@ -94,8 +94,8 @@ class IBusMessage
           #puts " ---> Method Type: #{methodType}"
           if methodType == "function"
             functionToPerform = FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))[1]
-            puts "Function: #{functionToPerform}"
-            puts send(functionToPerform, @processedData)
+            #puts "Function: #{functionToPerform}"
+            #puts send(functionToPerform, @processedData)
             messageOutput = send(functionToPerform, @processedData)
             return "#{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))[0]}: #{messageOutput}"
           # Check if this message type is just some form of identifier that we have statically recorded
