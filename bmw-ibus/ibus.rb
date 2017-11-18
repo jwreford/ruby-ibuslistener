@@ -65,7 +65,6 @@ class IBusMessage
       @processedData.each { |currentByte|
         bytesCheck.push(currentByte)
         byteCounter = byteCounter + 1
-        puts "[ ] In DecodeData Method"
         if DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck) == true
           puts "--> Known Message Type: #{bytesCheck}!"
           # Check if message type is inside the FunctionDetailsDecode hash
@@ -73,6 +72,7 @@ class IBusMessage
              FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
                methodType = "function"
                puts "  --> [v] Message Type is in the functions Hash"
+               break
           rescue Exception => ex
               methodType = "none"
               puts "  --> An error of type #{ex.class} happened, message is #{ex.message}"
@@ -82,6 +82,7 @@ class IBusMessage
             StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
               methodType = "static"
               puts "  --> [v] Message Type is in the StaticMessages Hash!"
+              break
           rescue Exception => ex
             methodType = "none"
             puts "  --> An error of type #{ex.class} happened, message is #{ex.message}"
