@@ -72,19 +72,19 @@ class IBusMessage
              FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
                methodType = "function"
                puts "  --> [✓] Message Found in Functions Hash. It says: #{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
-               return
           rescue Exception => ex
               methodType = "none"
               puts "  --> [x] Problem looking for this message in the Functions Hash. #{ex.class}: #{ex.message}"
           end
           begin
-            StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
-              methodType = "static"
-              puts "  --> [✓] Message Found in Static Hash. It says: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
-              return
-          rescue Exception => ex
-            methodType = "none"
-            puts "  --> [x] Problem looking for this message in the Staic Hash. #{ex.class}: #{ex.message}"
+            if methodType == "none"
+              StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
+                methodType = "static"
+                puts "  --> [✓] Message Found in Static Hash. It says: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
+            rescue Exception => ex
+              methodType = "none"
+              puts "  --> [x] Problem looking for this message in the Staic Hash. #{ex.class}: #{ex.message}"
+            end
           end
           puts "  ---> Bytes Used: #{byteCounter}"
           for i in 1..byteCounter do
