@@ -50,6 +50,25 @@ class IBusMessage
     return hex.pack('H*')
   end
 
+  # Decode Current Speed and RPM
+  def currentSpeedAndRPM(hex)
+    cleanOutput = "Speed: #{hex[1]}, RPM: #{hex[2]}"
+    return cleanOutput
+  end
+
+  # Decode CD Changer Status Reply
+  def cdChangerStatus(hex)
+    cleanOutput = "Current Status: #{hex[0]}, Requested Status: #{hex[1]}, Current CD: #{hex[2]}, Current Track: #{hex[3]}, CDs Loaded: #{hex[4]}"
+    return cleanOutput
+  end
+
+  # Decode Cluster Temperature Status Update
+  def temperatureStatusUpdate(hex)
+    cleanOutput = "Exterior Temperature: #{hex[0]}, Coolant Temperature: #{hex[1]}"
+    return cleanOutput
+  end
+
+
 
 
   # Decode the data part of the message.
@@ -370,7 +389,7 @@ IBusDevices = {
   ["E0"] => "IRIS",
   ["E7"] => "OBC",
   ["E8"] => "RLS",
-  ["ED"] => "TV",
+  ["ED"] => "VID",
   ["F0"] => "BM",
   ["F5"] => "CSU",
   ["FF"] => "BRD",
@@ -456,12 +475,17 @@ FunctionDetailsDecode = {
    "MessageType1" => ["Message Type 1", "toAscii2"],
    "CurrentLocationSuburb" => ["Current Suburb", "toAscii2"],
    "CurrentLocationStreetAndNumber" => ["Current Street and Number", "toAscii2"]
+   "CurrentLocationCoordinates" => ["Current Location in Coordinates", "toAscii2"],
+   "CurrentSpeedAndRPM" => ["Current Speed and RPM", "speedAndRPM"],
+   "CDChangerStatusReply" => ["CD Changer Status", "cdChangerStatus"],
+   "TemperatureStatus" => ["Current Temperatures", "temperatureStatusUpdate"],
+
+
  }
 
 StaticMessages = {
    "UnknownLocationStatusMessage" => "Unknown Location Status Message (ID 1)",
-   "CDChangerConnectedQuery" => "Is a CD Changer Connected?",
-   "CDChangerConnectedReply" => "Yes, CD Changer is Connected",
+   "CDChangerStatusRequest" => "Is a CD Changer Connected?",
    "KnobPress" => "Volume Knob Pressed (Toggle Radio)",
    "KnobHold" => "Volume Knob Held",
    "KnobRelease" => "Volume Knob Released",
@@ -482,7 +506,15 @@ StaticMessages = {
    "KnobRotateRightSpeed6" => "Volume Increased (Speed 6)",
    "KnobRotateRightSpeed7" => "Volume Increased (Speed 7)",
    "KnobRotateRightSpeed8" => "Volume Increased (Speed 8)",
-   "KnobRotateRightSpeed9" => "Volume Increased (Speed 9)"
+   "KnobRotateRightSpeed9" => "Volume Increased (Speed 9)",
+   "RadioStatusRequest" => "Is there a Radio Connected?",
+   "RadioStatusReply" => "Radio Connected and Ready",
+   "ClusterStatusRequest" => "Is there a Cluster Connected?",
+   "ClusterStatusReply" => "Cluster Connected and Ready",
+   "CurrentPhoneStatusRequest" => "Is a Phone Connected?",
+   "CurrentNetworkConnectedStatusRequest" => "Is the Cell Network Connected?",
+   "VideoModuleStatusReply" => "Is there a TV Module Connected?",
+   "VideoModuleStatusReply" => "TV Module Connected and Ready"
 }
 
 IKEMessages = {
@@ -517,7 +549,11 @@ DeviceFunctionsIN = {
   "IKE" => {
       ["1A"] => "Message",
       ["10"] => "RequestTerminalStatus",
-      ["12"] => "SensorRequest"
+      ["12"] => "SensorRequest",
+      ["01", "B9"] => "ClusterStatusRequest",
+
+      # Sent from the Video Controller (presumably to know whether to show the logo when a door is opened)
+      ["10"] => "IgnitionStatusRequest"
   },
 
   # Messages tht other devices can send the LCM
@@ -553,8 +589,18 @@ DeviceFunctionsIN = {
     # I think this is from the IHKA
     ["48", "07"] => "AuxHeatingPress",
 
-    # This is sent from the Radio (BM53, BM54, and a couple of others)
-    ["02", "00"] => "CDChangerConnectedQuery",
+    # From the Cluster broadcasting some general information
+    ["BF"] => "CurrentSpeedAndRPM",
+
+    # From the Radio broadcasting that it's ready.
+    ["02", "01", "D1"] => "RadioStatusReply",
+
+    # From the Cluster
+    ["02", "00", "39"] => "ClusterStatusReply",
+    ["19", "80", "80"] => "TemperatureStatus"
+
+
+
   },
 
   # Messages that devices can send to the 'OBC'
@@ -577,6 +623,13 @@ DeviceFunctionsIN = {
 
   # Messages that other devices can send to the Radio
   "RAD" => {
+
+    # From the CD Changer. This is a bit of a guess - I might be stripping part of the message off unintentionally.
+    ["39", "00", "02", "00"] => "CDChangerStatusReply",
+
+    # From the Board Monitor to the Radio
+    ["01", "9A"] => "RadioStatusRequest",
+
     # From the Steering Wheel Controls
     ["32", "10"] => "VolumeDownPress",
     ["32", "11"] => "VolumeUpPress",
@@ -665,7 +718,7 @@ DeviceFunctionsIN = {
     ["32", "71"] => "KnobRotateRightSpeed7",
     ["32", "81"] => "KnobRotateRightSpeed8",
     ["32", "91"] => "KnobRotateRightSpeed9",
-    # CD Changer connected query
+
     # This is sent from the CD Changer
     ["02", "01"] => "CDChangerConnectedResponse"
   },
@@ -676,9 +729,11 @@ DeviceFunctionsIN = {
     ["3B", "80"] => "SpeechKeyPress",
     ["3B", "A0"] => "SpeechKeyRelease",
     ["3B", "40"] => "RTPress",
-    ["A2", "00", "00", "37", "51", "23", "51", "01", "45", "06", "24", "10", "00", "00", "00", "FF", "FF", "00"] => "UnknownLocationStatusMessage",
-    ["A4", "00", "01", "4D", "2E", "2D"] => "CurrentLocationSuburb",
+    ["A2", "00", "00"] => "CurrentLocationCoordinates",
+    ["A4", "00", "01"] => "CurrentLocationSuburb",
     ["A4", "00", "02"] => "CurrentLocationStreetAndNumber",
+    ["A9", "0A", "30", "30", "12"] => "CurrentPhoneStatusRequest",
+    ["A9", "03", "30", "30", "1B"] => "CurrentNetworkConnectedStatusRequest"
   },
 
   # Messages that other devices can send the Navigation Computer
@@ -708,12 +763,30 @@ DeviceFunctionsIN = {
     ["49", "91"] => "KnobRotateRightSpeed9"
   },
 
-    "GT" => {
+  "GT" => {
     ["23", "62", "30"] => "WriteToTitle",
     ["A5", "62", "01"] => "WriteToHeading",
     ["21", "60", "00"] => "WriteToLowerField",
     ["A5", "60", "01", "00"] => "ClearLowerFields"
 
+    # Sent from the Board Monitor
+    ["02", "30", "FD"] => "BoardMonitorStatusReply"
+
+    # Sent from the TV Module (VID)
+    ["02", "00", "D0"] => "VideoModuleStatusReply"
+  }
+
+  "BM" => {
+    # Sent from the Video Controller (GT)
+    ["01", "C9"] => "BoardMonitorStatusRequest"
+
+  }
+  "CDC" => {
+    # This is sent from the Radio (BM53, BM54, and a couple of others)
+    ["38", "00", "00", "4D"] => "CDChangerStatusRequest"
+  }
+  "VID" =>{
+    ["01", "D4"] => "VideoModuleStatusRequest"
   }
 }
 
