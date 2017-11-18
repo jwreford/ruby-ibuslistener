@@ -130,6 +130,7 @@ class IBusMessage
           end
         end
       }
+      puts "#{@sourceName} #{@length} #{@destinationName} #{@data} #{@checksum}"
       return "Unknown Message"
     end
     return "Device has no method, sozzle"
