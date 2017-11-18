@@ -474,13 +474,11 @@ FunctionDetailsEncode = {
 FunctionDetailsDecode = {
    "MessageType1" => ["Message Type 1", "toAscii2"],
    "CurrentLocationSuburb" => ["Current Suburb", "toAscii2"],
-   "CurrentLocationStreetAndNumber" => ["Current Street and Number", "toAscii2"]
+   "CurrentLocationStreetAndNumber" => ["Current Street and Number", "toAscii2"],
    "CurrentLocationCoordinates" => ["Current Location in Coordinates", "toAscii2"],
    "CurrentSpeedAndRPM" => ["Current Speed and RPM", "speedAndRPM"],
    "CDChangerStatusReply" => ["CD Changer Status", "cdChangerStatus"],
-   "TemperatureStatus" => ["Current Temperatures", "temperatureStatusUpdate"],
-
-
+   "TemperatureStatus" => ["Current Temperatures", "temperatureStatusUpdate"]
  }
 
 StaticMessages = {
