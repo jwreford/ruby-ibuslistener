@@ -765,10 +765,10 @@ DeviceFunctionsIN = {
     ["23", "62", "30"] => "WriteToTitle",
     ["A5", "62", "01"] => "WriteToHeading",
     ["21", "60", "00"] => "WriteToLowerField",
-    ["A5", "60", "01", "00"] => "ClearLowerFields"
+    ["A5", "60", "01", "00"] => "ClearLowerFields",
 
     # Sent from the Board Monitor
-    ["02", "30", "FD"] => "BoardMonitorStatusReply"
+    ["02", "30", "FD"] => "BoardMonitorStatusReply",
 
     # Sent from the TV Module (VID)
     ["02", "00", "D0"] => "VideoModuleStatusReply"
