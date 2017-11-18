@@ -86,12 +86,12 @@ class IBusMessage
               #puts "  --> [x] Problem looking for this message in the Staic Hash. #{ex.class}: #{ex.message}"
             end
           end
-          puts "  ---> Bytes Used: #{byteCounter}"
+          #puts "  ---> Bytes Used: #{byteCounter}"
           for i in 1..byteCounter do
             @processedData.shift
           end
           # Check if this message type needs converting (the whole or part) of the message into ASCII
-          puts " ---> Method Type: #{methodType}"
+          #puts " ---> Method Type: #{methodType}"
           if methodType == "function"
             functionToPerform = FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))[1]
             puts "Function: #{functionToPerform}"
