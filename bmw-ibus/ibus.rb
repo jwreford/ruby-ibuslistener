@@ -52,7 +52,7 @@ class IBusMessage
 
   # Decode Current Speed and RPM
   def currentSpeedAndRPM(hex)
-    cleanOutput = "Speed: #{hex[1]}, RPM: #{hex[2]}"
+    cleanOutput = "Speed: #{hex[0].toAscii2}, RPM: #{hex[1].toAscii2}"
     return cleanOutput
   end
 
@@ -548,7 +548,7 @@ DeviceFunctionsIN = {
       ["1A"] => "Message",
       ["10"] => "RequestTerminalStatus",
       ["12"] => "SensorRequest",
-      ["01", "B9"] => "ClusterStatusRequest",
+      ["01"] => "ClusterStatusRequest",
 
       # Sent from the Video Controller (presumably to know whether to show the logo when a door is opened)
       ["10"] => "IgnitionStatusRequest"
@@ -588,13 +588,13 @@ DeviceFunctionsIN = {
     ["48", "07"] => "AuxHeatingPress",
 
     # From the Cluster broadcasting some general information
-    ["BF"] => "CurrentSpeedAndRPM",
+    ["18"] => "CurrentSpeedAndRPM",
 
     # From the Radio broadcasting that it's ready.
     ["02", "01", "D1"] => "RadioStatusReply",
 
     # From the Cluster
-    ["02", "00", "39"] => "ClusterStatusReply",
+    ["02", "00"] => "ClusterStatusReply",
     ["19", "80", "80"] => "TemperatureStatus"
 
 
