@@ -97,7 +97,7 @@ class IBusMessage
             puts "Function: #{functionToPerform}"
             puts send(functionToPerform, @processedData)
             messageOutput = send(functionToPerform, @processedData)
-            return "#{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)[0])}: #{messageOutput}"
+            return "#{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))[0]}: #{messageOutput}"
           # Check if this message type is just some form of identifier that we have statically recorded
           elsif methodType == "static"
             staticMessage = StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
