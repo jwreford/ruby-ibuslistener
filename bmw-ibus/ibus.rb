@@ -76,8 +76,8 @@ class IBusMessage
                break
           rescue Exception => ex
               methodType = "none"
-              puts "  --> An error of type #{ex.class} happened, message is #{ex.message}"
-              puts "  --> [x] Message Type not found in the functions hash"
+              puts "  --> [x] Problem looking for this message."
+              puts "  ------> #{ex.class}: #{ex.message}"
           end
           begin
             StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
@@ -87,8 +87,8 @@ class IBusMessage
               break
           rescue Exception => ex
             methodType = "none"
-            puts "  --> An error of type #{ex.class} happened, message is #{ex.message}"
             puts "  --> [x] Message Type not in the staticMessages hash"
+            puts "  ------> #{ex.class}: #{ex.message}"
           end
           if DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck).is_a?(Array)
             puts "Bytes Used: #{byteCounter}"
