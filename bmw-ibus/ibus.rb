@@ -103,11 +103,10 @@ class IBusMessage
             staticMessage = StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
             #puts "Static Message: #{staticMessage}"
             return staticMessage
+          elsif methodType == "none"
+            # puts "No specific instructions for decoding message."
+            puts "Message: #{DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)}"
           end
-          #else
-          #  puts "Unknown Message. Fetching Descriptor: #{DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)}"
-          #  return DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)
-          #end
         end
       }
       return "Unknown Message"
@@ -463,6 +462,27 @@ StaticMessages = {
    "UnknownLocationStatusMessage" => "Unknown Location Status Message (ID 1)",
    "CDChangerConnectedQuery" => "Is a CD Changer Connected?",
    "CDChangerConnectedReply" => "Yes, CD Changer is Connected",
+   "KnobPress" => "Volume Knob Pressed (Toggle Radio)",
+   "KnobHold" => "Volume Knob Held",
+   "KnobRelease" => "Volume Knob Released",
+   "KnobRotateLeftSpeed1" => "Volume Decreased (Speed 1)",
+   "KnobRotateLeftSpeed2" => "Volume Decreased (Speed 2)",
+   "KnobRotateLeftSpeed3" => "Volume Decreased (Speed 3)",
+   "KnobRotateLeftSpeed4" => "Volume Decreased (Speed 4)",
+   "KnobRotateLeftSpeed5" => "Volume Decreased (Speed 5)",
+   "KnobRotateLeftSpeed6" => "Volume Decreased (Speed 6)",
+   "KnobRotateLeftSpeed7" => "Volume Decreased (Speed 7)",
+   "KnobRotateLeftSpeed8" => "Volume Decreased (Speed 8)",
+   "KnobRotateLeftSpeed9" => "Volume Decreased (Speed 9)",
+   "KnobRotateRightSpeed1" => "Volume Increased (Speed 1)",
+   "KnobRotateRightSpeed2" => "Volume Increased (Speed 2)",
+   "KnobRotateRightSpeed3" => "Volume Increased (Speed 3)",
+   "KnobRotateRightSpeed4" => "Volume Increased (Speed 4)",
+   "KnobRotateRightSpeed5" => "Volume Increased (Speed 5)",
+   "KnobRotateRightSpeed6" => "Volume Increased (Speed 6)",
+   "KnobRotateRightSpeed7" => "Volume Increased (Speed 7)",
+   "KnobRotateRightSpeed8" => "Volume Increased (Speed 8)",
+   "KnobRotateRightSpeed9" => "Volume Increased (Speed 9)"
 }
 
 IKEMessages = {
@@ -623,7 +643,7 @@ DeviceFunctionsIN = {
     ["48", "A3"] => "ModeRelease",
     ["48", "A0"] => "SelectRelease",
     ["48", "80"] => "NextTrackRelease",
-    ## Control Knob
+    ## Volume Knob
     ["48", "06"] => "KnobPress",
     ["48", "46"] => "KnobHold",
     ["48", "86"] => "KnobRelease",
