@@ -628,7 +628,7 @@ DeviceFunctionsIN = {
     ["39", "00", "02", "00"] => "CDChangerStatusReply",
 
     # From the Board Monitor to the Radio
-    ["01", "9A"] => "RadioStatusRequest",
+    ["01"] => "RadioStatusRequest",
 
     # From the Steering Wheel Controls
     ["32", "10"] => "VolumeDownPress",
@@ -732,8 +732,8 @@ DeviceFunctionsIN = {
     ["A2", "00", "00"] => "CurrentLocationCoordinates",
     ["A4", "00", "01"] => "CurrentLocationSuburb",
     ["A4", "00", "02"] => "CurrentLocationStreetAndNumber",
-    ["A9", "0A", "30", "30", "12"] => "CurrentPhoneStatusRequest",
-    ["A9", "03", "30", "30", "1B"] => "CurrentNetworkConnectedStatusRequest"
+    ["A9", "0A", "30", "30"] => "CurrentPhoneStatusRequest",
+    ["A9", "03", "30", "30"] => "CurrentNetworkConnectedStatusRequest"
   },
 
   # Messages that other devices can send the Navigation Computer
@@ -778,7 +778,7 @@ DeviceFunctionsIN = {
 
   "BM" => {
     # Sent from the Video Controller (GT)
-    ["01", "C9"] => "BoardMonitorStatusRequest"
+    ["01"] => "BoardMonitorStatusRequest"
 
   },
   "CDC" => {
@@ -786,7 +786,7 @@ DeviceFunctionsIN = {
     ["38", "00", "00", "4D"] => "CDChangerStatusRequest"
   },
   "VID" => {
-    ["01", "D4"] => "VideoModuleStatusRequest"
+    ["01"] => "VideoModuleStatusRequest"
   }
 }
 
