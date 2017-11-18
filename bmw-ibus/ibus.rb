@@ -72,45 +72,44 @@ class IBusMessage
              FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
                methodType = "function"
                puts "  --> [✓] Message Type is in the functions Hash"
-               puts "  ------> Message in FunctionDetailsDecode?: #{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
+               puts "  ---> Message in FunctionDetailsDecode?: #{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
                break
           rescue Exception => ex
               methodType = "none"
               puts "  --> [x] Problem looking for this message."
-              puts "  ------> #{ex.class}: #{ex.message}"
+              puts "  ---> #{ex.class}: #{ex.message}"
           end
           begin
             StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
               methodType = "static"
               puts "  --> [✓] Message Type is in the StaticMessages Hash!"
-              puts "  ------> Message in StaticMessages?: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
+              puts "  ---> Message in StaticMessages?: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
               break
           rescue Exception => ex
             methodType = "none"
             puts "  --> [x] Message Type not in the staticMessages hash"
-            puts "  ------> #{ex.class}: #{ex.message}"
+            puts "  ---> #{ex.class}: #{ex.message}"
           end
-          if DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck).is_a?(Array)
-            puts "Bytes Used: #{byteCounter}"
-            for i in 1..byteCounter do
-              @processedData.shift
-            end
-            # Check if this message type needs converting (the whole or part) of the message into ASCII
-            if methodType == "function"
-              functionToPerform = FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))[1]
-              puts "Function: #{functionToPerform}"
-              puts send(functionToPerform, @processedData)
-              return send(functionToPerform, @processedData)
-            # Check if this message type is just some form of identifier that we have statically recorded
-            elsif methodType == "static"
-              staticMessage = StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
-              puts "Static Message: #{staticMessage}"
-              return staticMessage
-            end
-          else
-            puts "Unknown Message. Fetching Descriptor: #{DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)}"
-            return DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)
+          puts "  ---> Bytes Used: #{byteCounter}"
+          for i in 1..byteCounter do
+            @processedData.shift
           end
+          # Check if this message type needs converting (the whole or part) of the message into ASCII
+          if methodType == "function"
+            functionToPerform = FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))[1]
+            puts "Function: #{functionToPerform}"
+            puts send(functionToPerform, @processedData)
+            return send(functionToPerform, @processedData)
+          # Check if this message type is just some form of identifier that we have statically recorded
+          elsif methodType == "static"
+            staticMessage = StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
+            puts "Static Message: #{staticMessage}"
+            return staticMessage
+          end
+          #else
+          #  puts "Unknown Message. Fetching Descriptor: #{DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)}"
+          #  return DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)
+          #end
         end
       }
       return "Unknown Message"
