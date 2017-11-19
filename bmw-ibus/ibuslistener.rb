@@ -15,10 +15,11 @@ class IBusListener
       # Trim the first three characters from the string
 
       # If a message comes in wanting to flash the LEDs, don't also flash them again.
-      if @message != "c803e72b3200"
+      if @message != "c803e72b3200" and @message != "error 00"
         puts "In If"
         # Flash the Board Monitor LEDs when a message comes in.
-      @ibusListener.puts("C803E72B3200")
+      @ibusListener.puts("tx C804E72B3200")
+      @ibusListener.puts("tx C804E72B0000")
       end
       @message.slice!(0,3)
       # Make the string uppercase
@@ -34,3 +35,5 @@ class IBusListener
     ibusListener.close             # close socket when done
   end
 end
+
+tx c8 04 e7 2b 32 00
