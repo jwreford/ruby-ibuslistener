@@ -16,7 +16,7 @@ class IBusListener
 
       # If we are transmitting a message, don't flash the LEDs because it will go around forever in a loop.
       puts "raw message: #{@message}"
-      if @message.contains?("rx")
+      if @message.include?("rx")
         # Flash the Board Monitor LEDs when a message comes in.
         @ibusListener.puts("tx C804E72B3200")
         @ibusListener.puts("tx C804E72B0000")
