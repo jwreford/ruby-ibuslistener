@@ -16,7 +16,7 @@ class IBusListener
 
       # If a message comes in wanting to flash the LEDs, don't also flash them again.
       puts "raw message: #{@message}"
-      if @message = "c803e72b3200"
+      if @message == "c803e72b3200"
         puts "Match - breaking"
       break
       else
