@@ -16,13 +16,13 @@ class IBusListener
 
       # If a message comes in wanting to flash the LEDs, don't also flash them again.
       puts "raw message: #{@message}"
-      if @message == "c803e72b3200"
-        puts "Match - breaking"
+      if @message.contains?(tx)
+        puts "Transmitted Message - Skipping"
       break
       else
         # Flash the Board Monitor LEDs when a message comes in.
-        #@ibusListener.puts("tx C804E72B3200")
-        #@ibusListener.puts("tx C804E72B0000")
+        @ibusListener.puts("tx C804E72B3200")
+        @ibusListener.puts("tx C804E72B0000")
         @message.slice!(0,3)
         # Make the string uppercase
         @message.upcase!
