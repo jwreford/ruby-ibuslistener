@@ -8,7 +8,8 @@ class IBusListener
     #puts "In Initialise for IBusListener"
     # Instance variables
     @ibusListener = TCPSocket.new '127.0.0.1', 55537
-    @lastMessage = ""
+    # Need to set this to something initially otherwise Ruby will complain that @lastMessage doesn't have the include? method.
+    @lastMessage = "rx 000000000000"
   end
 
   def listen
@@ -16,7 +17,7 @@ class IBusListener
       # If we are transmitting a message, don't flash the LEDs because it will go around forever in a loop.
       puts "This Message: #{@message}"
       puts "Last Message: #{@lastMessage}"
-      if @lastMessage != "" and @lastMessage.include?("tx") and @lastMessage[3..-1] == @message[3..-1]
+      if @lastMessage.include?("tx") and @lastMessage[3..-1] == @message[3..-1]
         puts "We sent that message - skipping"
       else
         # Flash the Board Monitor LEDs when a message comes in.
@@ -33,7 +34,6 @@ class IBusListener
         @message.printDecodedMessage
 
         # Copy this messag into the @lastMessage variable so we can compare it next time around.
-        ###### Find a way to do this (use )
         @lastMessage = @message
 
         @message = nil # destroy the message, ready for the next one.
