@@ -14,12 +14,9 @@ class IBusListener
     while @message = @ibusListener.gets # Read lines from socket
       # Trim the first three characters from the string
 
-      # If a message comes in wanting to flash the LEDs, don't also flash them again.
+      # If we are transmitting a message, don't flash the LEDs because it will go around forever in a loop.
       puts "raw message: #{@message}"
-      if @message.contains?(tx)
-        puts "Transmitted Message - Skipping"
-      break
-      else
+      if @message.contains?("rx")
         # Flash the Board Monitor LEDs when a message comes in.
         @ibusListener.puts("tx C804E72B3200")
         @ibusListener.puts("tx C804E72B0000")
@@ -33,6 +30,8 @@ class IBusListener
         @message.printDecodedMessage
 
         @message = nil # destroy the message, ready for the next one.
+      else
+        puts "We sent that message - skipping"
       end
     end
     ibusListener.close             # close socket when done
