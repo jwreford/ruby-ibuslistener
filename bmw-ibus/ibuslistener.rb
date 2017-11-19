@@ -13,6 +13,12 @@ class IBusListener
   def listen
     while @message = @ibusListener.gets # Read lines from socket
       # Trim the first three characters from the string
+
+      # If a message comes in wanting to flash the LEDs, don't also flash them again.
+      if @message != "c803e72b3200"
+        # Flash the Board Monitor LEDs when a message comes in.
+        "C803E72B3200" = @ibusListener.puts
+      end
       @message.slice!(0,3)
       # Make the string uppercase
       @message.upcase!
@@ -21,6 +27,7 @@ class IBusListener
       @message = IBusMessage.new(@message) # Shove them into a new ibus message object
       #@message.printRawMessage
       @message.printDecodedMessage
+
       @message = nil # destroy the message, ready for the next one.
     end
     ibusListener.close             # close socket when done

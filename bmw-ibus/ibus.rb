@@ -390,7 +390,7 @@ IBusDevices = {
   ["CA"] => "ASST",
   ["D0"] => "LCM",
   ["E0"] => "IRIS",
-  ["E7"] => "OBC",
+  ["E7"] => "OBC", # Also known as ANZV
   ["E8"] => "RLS",
   ["ED"] => "VID",
   ["F0"] => "BM",
@@ -469,6 +469,27 @@ VideoControllerFields = {
   ["47"] => "LowerField8", # 14 Characters
   ["48"] => "LowerField9", # 14 Characters
   ["49"] => "LowerField10", # 14 Characters
+}
+
+BoardMonitorLED = {
+  ["00"] => "AllOff", # All LEDs are off
+  ["01"] => "RedOn", # Red LED On
+  ["03"] => "RedFlash", # Red LED Flashing
+  ["04"] => "YellowOn", # Yellow LED On
+  ["05"] => "RedOnYellowOn", # Red and Yellow LEDs On
+  ["07"] => "RedFlashYellowOn", # Red LED Flashing (Fast?), Yellow LED On
+  ["10"] => "GreenOn", # Green LED On
+  ["11"] => "RedOnGreenOn", # Red and Green LEDs on
+  ["14"] => "YellowOnGreenOn", # Red LED On
+  ["15"] => "AllOn", # All LEDs On
+  ["17"] => "RedFlashYellowOnGreenOn", # Red LED Flashing (Double?)
+  ["31"] => "RedOnGreenFlash",
+  ["32"] => "GreenFlash",
+  ["33"] => "RedFlashGreenFlash",
+  ["04"] => "YellowOnGreenFlash",
+  ["35"] => "RedOnYellowOnGreenFlash",
+  ["37"] => "RedFlashYellowOnGreenFlash",
+  ["39"] => "RedOnGreen"
 }
 
 FunctionDetailsEncode = {
@@ -556,8 +577,12 @@ DeviceFunctionsIN = {
 
       # Sent from the Video Controller (presumably to know whether to show the logo when a door is opened)
       ["10"] => "IgnitionStatusRequest"
-  },
+},
 
+  "DIA" => {
+    ["A0"] => "DiagnosticsRequestRecieved"
+
+  },
   # Messages tht other devices can send the LCM
   "LCM" => {
     # From the Instrument Cluster usually
@@ -622,12 +647,17 @@ DeviceFunctionsIN = {
     ["24", "0E", "00"] => "Timer",
     ["24", "0F", "00"] => "AuxHeatingTimer1",
     ["24", "10", "00"] => "AuxHeatingTimer2",
-    ["24", "1A", "00"] => "UnknownFunction"
+    ["24", "1A", "00"] => "UnknownFunction",
+
+    # Board Monitor LEDs
+    ["2B"] => "BoardMonitorLED"
   },
 
   # Messages that other devices can send to the Radio
   "RAD" => {
-
+    # Diagnostics Data
+    ["00"] => "DiagnosticsReadID",
+    ["04", "00"] => "DiagnosticsReadFaultMemory",
     # From the CD Changer. This is a bit of a guess - I might be stripping part of the message off unintentionally.
     ["39", "00", "02", "00"] => "CDChangerStatusReply",
 
