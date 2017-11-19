@@ -16,6 +16,7 @@ class IBusListener
 
       # If a message comes in wanting to flash the LEDs, don't also flash them again.
       if @message != "c803e72b3200"
+        puts "In If"
         # Flash the Board Monitor LEDs when a message comes in.
       @ibusListener.puts("C803E72B3200")
       end
