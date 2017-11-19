@@ -15,22 +15,25 @@ class IBusListener
       # Trim the first three characters from the string
 
       # If a message comes in wanting to flash the LEDs, don't also flash them again.
-      if @message != "c803e72b3200" and @message != "error 00"
-        puts "In If"
+      puts "raw message: #{@message}"
+      if @message = "c803e72b3200"
+        puts "Match - breaking"
+      break
+      else
         # Flash the Board Monitor LEDs when a message comes in.
-      @ibusListener.puts("tx C804E72B3200")
-      @ibusListener.puts("tx C804E72B0000")
-      end
-      @message.slice!(0,3)
-      # Make the string uppercase
-      @message.upcase!
-      # Split the string into groups of two characters in an array.
-      @message = @message.scan(/.{1,2}/)
-      @message = IBusMessage.new(@message) # Shove them into a new ibus message object
-      #@message.printRawMessage
-      @message.printDecodedMessage
+        #@ibusListener.puts("tx C804E72B3200")
+        #@ibusListener.puts("tx C804E72B0000")
+        @message.slice!(0,3)
+        # Make the string uppercase
+        @message.upcase!
+        # Split the string into groups of two characters in an array.
+        @message = @message.scan(/.{1,2}/)
+        @message = IBusMessage.new(@message) # Shove them into a new ibus message object
+        #@message.printRawMessage
+        @message.printDecodedMessage
 
-      @message = nil # destroy the message, ready for the next one.
+        @message = nil # destroy the message, ready for the next one.
+      end
     end
     ibusListener.close             # close socket when done
   end
