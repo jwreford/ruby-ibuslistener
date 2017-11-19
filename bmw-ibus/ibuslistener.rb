@@ -13,8 +13,6 @@ class IBusListener
 
   def listen
     while @message = @ibusListener.gets # Read lines from socket
-      # Copy this messag into the @lastMessage variable so we can compare it next time around.
-      @@lastMessage = @message
       # If we are transmitting a message, don't flash the LEDs because it will go around forever in a loop.
       puts "This Message: #{@message}"
       puts "Last Message: #{@@lastMessage}"
@@ -34,6 +32,9 @@ class IBusListener
         #@message.printRawMessage
         @message.printDecodedMessage
 
+        # Copy this messag into the @lastMessage variable so we can compare it next time around.
+        @@lastMessage = @message
+        
         @message = nil # destroy the message, ready for the next one.
       end
     end
