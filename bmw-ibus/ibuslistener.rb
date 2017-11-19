@@ -16,8 +16,7 @@ class IBusListener
       # If we are transmitting a message, don't flash the LEDs because it will go around forever in a loop.
       puts "This Message: #{@message}"
       puts "Last Message: #{@lastMessage}"
-      if @lastMessage != ""
-        if @lastMessage.include?("tx") and @lastMessage[3..-1] == @message[3..-1]
+        if @lastMessage != "" and @lastMessage.include?("tx") and @lastMessage[3..-1] == @message[3..-1]
           puts "We sent that message - skipping"
         else
           # Flash the Board Monitor LEDs when a message comes in.
