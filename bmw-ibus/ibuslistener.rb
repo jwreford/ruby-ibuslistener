@@ -35,5 +35,3 @@ class IBusListener
     ibusListener.close             # close socket when done
   end
 end
-
-tx c8 04 e7 2b 32 00
