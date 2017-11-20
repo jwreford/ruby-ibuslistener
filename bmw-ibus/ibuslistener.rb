@@ -23,8 +23,8 @@ class IBusListener
         puts "We sent that message - skipping"
       else
         # Flash the Board Monitor LEDs when a message comes in.
-        #@ibusListener.puts("tx C804E72B3200")
-        #@ibusListener.puts("tx C804E72B0000")
+        @ibusListener.puts("tx C804E72B3200")
+        @ibusListener.puts("tx C804E72B0000")
         # strip the first three characters (the "tx " or "rx ")
         @message.slice!(0,3)
         # Make the string uppercase
