@@ -14,10 +14,12 @@ class IBusListener
 
   def listen
     while @message = @ibusListener.gets # Read lines from socket
+
+      @temporaryLastMessage = @lastMessage
       # If we are transmitting a message, don't flash the LEDs because it will go around forever in a loop.
       puts "This Message: #{@message}"
-      puts "Last Message: #{@lastMessage}"
-      if @lastMessage.values.include?("tx") and @lastMessage[3..-1] == @message[3..-1]
+      puts "Last Message: #{@temporaryLastMessage}"
+      if @lastMessage.include?("tx") and @temporaryLastMessage[3..-1] == @message[3..-1]
         puts "We sent that message - skipping"
       else
         # Flash the Board Monitor LEDs when a message comes in.
