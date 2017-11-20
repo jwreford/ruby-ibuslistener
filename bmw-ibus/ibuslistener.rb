@@ -22,6 +22,8 @@ class IBusListener
       if @lastMessage.include?("tx") and @temporaryLastMessage[3..-1] == @message[3..-1]
         puts "We sent that message - skipping"
       else
+        # Copy this messag into the @lastMessage variable so we can compare it next time around.
+        @lastMessage << @message
         # Flash the Board Monitor LEDs when a message comes in.
         @ibusListener.puts("tx C804E72B3200")
         @ibusListener.puts("tx C804E72B0000")
@@ -34,10 +36,7 @@ class IBusListener
         @message = IBusMessage.new(@message) # Shove them into a new ibus message object
         #@message.printRawMessage
         @message.printDecodedMessage
-
-        # Copy this messag into the @lastMessage variable so we can compare it next time around.
-        @lastMessage << @message
-
+        
         @message = nil # destroy the message, ready for the next one.
       end
     end
