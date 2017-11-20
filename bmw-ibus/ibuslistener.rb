@@ -36,7 +36,7 @@ class IBusListener
         @message.printDecodedMessage
 
         # Copy this messag into the @lastMessage variable so we can compare it next time around.
-        @lastMessage << @message.values
+        @lastMessage << @message
 
         @message = nil # destroy the message, ready for the next one.
       end
