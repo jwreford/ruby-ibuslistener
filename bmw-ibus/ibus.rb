@@ -73,7 +73,21 @@ class IBusMessage
 
   # Decode Cluster Temperature Status Update
   def temperatureStatusUpdate(hex)
-    cleanOutput = "Exterior Temperature: #{hex[0]}, Coolant Temperature: #{hex[1]}"
+    exteriorTemperature = hex[0]  # Range is from -128 Degrees Celcius to +127 Degrees Celcius
+    # As coolant temperature range is greater than 255 steps (-128 to +255 Degrees Celcius), two bytes are required.
+    coolantTemperature1 = hex[1]  # Range is from -128 to +127 Degrees Celcius
+    coolantTemperature2 = hex[2]  # Anything above +127 Degrees Celcuis will be added on with this byte
+    if exteriorTemperature == "00"
+      exteriorTemperature = "Sensor Not Connected"
+    else
+      exteriorTemperature = exteriorTemperature.to_i(16) - 128
+    end
+    if coolantTemperature1 == "00" && coolantTemperature2 == "00"
+      "Sensor Not Connected"
+    else
+      coolantTemperatureTotal = coolantTemperature1.to_i(16) + coolantTemperature2.to_i(16) - 128
+    end
+    cleanOutput = "Exterior Temperature: #{exteriorTemperature}, Coolant Temperature: #{coolantTemperatureTotal}"
     return cleanOutput
   end
 
