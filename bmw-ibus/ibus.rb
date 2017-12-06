@@ -83,9 +83,10 @@ class IBusMessage
       exteriorTemperature = exteriorTemperature.to_i(16) - 128
     end
     if coolantTemperature1 == "00" && coolantTemperature2 == "00"
-      "Sensor Not Connected"
+      coolantTemperatureTotal = "Sensor Not Connected"
     else
-      coolantTemperatureTotal = coolantTemperature1.to_i(16) + coolantTemperature2.to_i(16) - 128
+      coolantTemperatureTotal = "To Be Calculated"
+      #coolantTemperatureTotal = coolantTemperature1.to_i(16) + coolantTemperature2.to_i(16) - 128
     end
     cleanOutput = "Exterior Temperature: #{exteriorTemperature}, Coolant Temperature: #{coolantTemperatureTotal}"
     return cleanOutput
