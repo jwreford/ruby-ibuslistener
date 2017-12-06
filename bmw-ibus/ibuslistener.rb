@@ -23,6 +23,7 @@ class IBusListener
         @ibusListener.puts("tx C804E72B3200")  # Set the Green Board Monitor LED to flash
         @ibusListener.puts("tx C804E72B0000")  # Set it back to OFF
       end
+      # Prepare the message, ready to be processed.
       @message.slice!(0,3)                     # Strip the first three characters (the "tx " or "rx ")
       @message.upcase!                         # Make the string uppercase
       @message = @message.scan(/.{1,2}/)       # Split the string into groups of two characters in an array.
@@ -31,7 +32,6 @@ class IBusListener
       @message.printDecodedMessage
 
       @message = nil # Destroy the message, ready for the next one.
-      end
     end
     ibusListener.close             # close socket when done
   end
