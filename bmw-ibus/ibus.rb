@@ -61,7 +61,7 @@ class IBusMessage
     else
       rpm = rpm.to_i(16) * 100    # RPM is hex value converted to decimal multiplied by 100
     end
-    cleanOutput = "Speed: #{speed}, RPM: #{rpm}"
+    cleanOutput = "Speed: #{speed} KM/H, RPM: #{rpm}"
     return cleanOutput
   end
 
