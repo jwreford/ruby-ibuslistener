@@ -20,6 +20,7 @@ class IBusListener
       if @message.include?("E72B")
         puts "LED Control Message - Skipping"
       else
+        puts "Flashing LED"
         @ibusListener.puts("tx C804E72B3200")  # Set the Green Board Monitor LED to flash
         @ibusListener.puts("tx C804E72B0000")  # Set it back to OFF
       end
