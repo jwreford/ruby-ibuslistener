@@ -16,9 +16,8 @@ class IBusListener
 
       # Flash the Green Board Monitor LED each time a messasge is sent on the iBus
       # But to prevent loops, ignore messages that want to change the LEDs.
-      puts "Message: #{@message}"
       if @message.include?("e72b")
-        puts "LED Control Message - Skipping"
+        #puts "LED Control Message - Skipping"
       else
         puts "Flashing LED"
         @ibusListener.puts("tx C804E72B3200")  # Set the Green Board Monitor LED to flash
