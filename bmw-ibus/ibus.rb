@@ -53,9 +53,14 @@ class IBusMessage
   # Decode Current Speed and RPM
   def speedAndRPM(hex)
     speed = hex[0]
-    speed = speed.to_i(16) * 2
+    speed = speed.to_i(16) * 2  # Speed is Hex value converted to Decimal multiplied by 2
     rpm = hex[1]
-    rpm = rpm.to_i(16) * 200
+    # If the DME isn't supplying the RPM (either via the tacho wire or the CAN Bus) the IKE will send FF (which converts to 25500 RPM.)
+    if rpm == "FF"
+      rpm = " Sensor Not Connected"
+    else
+      rpm = rpm.to_i(16) * 100    # RPM is hex value converted to decimal multiplied by 100
+    end
     cleanOutput = "Speed: #{speed}, RPM: #{rpm}"
     return cleanOutput
   end
