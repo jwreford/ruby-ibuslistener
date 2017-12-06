@@ -9,7 +9,6 @@ class IBusListener
     # Instance variables
     @ibusListener = TCPSocket.new '127.0.0.1', 55537
     # Need to set this to something initially otherwise Ruby will complain that @lastMessage doesn't have the include? method.
-    @lastMessage = "rx 000000000000"
   end
 
   def listen
@@ -17,6 +16,7 @@ class IBusListener
 
       # Flash the Green Board Monitor LED each time a messasge is sent on the iBus
       # But to prevent loops, ignore messages that want to change the LEDs.
+      puts "Message: #{@message}"
       if @message.include?("E72B")
         puts "LED Control Message - Skipping"
       else
