@@ -92,7 +92,69 @@ class IBusMessage
     return cleanOutput
   end
 
+  def videoControllerField(hex)
+    case hex[0]
+    when "01"
+      # HeadingField1
+    when "02"
+      # HeadingField2
+    when "03"
+      # HeadingField3
+    when "04"
+      # HeadingField4
+    when "05"
+      # HeadingField5
+    when "06"
+      # HeadingField6
+    when "07"
+      # HeadingField7
+    when "40"
+      # LowerField1
+    when "41"
+      # LowerField2
+    when "42"
+      # LowerField3
+    when "43"
+      # LowerField4
+    when "44"
+      # LowerField5
+    when "45"
+      # LowerField6
+    when "46"
+      # LowerField7
+    when "47"
+      # LowerField8
+    when "48"
+      # LowerField9
+    when "49"
+      # LowerField10
+    else
+      # Title
+    end
+    puts "Stuff"
+  end
 
+
+
+      [""] => "Title", # 11 Characters
+      ["01"] => "HeadingField1", # 5 Characters
+      ["02"] => "HeadingField2", # 5 Characters
+      ["03"] => "HeadingField3", # 5 Characters
+      ["04"] => "HeadingField4", # 5 Characters
+      ["05"] => "HeadingField5", # 7 Characters
+      ["06"] => "HeadingField6", # 20 Characters
+      ["07"] => "HeadingField7", # 20 Characters
+      ["40"] => "LowerField1", # 14 Characters
+      ["41"] => "LowerField2", # 14 Characters
+      ["42"] => "LowerField3", # 14 Characters
+      ["43"] => "LowerField4", # 14 Characters
+      ["44"] => "LowerField5", # 14 Characters
+      ["45"] => "LowerField6", # 14 Characters
+      ["46"] => "LowerField7", # 14 Characters
+      ["47"] => "LowerField8", # 14 Characters
+      ["48"] => "LowerField9", # 14 Characters
+      ["49"] => "LowerField10", # 14 Characters
+    }
 
 
   # Decode the data part of the message.
@@ -519,12 +581,13 @@ FunctionDetailsEncode = {
  }
 FunctionDetailsDecode = {
    "MessageType1" => ["Message Type 1", "toAscii2"],
-   "CurrentLocationSuburb" => ["Current Suburb", "toAscii2"],
+   "CurrentLocationSuburb" => ["Current City and Suburb", "toAscii2"],
    "CurrentLocationStreetAndNumber" => ["Current Street and Number", "toAscii2"],
    "CurrentLocationCoordinates" => ["Current Location in Coordinates", "toAscii2"],
    "CurrentSpeedAndRPM" => ["Current Speed and RPM", "speedAndRPM"],
    "CDChangerStatusReply" => ["CD Changer Status", "cdChangerStatus"],
-   "TemperatureStatus" => ["Current Temperatures", "temperatureStatusUpdate"]
+   "TemperatureStatus" => ["Current Temperatures", "temperatureStatusUpdate"],
+   "WriteToTitle" => ["Title Text Updated", "toAscii2"]
  }
 
 StaticMessages = {
@@ -820,7 +883,7 @@ DeviceFunctionsIN = {
   },
 
   "GT" => {
-    ["23", "62", "30"] => "WriteToTitle",
+    ["23", "62", "10", "03", "20"] => "WriteToTitle",     # This is the big text area as part of the banner at the top left of the screen.
     ["A5", "62", "01"] => "WriteToHeading",
     ["21", "60", "00"] => "WriteToLowerField",
     ["A5", "60", "01", "00"] => "ClearLowerFields",
