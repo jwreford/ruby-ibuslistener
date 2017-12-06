@@ -15,29 +15,22 @@ class IBusListener
   def listen
     while @message = @ibusListener.gets # Read lines from socket
 
-      @temporaryLastMessage = @lastMessage
-      # If we are transmitting a message, don't flash the LEDs because it will go around forever in a loop.
-      puts "This Message: #{@message}"
-      puts "Last Message: #{@temporaryLastMessage}"
-      if @lastMessage.include?("tx") and @temporaryLastMessage[3..-1] == @message[3..-1]
-        puts "We sent that message - skipping"
+      # Flash the Green Board Monitor LED each time a messasge is sent on the iBus
+      # But to prevent loops, ignore messages that want to change the LEDs.
+      if @Message.include?("E72B")
+        puts "LED Control Message - Skipping"
       else
-        # Copy this messag into the @lastMessage variable so we can compare it next time around.
-        @lastMessage << @message
-        # Flash the Board Monitor LEDs when a message comes in.
-        @ibusListener.puts("tx C804E72B3200")
-        @ibusListener.puts("tx C804E72B0000")
-        # strip the first three characters (the "tx " or "rx ")
-        @message.slice!(0,3)
-        # Make the string uppercase
-        @message.upcase!
-        # Split the string into groups of two characters in an array.
-        @message = @message.scan(/.{1,2}/)
-        @message = IBusMessage.new(@message) # Shove them into a new ibus message object
-        #@message.printRawMessage
-        @message.printDecodedMessage
-        
-        @message = nil # destroy the message, ready for the next one.
+        @ibusListener.puts("tx C804E72B3200")  # Set the Green Board Monitor LED to flash
+        @ibusListener.puts("tx C804E72B0000")  # Set it back to OFF
+      end
+      @message.slice!(0,3)                     # Strip the first three characters (the "tx " or "rx ")
+      @message.upcase!                         # Make the string uppercase
+      @message = @message.scan(/.{1,2}/)       # Split the string into groups of two characters in an array.
+      @message = IBusMessage.new(@message)     # Shove them into a new ibus message object
+      #@message.printRawMessage
+      @message.printDecodedMessage
+
+      @message = nil # Destroy the message, ready for the next one.
       end
     end
     ibusListener.close             # close socket when done
