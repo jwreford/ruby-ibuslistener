@@ -392,22 +392,6 @@ class IBusMessage
     end
   end
 
-    ["23", "62", "10", "03", "20"] => "WriteToTitle",     # This is the big text area as part of the banner at the top left of the screen.
-    ["A5", "62", "01"] => "WriteToHeading",
-    ["A5", "61", "01"] => "PartialWriteComplete",
-    ["21", "61", "00"] => "PartialWriteToLowerField",
-    ["A5", "60", "01", "00"] => "ClearLowerFields",
-    ["01"] => "GTStatusRequest",
-    ["02", "30"] => "GeneralDeviceStatusReply",
-
-    # Sent from the Board Monitor
-    ["02", "30", "FD"] => "BoardMonitorStatusReply",
-
-    # Sent from the TV Module (VID)
-    ["02", "00", "D0"] => "VideoModuleStatusReply"
-
-  end
-
 
   # Return the status of the doors
   def doorAndWindowStatus(bytes)
