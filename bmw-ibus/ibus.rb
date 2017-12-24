@@ -383,14 +383,19 @@ class IBusMessage
     bytes.pop(2) # Drop the checksum and the other mystery bit from the end
     ## Write to lower headers (Incomplete)
     if bytes[0] == "21" && bytes[1] == "61" && bytes[2] == "00"
-      puts "21 61 00"
       functionByte = bytes.shift(3)
       destinationByte = bytes.shift
       messageByte = bytes
       destination = VideoControllerFields.fetch([destinationByte])
       message = toAscii2(messageByte)
       function = "Write to Lower Header"
-      cleanOutput = "#{function} (#{destination}, Text: #{message})"
+      cleanOutput = "#{function} (#{destination}). Text: #{message})"
+    elsif bytes[0] == "A1" && bytes[1] == "61" && bytes[2] == "01"
+      functionByte = bytes.shift(3)
+      function = "Partial Write Complete"
+    elsif bytes[0] == "A5" && bytes[1] == "62" && bytes[2] == "01"
+      functionByte = bytes.shift(3)
+      function = "Unknown Text Field"
     else
       cleanOutput = "Unknown Video Controller Message"
     end
