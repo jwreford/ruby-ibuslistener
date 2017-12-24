@@ -379,7 +379,7 @@ class IBusMessage
     function = ""
     destination = ""
     message = ""
-    
+
     bytes.pop(2) # Drop the checksum and the other mystery bit from the end
     ## Write to lower headers (Incomplete)
     if bytes[0] == "21" && bytes[1] == "61" && bytes[2] == "00"
@@ -392,7 +392,8 @@ class IBusMessage
       function = "Write to Lower Header"
       puts "#{function} (#{destination}, Text: #{message})"
       puts return
-    elsif "Unknown Video Controller Message"
+    else
+      puts "Unknown Video Controller Message"
     end
   end
 
