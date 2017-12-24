@@ -369,11 +369,19 @@ class IBusMessage
     return lightSensorDataHash
   end
 
+
+
+
+  def decodeVideoControllerMessage
+    puts "It's a Video Controller Message"
+  end
+
+
   # Return the status of the doors
   def doorAndWindowStatus(bytes)
 
     if bytes.contains("HH")
-
+      #TODO: Finish this method
     end
   end
 
@@ -386,7 +394,9 @@ class IBusMessage
     byteCounter = 0
     methodType = ""
     # Check and see whether this device has any methods in the hash, and if not, skip to the end.
-    if DeviceFunctionsIN.key?(@destinationName) == true
+    if @destinationName == "GT"
+       decodeVideoControllerMessage(@data)
+    elsif DeviceFunctionsIN.key?(@destinationName) == true && @destinationName != "GT"
       # Iterate through the message, starting with on byte. If we don't find a valid method, add the next byte to the end and try again
       @processedData.each { |currentByte|
         bytesCheck.push(currentByte)
@@ -1107,7 +1117,8 @@ DeviceFunctionsIN = {
   "GT" => {
     ["23", "62", "10", "03", "20"] => "WriteToTitle",     # This is the big text area as part of the banner at the top left of the screen.
     ["A5", "62", "01"] => "WriteToHeading",
-    ["21", "61", "00"] => "WriteToLowerField",
+    ["A5", "61", "01"] => "PartialWriteComplete",
+    ["21", "61", "00"] => "PartialWriteToLowerField",
     ["A5", "60", "01", "00"] => "ClearLowerFields",
     ["01"] => "GTStatusRequest",
     ["02", "30"] => "GeneralDeviceStatusReply",
