@@ -393,7 +393,7 @@ class IBusMessage
     elsif bytes[0] == "A1" && bytes[1] == "61" && bytes[2] == "01"
       functionByte = bytes.shift(3)
       function = "Partial Write Complete"
-    elsif bytes[0] == "A1" && bytes[1] == "62" && bytes[2] == "01"
+    elsif bytes[0] == "A5" && bytes[1] == "61" && bytes[2] == "01"
       functionByte = bytes.shift(3)
       function = "Unknown Text Field"
     else
