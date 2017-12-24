@@ -375,6 +375,23 @@ class IBusMessage
   def decodeVideoControllerMessage(bytes)
     puts "It's a Video Controller Message"
     puts "Data: #{bytes}"
+
+
+
+
+    ["23", "62", "10", "03", "20"] => "WriteToTitle",     # This is the big text area as part of the banner at the top left of the screen.
+    ["A5", "62", "01"] => "WriteToHeading",
+    ["A5", "61", "01"] => "PartialWriteComplete",
+    ["21", "61", "00"] => "PartialWriteToLowerField",
+    ["A5", "60", "01", "00"] => "ClearLowerFields",
+    ["01"] => "GTStatusRequest",
+    ["02", "30"] => "GeneralDeviceStatusReply",
+
+    # Sent from the Board Monitor
+    ["02", "30", "FD"] => "BoardMonitorStatusReply",
+
+    # Sent from the TV Module (VID)
+    ["02", "00", "D0"] => "VideoModuleStatusReply"
   end
 
 
@@ -396,7 +413,8 @@ class IBusMessage
     methodType = ""
     # Check and see whether this device has any methods in the hash, and if not, skip to the end.
     if @destinationName == "GT"
-       decodeVideoControllerMessage(@data)
+      puts "Data: #{@processedData}"
+       decodeVideoControllerMessage(@processedData)
     elsif DeviceFunctionsIN.key?(@destinationName) == true && @destinationName != "GT"
       # Iterate through the message, starting with on byte. If we don't find a valid method, add the next byte to the end and try again
       @processedData.each { |currentByte|
