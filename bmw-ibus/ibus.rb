@@ -390,11 +390,12 @@ class IBusMessage
       destination = VideoControllerFields.fetch([destinationByte])
       message = toAscii2(messageByte)
       function = "Write to Lower Header"
-      puts "#{function} (#{destination}, Text: #{message})"
-      puts return
+      cleanOutput = "#{function} (#{destination}, Text: #{message})"
     else
-      puts "Unknown Video Controller Message"
+      cleanOutput = "Unknown Video Controller Message"
     end
+    puts cleanOutput
+    return cleanOutput
   end
 
 
