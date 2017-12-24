@@ -1131,7 +1131,7 @@ DeviceFunctionsIN = {
   },
   "VID" => {
     ["01"] => "VideoModuleStatusRequest"
-  }
+  },
 
   "D0" => {
     # Sent from the RLS advising the status of the light outside.
