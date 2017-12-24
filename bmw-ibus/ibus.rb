@@ -374,8 +374,7 @@ class IBusMessage
 
     if bytes.contains("HH")
 
-
-
+    end
   end
 
 
@@ -1177,5 +1176,4 @@ def findDevice(device)
   else
     return IBusDevices.fetch([device])
   end
-end
 end
