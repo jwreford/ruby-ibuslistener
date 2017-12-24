@@ -251,14 +251,14 @@ class IBusMessage
     end
 
     puts "Finished Bits: #{byte1} #{byte2}"
-    byte1 = byte1.pack(H*)
-    byte2 = byte2.pack(H*)
-    messageContent = messageContent.toHex
-    finishedMessage = []
-    finishedMessage[0] = byte1
-    finishedMessage[1] = byte2
+    #byte1 = byte1.pack(H*)
+    #byte2 = byte2.pack(H*)
+    #messageContent = messageContent.toHex
+    #finishedMessage = []
+    #finishedMessage[0] = byte1
+    #finishedMessage[1] = byte2
     ## TODO: Append messageContent array to the end of the finishedMessage array.
-    return finishedMessage
+    #return finishedMessage
   end
 
   # Pass in OBC Messge to the cluster as an array of hex bytes
