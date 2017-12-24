@@ -379,7 +379,7 @@ class IBusMessage
     function = ""
     destination = ""
     message = ""
-    puts "It's a Video Controller Message"
+    
     bytes.pop(2) # Drop the checksum and the other mystery bit from the end
     ## Write to lower headers (Incomplete)
     if bytes[0] == "21" && bytes[1] == "61" && bytes[2] == "00"
@@ -389,8 +389,10 @@ class IBusMessage
       messageByte = bytes
       destination = VideoControllerFields.fetch([destinationByte])
       message = toAscii2(messageByte)
-      function = "Write to Lower Header: (#{destination}). Text: #{message}"
-    elsif "Didn't match"
+      function = "Write to Lower Header"
+      puts "#{function} (#{destination}, Text: #{message})"
+      puts return
+    elsif "Unknown Video Controller Message"
     end
   end
 
