@@ -387,7 +387,7 @@ class IBusMessage
       destinationByte = bytes.shift
       messageByte = bytes
       destination = VideoControllerFields.fetch([destinationByte])
-      message = messageByte.toAscii2
+      message = toAscii2(messageByte)
       function = "Write to Lower Header: (#{destination}). Text: #{message}"
     end
   end
