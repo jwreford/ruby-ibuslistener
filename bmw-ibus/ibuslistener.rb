@@ -16,13 +16,15 @@ class IBusListener
 
       # Flash the Green Board Monitor LED each time a messasge is sent on the iBus
       # But to prevent loops, ignore messages that want to change the LEDs.
-      if @message.include?("e72b")
+
+      #if @message.include?("e72b")
         #puts "LED Control Message - Skipping"
-      else
-        puts "Flashing LED"
-        @ibusListener.puts("tx C804E72B3200")  # Set the Green Board Monitor LED to flash
-        @ibusListener.puts("tx C804E72B0000")  # Set it back to OFF
-      end
+      #else
+      #  puts "Flashing LED"
+      #  @ibusListener.puts("tx C804E72B3200")  # Set the Green Board Monitor LED to flash
+      #  @ibusListener.puts("tx C804E72B0000")  # Set it back to OFF
+      #end
+
       # Prepare the message, ready to be processed.
       @message.slice!(0,3)                     # Strip the first three characters (the "tx " or "rx ")
       @message.upcase!                         # Make the string uppercase
