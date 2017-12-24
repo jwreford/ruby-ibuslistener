@@ -1178,3 +1178,4 @@ def findDevice(device)
     return IBusDevices.fetch([device])
   end
 end
+end
