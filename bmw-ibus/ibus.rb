@@ -135,6 +135,249 @@ class IBusMessage
     puts "Stuff"
   end
 
+  # Creates the Message to send to the cluster.
+  ## Options for the messagePriority:
+  ## - ClearMessage: Clears the current alert.
+  ## - Priority3: Low priority message
+  ## - Priority2: Medium priority message
+  ## - Priority1: High priority message
+  ## Options for textLength
+  ## - LengthSpecified
+  ## - LengthNotSpecified
+  ## Options for the displayType:
+  ## - NoChange: Display is not changed
+  ## - NoText: Display is cleared
+  ## - Text: Text is shown on the display
+  ## - TextFlashing: Text is shown flashing (once per second) on the display
+  ## Options for the gongType:
+  ## - NoGong: No gong is sounded: Example: Changing radio station using the steering wheel controls.
+  ## - SilenceGong: Switch gong off if currently 'gonging'
+  ## - SingleT3: A single standard Gong tone. Example: Speed limit exceeded
+  ## - ConstantT3: The standard gong tone is sounded every 1.5 seconds for the duration of the message. Example: Key In Ignition alert.
+  ## - DoubleT3: The standard gong tone is sounded twice (0.75 seconds apart). Example: Handbreak on alert.
+  ## - SingleT2: A single 'check control' gong tone is sounded.
+  ## - TripleT3: Three short standard gong tones are sounded. Example: Memo alert for the tine.
+  ## - SingleT1: A single lower-pitched gong tone is sounded. Example: CODE
+  def clusterMessageBuilder(messagePriority, textLength, displayType, gongType, messageContent)
+    byte1 = "00000000"
+    byte2 = "00000000"
+    case messagePriority
+    when "ClearMessage"
+      byte1[5] = "0"
+      byte1[6] = "0"
+      byte1[7] = "0"
+    when "Priority3"
+      byte1[5] = "1"
+      byte1[6] = "0"
+      byte1[7] = "1"
+    when "Priority2"
+      byte1[5] = "1"
+      byte1[6] = "1"
+      byte1[7] = "1"
+    when "Priority1"
+      byte1[5] = "1"
+      byte1[6] = "0"
+      byte1[7] = "1"
+    when "Unknown"
+      byte1[5] = "0"
+      byte1[6] = "0"
+      byte1[7] = "1"
+    end
+
+    case textLength
+    when "LengthSpecified"
+      byte1[4] = "0"
+    when "LengthNotSpecified"
+      byte1[4] = "1"
+    end
+
+    case displayType
+    when "NoChange"
+      byte1[2] = "0"
+    when "NoText"
+      byte1[2] = "1"
+      byte2[6] = "0"
+      byte2[7] = "0"
+    when "Text"
+      byte1[2] = "1"
+      byte2[6] = "1"
+      byte2[7] = "0"
+    when "TextFlashing"
+      byte1[2] = "1"
+      byte2[6] = "1"
+      byte2[7] = "1"
+    end
+
+    case gongType
+    when "NoGong"
+      byte1[3] = "0"
+    when "SilenceGong"
+      byte1[3] = "1"
+      byte2[2] = "0"
+      byte2[3] = "0"
+      byte2[4] = "0"
+      byte2[5] = "0"
+    when "SingleT3"
+      byte1[3] = "1"
+      byte2[2] = "0"
+      byte2[3] = "0"
+      byte2[4] = "0"
+      byte2[5] = "1"
+    when "ConstantT3"
+      byte1[3] = "1"
+      byte2[2] = "0"
+      byte2[3] = "0"
+      byte2[4] = "1"
+      byte2[5] = "0"
+    when "DoubleT3"
+      byte1[3] = "1"
+      byte2[2] = "0"
+      byte2[3] = "0"
+      byte2[4] = "1"
+      byte2[5] = "1"
+    when "SingleT2"
+      byte1[3] = "1"
+      byte2[2] = "0"
+      byte2[3] = "1"
+      byte2[4] = "0"
+      byte2[5] = "1"
+    when "SingleT1"
+      byte1[3] = "1"
+      byte2[2] = "0"
+      byte2[3] = "1"
+      byte2[4] = "1"
+      byte2[5] = "0"
+    # Missing TripleT3
+    end
+
+    puts "Finished Bits: #{byte1} #{byte2}"
+    byte1 = byte1.pack(H*)
+    byte2 = byte2.pack(H*)
+    messageContent = messageContent.toHex
+    finishedMessage = []
+    finishedMessage[0] = byte1
+    finishedMessage[1] = byte2
+    ## TODO: Append messageContent array to the end of the finishedMessage array.
+    return finishedMessage
+  end
+
+  # Pass in OBC Messge to the cluster as an array of hex bytes
+  def clusterMessageDecoder(bytes)
+    # TODO: Write toBinary method or find another way to convert a hex byte to binary.
+    byte1 = bytes[0].shift.toBinary
+    byte2 = bytes[1].shift.toBinary
+    messagePriority = ""
+    textLength = ""
+    displayType = ""
+    gongType = ""
+    messageContent = bytes.toAscii2
+
+    # Message Priority
+    case
+    when byte1[5] == "0" && byte1[6] == "0" && byte1[7] == "0"
+      messagePriority = "ClearMessage"
+    when byte1[5] == "1" && byte1[6] == "0" && byte1[7] == "1"
+      messagePriority = "Priority3"
+    when byte1[5] == "1" && byte1[6] == "1" && byte1[7] == "1"
+      messagePriority =  "Priority2"
+    when byte1[5] == "1" && byte1[6] == "0" && byte1[7] == "1"
+      messagePriority =  "Priority1"
+    when byte1[5] == "0" && byte1[6] == "0" && byte1[7] == "1"
+      messagePriority = "Unknown"
+    end
+
+    # Text Length
+    case
+    when byte1[4] == "0"
+      textLength = "LengthSpecified"
+    when byte1[4] == "1"
+      textLength = "LengthNotSpecified"
+    end
+
+    # Display Type
+    case
+    when byte1[2] == "0"
+      displayType = "NoChange"
+    when byte1[2] == "1" && byte2[6] == "0" && byte2[7] == "0"
+      displayType = "NoText"
+    when byte1[2] == "1" && byte2[6] == "1" && byte2[7] == "0"
+      displayType = "Text"
+    when byte1[2] == "1" && byte2[6] == "1" && byte2[7] == "1"
+      displayType = "TextFlashing"
+    end
+
+    # Gong Type
+    case
+    when byte1[3] == "0"
+      gongType = "NoGong"
+    when byte1[3] == "1" && byte2[2] == "0" && byte2[3] == "0" && byte2[4] == "0" && byte2[5] == "0"
+      gongType = "SilenceGong"
+    when byte1[3] == "1" && byte2[2] == "0" && byte2[3] == "0" && byte2[4] == "0" && byte2[5] == "1"
+      gongType = "SingleT3"
+    when byte1[3] == "1" && byte2[2] == "0" && byte2[3] == "0" && byte2[4] == "1" && byte2[5] == "0"
+      gongType = "ConstantT3"
+    when byte1[3] == "1" && byte2[2] == "0" && byte2[3] == "0" && byte2[4] == "1" && byte2[5] == "1"
+      gongType = "DoubleT3"
+    when byte1[3] == "1" && byte2[2] == "0" && byte2[3] == "1" && byte2[4] == "0" && byte2[5] == "1"
+      gongType = "SingleT2"
+    when byte1[3] == "1" && byte2[2] == "0" && byte2[3] == "1" && byte2[4] == "1" && byte2[5] == "0"
+      gongType = "SingleT1"
+    end
+    #puts "Cluster Message - Priority: #{messagePriority}, Text Length: #[textLength], Display Type: #{displayType}, Gong Type: #{gongType}. Message Content: #{messageContent}"
+    return [messagePriority, textLength, displayType, gongType, messageContent]
+  end
+
+  def rlsMessageDecoder(bytes)
+    lightConditionbyte = bytes[0]
+    lightIntensitybyte = bytes[1]
+    lightCondition = ""
+    lightIntensity = ""
+
+    case lightConditionbyte
+    when "01"
+      lightCondition = "Twilight"
+    when "02"
+      lightCondition = "Darkness"
+    when "04"
+      lightCondition = "Raining"
+    when "08"
+      lightCondition = "Tunnel"
+    when "10"
+      lightCondition = "Garage"
+    end
+
+    case lightIntensitybyte
+    when "11"
+      lightIntensity = "1"
+    when "21"
+      lightIntensity = "2"
+    when "31"
+      lightIntensity = "3"
+    when "41"
+      lightIntensity = "4"
+    when "50"
+      lightIntensity = "5"
+    when "60"
+      lightIntensity = "6"
+    end
+
+    lightSensorDataHash = {
+      ["lightCondition"] => "LightCondition",
+      ["LightIntensity"] => "LightIntensity"
+    }
+
+    return lightSensorDataHash
+  end
+
+  # Return the status of the doors
+  def doorAndWindowStatus(bytes)
+
+    if bytes.contains("HH")
+
+
+
+  end
+
 
   # Decode the data part of the message.
   def decodeData
@@ -287,7 +530,7 @@ class CarStats
     # Exterior Information
     @outsideTemperature = ""
     @outsideAmbientLight = "" # Brightness of ambient light outside. 1-8
-    @outsideEnvironment = "" # Daylight, dusk/dawn, nighttime, rain, tunnel, garage.
+    @outsideEnvironment = "" # Daylight, dusk/dawn, nighttime, rain, tunnel, garage
     @outsideRaining = "" # Don't know if the iBus tells us this - I don't think it does.
     @curretLocation = "" # We get this from the NAV
     @gpsTime = ""
@@ -334,6 +577,8 @@ class CarStats
     @aicPresent = ""
     @ihkaPresent = ""
     @telephonePresent = ""
+    @dspPresent
+
 
     # Heating, Cooling, and Vents
     @recirculateState # Don't know if the iBus tells us this, or if we can only toggle it
@@ -388,7 +633,6 @@ class CarStats
     @navBatteryVoltage
     @navSensorVoltage
     @navTemperature
-
 
     # Variables for the Immobalizer and Key
     @keyState # Inserted, Position 1, Position 2, Ignition
@@ -575,24 +819,24 @@ StaticMessages = {
    "KnobPress" => "Volume Knob Pressed (Toggle Radio)",
    "KnobHold" => "Volume Knob Held",
    "KnobRelease" => "Volume Knob Released",
-   "KnobRotateLeftSpeed1" => "Volume Decreased (Speed 1)",
-   "KnobRotateLeftSpeed2" => "Volume Decreased (Speed 2)",
-   "KnobRotateLeftSpeed3" => "Volume Decreased (Speed 3)",
-   "KnobRotateLeftSpeed4" => "Volume Decreased (Speed 4)",
-   "KnobRotateLeftSpeed5" => "Volume Decreased (Speed 5)",
-   "KnobRotateLeftSpeed6" => "Volume Decreased (Speed 6)",
-   "KnobRotateLeftSpeed7" => "Volume Decreased (Speed 7)",
-   "KnobRotateLeftSpeed8" => "Volume Decreased (Speed 8)",
-   "KnobRotateLeftSpeed9" => "Volume Decreased (Speed 9)",
-   "KnobRotateRightSpeed1" => "Volume Increased (Speed 1)",
-   "KnobRotateRightSpeed2" => "Volume Increased (Speed 2)",
-   "KnobRotateRightSpeed3" => "Volume Increased (Speed 3)",
-   "KnobRotateRightSpeed4" => "Volume Increased (Speed 4)",
-   "KnobRotateRightSpeed5" => "Volume Increased (Speed 5)",
-   "KnobRotateRightSpeed6" => "Volume Increased (Speed 6)",
-   "KnobRotateRightSpeed7" => "Volume Increased (Speed 7)",
-   "KnobRotateRightSpeed8" => "Volume Increased (Speed 8)",
-   "KnobRotateRightSpeed9" => "Volume Increased (Speed 9)",
+   "KnobRotateLeftSpeed1" => "Volume Decreased (1 Step)",
+   "KnobRotateLeftSpeed2" => "Volume Decreased (2 Steps)",
+   "KnobRotateLeftSpeed3" => "Volume Decreased (3 Steps)",
+   "KnobRotateLeftSpeed4" => "Volume Decreased (4 Steps)",
+   "KnobRotateLeftSpeed5" => "Volume Decreased (5 Steps)",
+   "KnobRotateLeftSpeed6" => "Volume Decreased (6 Steps)",
+   "KnobRotateLeftSpeed7" => "Volume Decreased (7 Steps)",
+   "KnobRotateLeftSpeed8" => "Volume Decreased (8 Steps)",
+   "KnobRotateLeftSpeed9" => "Volume Decreased (9 Steps)",
+   "KnobRotateRightSpeed1" => "Volume Increased (1 Step)",
+   "KnobRotateRightSpeed2" => "Volume Increased (2 Steps)",
+   "KnobRotateRightSpeed3" => "Volume Increased (3 Steps)",
+   "KnobRotateRightSpeed4" => "Volume Increased (4 Steps)",
+   "KnobRotateRightSpeed5" => "Volume Increased (5 Steps)",
+   "KnobRotateRightSpeed6" => "Volume Increased (6 Steps)",
+   "KnobRotateRightSpeed7" => "Volume Increased (7 Steps)",
+   "KnobRotateRightSpeed8" => "Volume Increased (8 Steps)",
+   "KnobRotateRightSpeed9" => "Volume Increased (9 Steps)",
    "RadioStatusRequest" => "Is there a Radio Connected?",
    "RadioStatusReply" => "Radio Connected and Ready",
    "ClusterStatusRequest" => "Is there a Cluster Connected?",
@@ -864,7 +1108,7 @@ DeviceFunctionsIN = {
   "GT" => {
     ["23", "62", "10", "03", "20"] => "WriteToTitle",     # This is the big text area as part of the banner at the top left of the screen.
     ["A5", "62", "01"] => "WriteToHeading",
-    ["21", "60", "00"] => "WriteToLowerField",
+    ["21", "61", "00"] => "WriteToLowerField",
     ["A5", "60", "01", "00"] => "ClearLowerFields",
     ["01"] => "GTStatusRequest",
     ["02", "30"] => "GeneralDeviceStatusReply",
@@ -887,6 +1131,11 @@ DeviceFunctionsIN = {
   },
   "VID" => {
     ["01"] => "VideoModuleStatusRequest"
+  }
+
+  "D0" => {
+    # Sent from the RLS advising the status of the light outside.
+    ["59"] => "LightingConditionsUpdate"
   }
 }
 
