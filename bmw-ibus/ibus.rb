@@ -13,6 +13,7 @@ class IBusMessage
     @destination = rawMessage.shift
     @checksum = rawMessage.pop
     @data = rawMessage
+    puts "Data (First): #{rawMessage}, @data: #{@data}"
     @processedData = []
     ## Find the source device's Module Name
     @sourceName = self.findDevice(@source)
