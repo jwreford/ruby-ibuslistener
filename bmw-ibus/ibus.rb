@@ -390,10 +390,10 @@ class IBusMessage
       message = toAscii2(messageByte)
       function = "Write to Lower Header"
       cleanOutput = "#{function} (#{destination}). Text: #{message})"
-    elsif bytes[0] == "A1" && bytes[1] == "61" && bytes[2] == "01"
+    elsif bytes[0] == "A5" && bytes[1] == "61" && bytes[2] == "01"
       functionByte = bytes.shift(3)
       function = "Partial Write Complete"
-    elsif bytes[0] == "A5" && bytes[1] == "61" && bytes[2] == "01"
+    elsif bytes[0] == "A1" && bytes[1] == "60" && bytes[2] == "01"
       functionByte = bytes.shift(3)
       function = "Unknown Text Field"
     else
