@@ -372,8 +372,9 @@ class IBusMessage
 
 
 
-  def decodeVideoControllerMessage
+  def decodeVideoControllerMessage(bytes)
     puts "It's a Video Controller Message"
+    puts "Data: #{bytes}"
   end
 
 
