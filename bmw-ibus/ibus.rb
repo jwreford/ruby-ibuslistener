@@ -398,6 +398,8 @@ class IBusMessage
     elsif bytes[0] == "A1" && bytes[1] == "60" && bytes[2] == "01"
       functionByte = bytes.shift(3)
       function = "Unknown Text Field"
+    elsif bytes[0] == "02" && bytes[1] == "30"
+        cleanOutput = "Video Module Status Request"
     else
       cleanOutput = "Unknown Video Controller Message"
     end
@@ -670,6 +672,7 @@ StaticMessages = {
    "UnknownLocationStatusMessage" => "Unknown Location Status Message (ID 1)",
    "CDChangerStatusRequest" => "Is a CD Changer Connected?",
    "DSPStatusRequest" => "Is there a DSP Amplifier Connected?",
+   "FrontCDStatusRequest" => "Is there a Front CD Player Connected?",
    "KnobPress" => "Volume Knob Pressed (Toggle Radio)",
    "KnobHold" => "Volume Knob Held",
    "KnobRelease" => "Volume Knob Released",
@@ -925,6 +928,11 @@ DeviceFunctionsIN = {
     ["01"] => "DSPStatusRequest"
   },
 
+  # Hash containing messages that other devices can send the DSP Amplifier
+  "CDD" => {
+    # From the RAD
+    ["01"] => "FrontCDStatusRequest"
+  },
 
   # Hash containing messages that other devices can send the Telephone Module (ULF)
   "TEL" => {
