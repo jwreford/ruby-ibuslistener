@@ -669,6 +669,7 @@ FunctionDetailsDecode = {
 StaticMessages = {
    "UnknownLocationStatusMessage" => "Unknown Location Status Message (ID 1)",
    "CDChangerStatusRequest" => "Is a CD Changer Connected?",
+   "DSPStatusRequest" => "Is there a DSP Amplifier Connected?",
    "KnobPress" => "Volume Knob Pressed (Toggle Radio)",
    "KnobHold" => "Volume Knob Held",
    "KnobRelease" => "Volume Knob Released",
