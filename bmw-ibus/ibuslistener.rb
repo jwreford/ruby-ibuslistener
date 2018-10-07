@@ -1,6 +1,5 @@
 require 'socket'
 require_relative 'ibus'
-require_relative 'carStats'
 
 # Open a Socket to the pibus Application (port 55537)
 class IBusListener
