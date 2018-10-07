@@ -268,7 +268,7 @@ class IBusMessage
       puts "Size of messageContent: #{messageContent.length}"
     }
     puts "Finished Message: #{finishedMessage}"
-    #return finishedMessage
+    return finishedMessage
   end
 
   # Pass in OBC Messge to the cluster as an array of hex bytes
