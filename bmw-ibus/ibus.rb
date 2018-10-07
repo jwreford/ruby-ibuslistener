@@ -134,7 +134,7 @@ class IBusMessage
     else
       # Title
     end
-    puts "Stuff"
+    puts "In Video Controller Field"
   end
 
   # Creates the Message to send to the cluster.
@@ -160,6 +160,7 @@ class IBusMessage
   ## - SingleT2: A single 'check control' gong tone is sounded.
   ## - TripleT3: Three short standard gong tones are sounded. Example: Memo alert for the tine.
   ## - SingleT1: A single lower-pitched gong tone is sounded. Example: CODE
+  ## - NOTE: Pass in messageContent as array of hex. EG: ["AA", "BB", "CC"]
   def clusterMessageBuilder(messagePriority, textLength, displayType, gongType, messageContent)
     byte1 = "00000000"
     byte2 = "00000000"
@@ -252,15 +253,20 @@ class IBusMessage
     # Missing TripleT3
     end
 
-    puts "Finished Bits: #{byte1} #{byte2}"
-    #byte1 = byte1.pack(H*)
-    #byte2 = byte2.pack(H*)
-    #messageContent = messageContent.toHex
-    #finishedMessage = []
-    #finishedMessage[0] = byte1
-    #finishedMessage[1] = byte2
-    ## TODO: Append messageContent array to the end of the finishedMessage array.
-    #return finishedMessage
+    puts "Bits (Gong and Message Type): #{byte1} #{byte2}"
+    messageContent = messageContent.toHex
+    byte1 = byte1.pack(H*)
+    byte2 = byte2.pack(H*)
+    puts "Hex (Gong and Message Type): #{byte1} #{byte2}"
+    puts "Message Content: #{messageContent}"
+    finishedMessage = []
+    finishedMessage[0] = byte1
+    finishedMessage[1] = byte2
+    for messageContent.length |currentElement|
+      messageContent.push(messageContent.fetch(currentElement))
+    end
+    puts "Finished Message: #{finishedMessage}"
+    return finishedMessage
   end
 
   # Pass in OBC Messge to the cluster as an array of hex bytes
