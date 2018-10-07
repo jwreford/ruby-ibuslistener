@@ -1,5 +1,5 @@
 
-
+require_relative 'carStats'
 ## Note: iBus Message Structure:
 # Source, Length, Destination, Data, Checksum
 
@@ -255,8 +255,8 @@ class IBusMessage
 
     puts "Bits (Gong and Message Type): #{byte1} #{byte2}"
     messageContent = messageContent.toHex
-    byte1 = byte1.pack(H*)
-    byte2 = byte2.pack(H*)
+    byte1 = byte1.pack('H*')
+    byte2 = byte2.pack('H*')
     puts "Hex (Gong and Message Type): #{byte1} #{byte2}"
     puts "Message Content: #{messageContent}"
     finishedMessage = []
@@ -267,10 +267,8 @@ class IBusMessage
       messageContent.push(messageContent.fetch(x))
       puts "Size of messageContent: #{messageContent.length}"
     }
-
-    end
     puts "Finished Message: #{finishedMessage}"
-    return finishedMessage
+    #return finishedMessage
   end
 
   # Pass in OBC Messge to the cluster as an array of hex bytes
@@ -710,7 +708,7 @@ StaticMessages = {
    "GeneralDeviceStatusReply" => "Connected and Ready",
    "CurrentPhoneStatusRequest" => "Is a Phone Connected?",
    "CurrentNetworkConnectedStatusRequest" => "Is the Cell Network Connected?",
-   "VideoModuleStatusReply" => "Is there a TV Module Connected?",
+   "VideoModuleStatusRequest" => "Is there a TV Module Connected?",
    "VideoModuleStatusReply" => "TV Module Connected and Ready",
    "BoardMonitorStatusRequest" => "Is there a Board Monitor Connected?"
 }
