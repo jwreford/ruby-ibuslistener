@@ -262,8 +262,12 @@ class IBusMessage
     finishedMessage = []
     finishedMessage[0] = byte1
     finishedMessage[1] = byte2
-    for messageContent.length |currentElement|
-      messageContent.push(messageContent.fetch(currentElement))
+    messageContent.each { |x|
+      puts "Current Array Element: #{x}"
+      messageContent.push(messageContent.fetch(x))
+      puts "Size of messageContent: #{messageContent.length}"
+    }
+
     end
     puts "Finished Message: #{finishedMessage}"
     return finishedMessage
