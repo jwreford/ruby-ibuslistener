@@ -1,5 +1,6 @@
 
 require_relative 'carStats'
+require_relative 'IKE'
 ## Note: iBus Message Structure:
 # Source, Length, Destination, Data, Checksum
 
@@ -433,7 +434,11 @@ class IBusMessage
     byteCounter = 0
     methodType = ""
     # Check and see whether this device has any methods in the hash, and if not, skip to the end.
-    if @destinationName == "GT"
+    if @destinationName == "IKE"
+          @methodMessage = IKE.new
+          @methodMessage.setRawMessage(@destinationName,@data,@length)
+          @methodMessage.putsHello
+    elsif @destinationName == "GT"
       puts "Data: #{@processedData}"
        decodeVideoControllerMessage(@processedData)
     elsif DeviceFunctionsIN.key?(@destinationName) == true && @destinationName != "GT"
