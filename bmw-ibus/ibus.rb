@@ -439,10 +439,7 @@ class IBusMessage
           @methodMessage.setRawMessage(@sourceName,@data,@length)
           @methodMessage.putsHello
           puts "Source Source: #{@sourceName}"
-          @methodMessage.decodeFunction
-    elsif @destinationName == "GT"
-      puts "Data: #{@processedData}"
-       decodeVideoControllerMessage(@processedData)
+          puts "#{@methodMessage.decodeFunction}"
     elsif DeviceFunctionsIN.key?(@destinationName) == true && @destinationName != "GT"
       # Iterate through the message, starting with on byte. If we don't find a valid method, add the next byte to the end and try again
       @processedData.each { |currentByte|
