@@ -31,8 +31,8 @@ class IKE
   end
 
   def decodeFunction
-    if IKEFunctionsIN.fetch(@sourceName).key?(@data) == true
-      return "#{IKEFunctionsIN.fetch(@sourceName).key?(@data)}"
+    if IKEFunctionsIN.key?(@data) == true
+      return "#{IKEFunctionsIN.key?(@data)}"
     else
       retrurn "Not sure what that message was"
     end
