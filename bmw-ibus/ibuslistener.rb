@@ -33,7 +33,7 @@ class IBusListener
       @message.printRawMessage
       @message.printDecodedMessage
       # Print Cluster Message whenever BM checks for RAD
-      if @message.@sourceName = "BM"
+      if @message.@sourceName == "BM"
         ## messagePriority, textLength, displayType, gongType, messageContent)
         @message.clusterMessageBuilder("Priority1","LengthNotSpecified","Text","SingleT2","Hello")
 
