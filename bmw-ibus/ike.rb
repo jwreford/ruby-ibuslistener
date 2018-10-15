@@ -40,8 +40,7 @@ class IKE
       retrurn "Not sure what that message was"
     end
   end
-
-  end
+  
   def putsHello
     puts "-------- IKE: #{@destinationName}, #{@data}, #{@length}"
   end
