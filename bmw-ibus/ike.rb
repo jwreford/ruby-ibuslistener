@@ -10,8 +10,6 @@ class IKE
 
   IKEFunctionsIN = {
     # Messages that devices can send to the Instrument CLuster
-    # Note: For custom messages, add message content after the hex below.
-    "IKE" => {
         ["1A"] => "Message",
         ["10"] => "RequestTerminalStatus",
         ["12"] => "SensorRequest",
@@ -22,9 +20,9 @@ class IKE
       }
     }
 
-  def setRawMessage(destinationName,data,length)
+  def setRawMessage(sourceName,data,length)
     # Instance variables
-    @destinationName = destinationName
+    @sourceName = sourceName
     @data = data
     @length = length
   end
@@ -34,15 +32,15 @@ class IKE
   end
 
   def decodeFunction
-    if IKEFunctionsIN.fetch(@destinationName).key?(@data) == true
-      return "#{IKEFunctionsIN.fetch(@destinationName).key?(@data)}"
+    if IKEFunctionsIN.fetch(@sourceName).key?(@data) == true
+      return "#{IKEFunctionsIN.fetch(@sourceName).key?(@data)}"
     else
       retrurn "Not sure what that message was"
     end
   end
-  
+
   def putsHello
-    puts "-------- IKE: #{@destinationName}, #{@data}, #{@length}"
+    puts "-------- IKE Class. From:#{@sourceName}, Data: #{@data}, Length: #{@length}"
   end
 
   def clusterMessageBuilder(messagePriority, textLength, displayType, gongType, messageContent)
