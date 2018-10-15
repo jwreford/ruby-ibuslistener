@@ -31,10 +31,13 @@ class IKE
   end
 
   def decodeFunction
+    puts "In decodeFunction"
+    puts "Fetch Results: #{IKEFunctionsIN.key?(@data)}"
     if IKEFunctionsIN.key?(@data) == true
+      puts "In the if statement"
       return "#{IKEFunctionsIN.key?(@data)}"
     else
-      retrurn "Not sure what that message was"
+      return "Not sure what that message was"
     end
   end
 
