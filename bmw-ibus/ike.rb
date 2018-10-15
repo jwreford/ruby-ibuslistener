@@ -33,8 +33,17 @@ class IKE
     @asciiMessage = asciiMessage
   end
 
+  def decodeFunction
+    if IKEFunctionsIN.fetch(@destinationName).key?(@data) == true
+      return "#{IKEFunctionsIN.fetch(@destinationName).key?(@data)}"
+    else
+      retrurn "Not sure what that message was"
+    end
+  end
+
+  end
   def putsHello
-    puts "Hello! This is inside the IKE Class"
+    puts "-------- IKE: #{@destinationName}, #{@data}, #{@length}"
   end
 
   def clusterMessageBuilder(messagePriority, textLength, displayType, gongType, messageContent)
