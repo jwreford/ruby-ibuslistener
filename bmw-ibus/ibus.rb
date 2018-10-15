@@ -436,7 +436,7 @@ class IBusMessage
     # Check and see whether this device has any methods in the hash, and if not, skip to the end.
     if @destinationName == "IKE"
           @methodMessage = IKE.new
-          @methodMessage.setRawMessage(@destinationName,@data,@length)
+          @methodMessage.setRawMessage(@sourceName,@data,@length)
           @methodMessage.putsHello
     elsif @destinationName == "GT"
       puts "Data: #{@processedData}"
