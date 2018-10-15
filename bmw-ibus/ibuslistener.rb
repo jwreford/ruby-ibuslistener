@@ -32,11 +32,6 @@ class IBusListener
       @message = IBusMessage.new(@message)     # Shove them into a new ibus message object
       @message.printRawMessage
       @message.printDecodedMessage
-      # Print Cluster Message whenever BM checks for RAD
-      if @message.@sourceName == "BM"
-        ## messagePriority, textLength, displayType, gongType, messageContent)
-        @message.clusterMessageBuilder("Priority1","LengthNotSpecified","Text","SingleT2","Hello")
-
       @message = nil # Destroy the message, ready for the next one.
     end
     ibusListener.close             # close socket when done

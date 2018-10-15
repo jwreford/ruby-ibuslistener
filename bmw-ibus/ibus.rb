@@ -494,6 +494,7 @@ class IBusMessage
       return "Unknown Message"
     end
     return "Device has no method, sozzle"
+    @methodMessage = nil
   end
 
 
