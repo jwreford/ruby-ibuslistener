@@ -1,6 +1,6 @@
 
 require_relative 'carStats'
-require_relative 'IKE'
+require_relative 'ike'
 ## Note: iBus Message Structure:
 # Source, Length, Destination, Data, Checksum
 
