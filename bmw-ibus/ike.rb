@@ -17,8 +17,7 @@ class IKE
 
         # Sent from the Video Controller (presumably to know whether to show the logo when a door is opened)
         ["10"] => "IgnitionStatusRequest"
-      }
-    }
+  }
 
   def setRawMessage(sourceName,data,length)
     # Instance variables
