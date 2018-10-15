@@ -438,6 +438,8 @@ class IBusMessage
           @methodMessage = IKE.new
           @methodMessage.setRawMessage(@sourceName,@data,@length)
           @methodMessage.putsHello
+          puts "Source Source: #{@sourceName}"
+          @methodMessage.decodeFunction
     elsif @destinationName == "GT"
       puts "Data: #{@processedData}"
        decodeVideoControllerMessage(@processedData)
