@@ -4,7 +4,7 @@
 # The Class
 class IKE
   # What happens when a new IKE object is created
-  def initialize(,messageFunction)
+  def initialize
     # Nothing to do here for now.
   end
 
