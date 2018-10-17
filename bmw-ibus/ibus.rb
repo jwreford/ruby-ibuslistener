@@ -440,8 +440,8 @@ class IBusMessage
           @methodMessage = IKE.new # Create new IKE object
           @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in IKE object ready for Decoding a message
           @methodMessage.decodeMessage
+          puts "Decoded Message: #{@methodMessage.decodeMessage}"
           puts "Source Source: #{@sourceName}"
-          puts "#{@methodMessage.decodeFunction}"
     elsif DeviceFunctionsIN.key?(@destinationName) == true && @destinationName != "GT"
       # Iterate through the message, starting with on byte. If we don't find a valid method, add the next byte to the end and try again
       @processedData.each { |currentByte|
