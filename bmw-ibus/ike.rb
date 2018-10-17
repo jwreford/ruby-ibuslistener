@@ -41,7 +41,7 @@ class IKE
     puts "----> Fetch Results: #{IKEStaticMessagesIN.key?(@messageData)}"
     if IKEStaticMessagesIN.key?(@messageData) == true
       puts "------> We know this message"
-      puts "------> Message: #{IKEStaticMessagesIN.fetch()@messageData)}"
+      puts "------> Message: #{IKEStaticMessagesIN.fetch(@messageData)}"
       return "#{IKEStaticMessagesIN.fetch(@messageData)}"
     else
       # This is where we need to determine what kind of message it is. For the IKE, the
