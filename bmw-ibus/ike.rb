@@ -35,7 +35,7 @@ class IKE
         ["10"] => "IgnitionStatusRequest"
   }
 
-  def decodeMessage(sourceDeviceName,messageData,messageLength)
+  def decodeMessage
     # Returns message as a string
     puts "--> Decoding Message"
     puts "----> Fetch Results: #{IKEStaticMessagesIN.key?(@messageData)}"
