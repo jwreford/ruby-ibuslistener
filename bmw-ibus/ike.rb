@@ -26,13 +26,16 @@ class IKE
 
   IKEStaticMessagesIN = {
     # Messages that devices can send to the Instrument CLuster
-        ["1A"] => "Message",
-        ["10"] => "RequestTerminalStatus",
-        ["12"] => "SensorRequest",
-        ["01"] => "ClusterStatusRequest",
+        ["10"] => "Requesting Terminal Status",
+        ["12"] => "Requesting Sensor Data",
+        ["01"] => "Requesting Cluster Status",
 
         # Sent from the Video Controller (presumably to know whether to show the logo when a door is opened)
         ["10"] => "IgnitionStatusRequest"
+  }
+
+  IKEFunctionsIN = {
+        ["1A"] => ["Cluster Message","clusterMessageDecoder"]
   }
 
   def decodeMessage
@@ -44,9 +47,9 @@ class IKE
       puts "------> Message: #{IKEStaticMessagesIN.fetch(@messageData)}"
       return "#{IKEStaticMessagesIN.fetch(@messageData)}"
     else
-      # This is where we need to determine what kind of message it is. For the IKE, the
-      # only actual Function is displaying cluster messages, so we can try and run clusterMessageDecoder here.
-      # For the TV module or the radio it might be a bit more complex.
+      ## TODO: Write this bit.
+      # Run through the IKEFunctionsIN hash.
+      # Use index 1 in the array inside the hash to determine what method to use.
       return "--> Unknown Message"
     end
   end
