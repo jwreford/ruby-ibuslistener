@@ -41,8 +41,8 @@ class IKE
     puts "----> Fetch Results: #{IKEStaticMessagesIN.key?(@messageData)}"
     if IKEStaticMessagesIN.key?(@messageData) == true
       puts "------> We know this message"
-      puts "------> Message: #{IKEStaticMessagesIN.key?(@messageData)}"
-      return "#{IKEStaticMessagesIN.key?(@messageData)}"
+      puts "------> Message: #{IKEStaticMessagesIN.fetch()@messageData)}"
+      return "#{IKEStaticMessagesIN.fetch(@messageData)}"
     else
       # This is where we need to determine what kind of message it is. For the IKE, the
       # only actual Function is displaying cluster messages, so we can try and run clusterMessageDecoder here.
