@@ -33,27 +33,37 @@ class IKE
         # Sent from the Video Controller (presumably to know whether to show the logo when a door is opened)
         ["10"] => "IgnitionStatusRequest"
   }
-
   IKEFunctionsIN = {
-        ["1A"] => ["Cluster Message","clusterMessageDecoder"]
+    ["1A"] => ["Cluster Message","clusterMessageDecoder"]
   }
+
 
   def decodeMessage
     # Returns message as a string
-    puts "--> Decoding Message"
-    puts "----> Fetch Results: #{IKEStaticMessagesIN.key?(@messageData)}"
+    bytesCheck = []
+    byteCounter = 0
     if IKEStaticMessagesIN.key?(@messageData) == true
-      puts "------> We know this message"
-      puts "------> Message: #{IKEStaticMessagesIN.fetch(@messageData)}"
       return "#{IKEStaticMessagesIN.fetch(@messageData)}"
-    else
-      ## TODO: Write this bit.
-      # Run through the IKEFunctionsIN hash.
-      # Use index 1 in the array inside the hash to determine what method to use.
-      return "--> Unknown Message"
     end
+    @messageData.each { |currentByte|
+      bytesCheck.push(currentByte)
+      byteCounter = byteCounter + 1
+      if IKEFunctionsIN.key?(bytesCheck) == true
+        # IKEFunctionsIN.fetch(bytesCheck)[0] = the name of the function
+        # IKEFunctionsIN.fetch(bytesCheck)[1] = the method's name for that function.
+        return "#{IKEFunctionsIN.fetch(bytesCheck)[0]}"
+      end
+      for i in 1..byteCounter do
+        @messageData.shift
+      end
+    }
+    return "--> Unknown Message"
   end
 
+
+
+## To do: Write code to iterate over hash checking for groups of hex, increasing if not found. EG: check for AA, then AA BB, then AA BB CC, etc.
+## Then remember to exclude those bits from the actual function.
 
   def clusterMessageBuilder
     # Creates the Message to send to the cluster.
