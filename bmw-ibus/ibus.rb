@@ -433,11 +433,13 @@ class IBusMessage
     bytesCheck = []
     byteCounter = 0
     methodType = ""
+    # This is used to tell the constructor for IKE whether it is decoding or building a message
+    messageFunction = "decode"
     # Check and see whether this device has any methods in the hash, and if not, skip to the end.
     if @destinationName == "IKE"
-          @methodMessage = IKE.new
-          @methodMessage.setRawMessage(@sourceName,@data,@length)
-          @methodMessage.putsHello
+          @methodMessage = IKE.new # Create new IKE object
+          @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in IKE object ready for Decoding a message
+          @methodMessage.decodeMessage
           puts "Source Source: #{@sourceName}"
           puts "#{@methodMessage.decodeFunction}"
     elsif DeviceFunctionsIN.key?(@destinationName) == true && @destinationName != "GT"

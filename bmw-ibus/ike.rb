@@ -4,11 +4,27 @@
 # The Class
 class IKE
   # What happens when a new IKE object is created
-  def initialize
-    # Do stuff here later if you need to
+  def initialize(,messageFunction)
+    # Nothing to do here for now.
   end
 
-  IKEFunctionsIN = {
+  def setDecode(sourceDeviceName, messageData, messageLength)
+    # Decoding a message
+    puts "[IKE] - Setting Message Decode Variables"
+    @sourceDeviceName = sourceDeviceName
+    @messageData = messageData
+    @messageLength = messageLength
+  end
+
+  def setEncode(messagePriority, textLength, displayType, gongType, messageContent)
+    @messagePriority = messagePriority
+    @textLength = textLength
+    @displayType = displayType
+    @gongType = gongType
+    @messageContent = messageContent
+  end
+
+  IKEStaticMessagesIN = {
     # Messages that devices can send to the Instrument CLuster
         ["1A"] => "Message",
         ["10"] => "RequestTerminalStatus",
@@ -19,33 +35,24 @@ class IKE
         ["10"] => "IgnitionStatusRequest"
   }
 
-  def setRawMessage(sourceName,data,length)
-    # Instance variables
-    @sourceName = sourceName
-    @data = data
-    @length = length
-  end
-
-  def setASCIIMessage(asciiMessage)
-    @asciiMessage = asciiMessage
-  end
-
-  def decodeFunction
-    puts "In decodeFunction"
-    puts "Fetch Results: #{IKEFunctionsIN.key?(@data)}"
-    if IKEFunctionsIN.key?(@data) == true
-      puts "In the if statement"
-      return "#{IKEFunctionsIN.key?(@data)}"
+  def decodeMessage(sourceDeviceName,messageData,messageLength)
+    # Returns message as a string
+    puts "--> Decoding Message"
+    puts "----> Fetch Results: #{IKEStaticMessagesIN.key?(@messageData)}"
+    if IKEStaticMessagesIN.key?(@messageData) == true
+      puts "------> We know this message"
+      puts "------> Message: #{IKEStaticMessagesIN.key?(@messageData)}"
+      return "#{IKEStaticMessagesIN.key?(@messageData)}"
     else
-      return "Not sure what that message was"
+      # This is where we need to determine what kind of message it is. For the IKE, the
+      # only actual Function is displaying cluster messages, so we can try and run clusterMessageDecoder here.
+      # For the TV module or the radio it might be a bit more complex.
+      return "--> Unknown Message"
     end
   end
 
-  def putsHello
-    puts "-------- IKE Class. From:#{@sourceName}, Data: #{@data}, Length: #{@length}"
-  end
 
-  def clusterMessageBuilder(messagePriority, textLength, displayType, gongType, messageContent)
+  def clusterMessageBuilder
     # Creates the Message to send to the cluster.
     ## Options for the messagePriority:
     ## - ClearMessage: Clears the current alert.
@@ -73,7 +80,7 @@ class IKE
 
     byte1 = "00000000"
     byte2 = "00000000"
-    case messagePriority
+    case @messagePriority
     when "ClearMessage"
       byte1[5] = "0"
       byte1[6] = "0"
@@ -96,14 +103,14 @@ class IKE
       byte1[7] = "1"
     end
 
-    case textLength
+    case @textLength
     when "LengthSpecified"
       byte1[4] = "0"
     when "LengthNotSpecified"
       byte1[4] = "1"
     end
 
-    case displayType
+    case @displayType
     when "NoChange"
       byte1[2] = "0"
     when "NoText"
@@ -120,7 +127,7 @@ class IKE
       byte2[7] = "1"
     end
 
-    case gongType
+    case @gongType
     when "NoGong"
       byte1[3] = "0"
     when "SilenceGong"
