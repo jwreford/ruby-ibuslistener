@@ -15,7 +15,6 @@ class RAD
 
   RADStaticMessagesIN = {
     # Messages that other devices can send to the Radio
-    "RAD" => {
       # Diagnostics Data
       ["00"] => "DiagnosticsReadID",
       ["04", "00"] => "DiagnosticsReadFaultMemory",
@@ -117,7 +116,6 @@ class RAD
 
       # This is sent from the CD Changer
       ["02", "01"] => "CDChangerConnectedResponse"
-    },
 
   }
   RADFunctionsIN = {
