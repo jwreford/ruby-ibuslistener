@@ -131,9 +131,9 @@ class RAD
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
-              puts "Byte Check #{bytesCheck}, Byte Counter: #{byteCounter}"
+      puts "Byte Check #{bytesCheck}, Byte Counter: #{byteCounter}. Length of Byte Check: #{bytesCheck.length}"
       if RADStaticMessagesIN.key?(bytesCheck) == true
-        puts "Byte Check #{bytesCheck}, Byte Counter: #{byteCounter}"
+        puts "In the if: Byte Check #{bytesCheck}, Byte Counter: #{byteCounter}"
         return "#{RADStaticMessagesIN.fetch(@messageData)}"
       elsif RADFunctionsIN.key?(bytesCheck) == true
         # IKEFunctionsIN.fetch(bytesCheck)[0] = the name of the function
@@ -141,6 +141,7 @@ class RAD
         # Do that thing here
       end
       for i in 1..byteCounter do
+        puts "Incrementing the byte counter"
         @messageData.shift
       end
     }
