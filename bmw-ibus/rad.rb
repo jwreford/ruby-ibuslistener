@@ -143,9 +143,7 @@ class RAD
         # IKEFunctionsIN.fetch(bytesCheck)[1] = the method's name for that function.
         # Do that thing here
       end
-      for i in 1..byteCounter do
-        @messageData.shift
-      end
+      @messageData.shift
     }
     return "--> Unknown Message"
   end
