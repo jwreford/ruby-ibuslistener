@@ -128,7 +128,7 @@ class RAD
     puts "[RAD] Message: #{@sourceDeviceName} -> #{@destinationDeviceName}: #{@messageData}"
     bytesCheck = []
     byteCounter = 0
-    puts "Message Data Length: #{messageData.length}"
+    puts "Message Data Length: #{@messageData.length}"
     @messageData.each { |currentByte|
       puts "Current Byte: #{currentByte}"
       puts "Byte Counter: #{byteCounter}"
