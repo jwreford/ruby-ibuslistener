@@ -46,6 +46,7 @@ class IKE
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
       if IKEStaticMessagesIN.key?(bytesCheck) == true
+        puts "Byte Check #{bytesCheck}, Byte Counter: #{byteCounter}"
         return "#{IKEStaticMessagesIN.fetch(@messageData)}"
       elsif IKEFunctionsIN.key?(bytesCheck) == true
         # IKEFunctionsIN.fetch(bytesCheck)[0] = the name of the function
