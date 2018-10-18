@@ -23,7 +23,7 @@ class RAD
       ["39", "00", "02", "00"] => "CDChangerStatusReply",
 
       # From the Board Monitor to the Radio
-      ["01"] => "RadioStatusRequest",
+      ["01"] => "Radio Status Request",
 
       # From the Steering Wheel Controls
       ["32", "10"] => "VolumeDownPress",
@@ -125,7 +125,6 @@ class RAD
 
   def decodeMessage
     # Returns message as a string
-    puts "[RAD] Message: #{@sourceDeviceName} -> #{@destinationDeviceName}: #{@messageData}"
     bytesCheck = []
     byteCounter = 0
     @messageData.each { |currentByte|

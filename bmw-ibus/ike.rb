@@ -31,7 +31,7 @@ class IKE
         ["01"] => "Requesting Cluster Status",
 
         # Sent from the Video Controller (presumably to know whether to show the logo when a door is opened)
-        ["10"] => "IgnitionStatusRequest"
+        ["10"] => "Ignition Status Request"
   }
   IKEFunctionsIN = {
     ["1A"] => ["Cluster Message","clusterMessageDecoder"]
