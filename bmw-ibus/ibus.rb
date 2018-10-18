@@ -1,6 +1,8 @@
 
 require_relative 'carStats'
 require_relative 'ike'
+require_relative 'rad'
+
 ## Note: iBus Message Structure:
 # Source, Length, Destination, Data, Checksum
 
@@ -434,11 +436,17 @@ class IBusMessage
     byteCounter = 0
     # Check and see whether this device has any methods in the hash, and if not, skip to the end.
     if @destinationName == "IKE"
-          @methodMessage = IKE.new # Create new IKE object
-          @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in IKE object ready for Decoding a message
-          @methodMessage.decodeMessage
-          puts "Decoded Message: #{@methodMessage.decodeMessage}"
-          return "#{@methodMessage.decodeMessage}"
+      @methodMessage = IKE.new # Create new IKE object
+      @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in IKE object ready for Decoding a message
+      @methodMessage.decodeMessage
+      puts "Decoded Message: #{@methodMessage.decodeMessage}"
+      return "#{@methodMessage.decodeMessage}"
+    elsif @destinationName == "RAD"
+      @methodMessage = RAD.new # Create new RAD object
+      @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
+      @methodMessage.decodeMessage
+      puts "Decoded Message: #{@methodMessage.decodeMessage}"
+      return "#{@methodMessage.decodeMessage}"
     elsif DeviceFunctionsIN.key?(@destinationName) == true && @destinationName != "GT"
       # Iterate through the message, starting with on byte. If we don't find a valid method, add the next byte to the end and try again
       @processedData.each { |currentByte|

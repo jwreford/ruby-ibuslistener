@@ -1,40 +1,127 @@
 # Ruby Library for the Instrument Cluster (IKE)
 
-
-# The Class
-class IKE
-  # What happens when a new IKE object is created
+class RAD
   def initialize
     # Nothing to do here for now.
   end
 
   def setDecode(sourceDeviceName, messageData, messageLength)
     # Decoding a message
-    puts "[IKE] - Setting Message Decode Variables"
+    puts "[RAD] - Setting Message Decode Variables"
     @sourceDeviceName = sourceDeviceName
     @messageData = messageData
     @messageLength = messageLength
   end
 
-  def setEncode(messagePriority, textLength, displayType, gongType, messageContent)
-    @messagePriority = messagePriority
-    @textLength = textLength
-    @displayType = displayType
-    @gongType = gongType
-    @messageContent = messageContent
-  end
+  RADStaticMessagesIN = {
+    # Messages that other devices can send to the Radio
+    "RAD" => {
+      # Diagnostics Data
+      ["00"] => "DiagnosticsReadID",
+      ["04", "00"] => "DiagnosticsReadFaultMemory",
 
-  IKEStaticMessagesIN = {
-    # Messages that devices can send to the Instrument CLuster
-        ["10"] => "Requesting Terminal Status",
-        ["12"] => "Requesting Sensor Data",
-        ["01"] => "Requesting Cluster Status",
+      # From the CD Changer. This is a bit of a guess - I might be stripping part of the message off unintentionally.
+      ["39", "00", "02", "00"] => "CDChangerStatusReply",
 
-        # Sent from the Video Controller (presumably to know whether to show the logo when a door is opened)
-        ["10"] => "IgnitionStatusRequest"
+      # From the Board Monitor to the Radio
+      ["01"] => "RadioStatusRequest",
+
+      # From the Steering Wheel Controls
+      ["32", "10"] => "VolumeDownPress",
+      ["32", "11"] => "VolumeUpPress",
+      ["3B", "01"] => "NextTrackPress",
+      ["3B", "21"] => "NextTrackRelease",
+      ["3B", "08"] => "PreviousTrackPress",
+      ["3B", "28"] => "PreviousTrackRelease",
+
+      # From the Board Monitor
+      ## Buttons
+      ["48", "14"] => "ReverseTapePress",
+      ["48", "11"] => "1Press",
+      ["48", "12"] => "3Press",
+      ["48", "13"] => "5Press",
+      ["48", "32"] => "TPPress",
+      ["48", "31"] => "FMPress",
+      ["48", "33"] => "DolbyPress",
+      ["48", "04"] => "TonePress",
+      ["48", "10"] => "PreviousTrackPress",
+      ["48", "30"] => "MenuPress",
+      ["48", "54"] => "ReverseTapeHold",
+      ["48", "51"] => "1Hold",
+      ["48", "52"] => "3Hold",
+      ["48", "53"] => "5Hold",
+      ["48", "72"] => "TPHold",
+      ["48", "71"] => "FMHold",
+      ["48", "73"] => "DolbyHold",
+      ["48", "44"] => "ToneHold",
+      ["48", "50"] => "PreviousTrackHold",
+      ["48", "70"] => "MenuHold",
+      ["48", "94"] => "ReverseTapeRelease",
+      ["48", "91"] => "1Release",
+      ["48", "92"] => "3Release",
+      ["48", "93"] => "5Release",
+      ["48", "B2"] => "TPRelease",
+      ["48", "B1"] => "FMRelease",
+      ["48", "84"] => "DolbyRelease",
+      ["48", "90"] => "NextTrackRelease",
+      ["48", "B0"] => "MenuRelease",
+      ["48", "24"] => "EjectPress",
+      ["48", "01"] => "2Press",
+      ["48", "02"] => "4Press",
+      ["48", "03"] => "6Press",
+      ["48", "22"] => "RDSPress",
+      ["48", "21"] => "AMPress",
+      ["48", "23"] => "ModePress",
+      ["48", "20"] => "SelectPress",
+      ["48", "00"] => "NextTrackPress",
+      ["48", "64"] => "EjectHold",
+      ["48", "41"] => "2Hold",
+      ["48", "42"] => "4Hold",
+      ["48", "43"] => "6Hold",
+      ["48", "62"] => "RDSHold",
+      ["48", "61"] => "AMHold",
+      ["48", "63"] => "ModeHold",
+      ["48", "60"] => "SelectHold",
+      ["48", "40"] => "NextTrackHold",
+      ["48", "A4"] => "EjectRelease",
+      ["48", "81"] => "2Release",
+      ["48", "82"] => "4Release",
+      ["48", "83"] => "6Release",
+      ["48", "A2"] => "RDSRelease",
+      ["48", "A1"] => "AMRelease",
+      ["48", "A3"] => "ModeRelease",
+      ["48", "A0"] => "SelectRelease",
+      ["48", "80"] => "NextTrackRelease",
+      ## Volume Knob
+      ["48", "06"] => "KnobPress",
+      ["48", "46"] => "KnobHold",
+      ["48", "86"] => "KnobRelease",
+      ["32", "10"] => "KnobRotateLeftSpeed1",
+      ["32", "20"] => "KnobRotateLeftSpeed2",
+      ["32", "30"] => "KnobRotateLeftSpeed3",
+      ["32", "40"] => "KnobRotateLeftSpeed4",
+      ["32", "50"] => "KnobRotateLeftSpeed5",
+      ["32", "60"] => "KnobRotateLeftSpeed6",
+      ["32", "70"] => "KnobRotateLeftSpeed7",
+      ["32", "80"] => "KnobRotateLeftSpeed8",
+      ["32", "90"] => "KnobRotateLeftSpeed9",
+      ["32", "11"] => "KnobRotateRightSpeed1",
+      ["32", "21"] => "KnobRotateRightSpeed2",
+      ["32", "31"] => "KnobRotateRightSpeed3",
+      ["32", "41"] => "KnobRotateRightSpeed4",
+      ["32", "51"] => "KnobRotateRightSpeed5",
+      ["32", "61"] => "KnobRotateRightSpeed6",
+      ["32", "71"] => "KnobRotateRightSpeed7",
+      ["32", "81"] => "KnobRotateRightSpeed8",
+      ["32", "91"] => "KnobRotateRightSpeed9",
+
+      # This is sent from the CD Changer
+      ["02", "01"] => "CDChangerConnectedResponse"
+    },
+
   }
-  IKEFunctionsIN = {
-    ["1A"] => ["Cluster Message","clusterMessageDecoder"]
+  RADFunctionsIN = {
+
   }
 
 
@@ -42,227 +129,21 @@ class IKE
     # Returns message as a string
     bytesCheck = []
     byteCounter = 0
-    if IKEStaticMessagesIN.key?(@messageData) == true
-      return "#{IKEStaticMessagesIN.fetch(@messageData)}"
-    end
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
-      if IKEFunctionsIN.key?(bytesCheck) == true
+      if RADStaticMessagesIN.key?(bytesCheck) == true
+        puts "Byte Check #{bytesCheck}, Byte Counter: #{byteCounter}"
+        return "#{RADStaticMessagesIN.fetch(@messageData)}"
+      elsif RADFunctionsIN.key?(bytesCheck) == true
         # IKEFunctionsIN.fetch(bytesCheck)[0] = the name of the function
         # IKEFunctionsIN.fetch(bytesCheck)[1] = the method's name for that function.
-        return "#{IKEFunctionsIN.fetch(bytesCheck)[0]}"
+        # Do that thing here
       end
       for i in 1..byteCounter do
         @messageData.shift
       end
     }
     return "--> Unknown Message"
-  end
-
-
-
-## To do: Write code to iterate over hash checking for groups of hex, increasing if not found. EG: check for AA, then AA BB, then AA BB CC, etc.
-## Then remember to exclude those bits from the actual function.
-
-  def clusterMessageBuilder
-    # Creates the Message to send to the cluster.
-    ## Options for the messagePriority:
-    ## - ClearMessage: Clears the current alert.
-    ## - Priority3: Low priority message
-    ## - Priority2: Medium priority message
-    ## - Priority1: High priority message
-    ## Options for textLength
-    ## - LengthSpecified
-    ## - LengthNotSpecified
-    ## Options for the displayType:
-    ## - NoChange: Display is not changed
-    ## - NoText: Display is cleared
-    ## - Text: Text is shown on the display
-    ## - TextFlashing: Text is shown flashing (once per second) on the display
-    ## Options for the gongType:
-    ## - NoGong: No gong is sounded: Example: Changing radio station using the steering wheel controls.
-    ## - SilenceGong: Switch gong off if currently 'gonging'
-    ## - SingleT3: A single standard Gong tone. Example: Speed limit exceeded
-    ## - ConstantT3: The standard gong tone is sounded every 1.5 seconds for the duration of the message. Example: Key In Ignition alert.
-    ## - DoubleT3: The standard gong tone is sounded twice (0.75 seconds apart). Example: Handbreak on alert.
-    ## - SingleT2: A single 'check control' gong tone is sounded.
-    ## - TripleT3: Three short standard gong tones are sounded. Example: Memo alert for the tine.
-    ## - SingleT1: A single lower-pitched gong tone is sounded. Example: CODE
-    ## - NOTE: Pass in messageContent as array of hex. EG: ["AA", "BB", "CC"]
-
-    byte1 = "00000000"
-    byte2 = "00000000"
-    case @messagePriority
-    when "ClearMessage"
-      byte1[5] = "0"
-      byte1[6] = "0"
-      byte1[7] = "0"
-    when "Priority3"
-      byte1[5] = "1"
-      byte1[6] = "0"
-      byte1[7] = "1"
-    when "Priority2"
-      byte1[5] = "1"
-      byte1[6] = "1"
-      byte1[7] = "1"
-    when "Priority1"
-      byte1[5] = "1"
-      byte1[6] = "0"
-      byte1[7] = "1"
-    when "Unknown"
-      byte1[5] = "0"
-      byte1[6] = "0"
-      byte1[7] = "1"
-    end
-
-    case @textLength
-    when "LengthSpecified"
-      byte1[4] = "0"
-    when "LengthNotSpecified"
-      byte1[4] = "1"
-    end
-
-    case @displayType
-    when "NoChange"
-      byte1[2] = "0"
-    when "NoText"
-      byte1[2] = "1"
-      byte2[6] = "0"
-      byte2[7] = "0"
-    when "Text"
-      byte1[2] = "1"
-      byte2[6] = "1"
-      byte2[7] = "0"
-    when "TextFlashing"
-      byte1[2] = "1"
-      byte2[6] = "1"
-      byte2[7] = "1"
-    end
-
-    case @gongType
-    when "NoGong"
-      byte1[3] = "0"
-    when "SilenceGong"
-      byte1[3] = "1"
-      byte2[2] = "0"
-      byte2[3] = "0"
-      byte2[4] = "0"
-      byte2[5] = "0"
-    when "SingleT3"
-      byte1[3] = "1"
-      byte2[2] = "0"
-      byte2[3] = "0"
-      byte2[4] = "0"
-      byte2[5] = "1"
-    when "ConstantT3"
-      byte1[3] = "1"
-      byte2[2] = "0"
-      byte2[3] = "0"
-      byte2[4] = "1"
-      byte2[5] = "0"
-    when "DoubleT3"
-      byte1[3] = "1"
-      byte2[2] = "0"
-      byte2[3] = "0"
-      byte2[4] = "1"
-      byte2[5] = "1"
-    when "SingleT2"
-      byte1[3] = "1"
-      byte2[2] = "0"
-      byte2[3] = "1"
-      byte2[4] = "0"
-      byte2[5] = "1"
-    when "SingleT1"
-      byte1[3] = "1"
-      byte2[2] = "0"
-      byte2[3] = "1"
-      byte2[4] = "1"
-      byte2[5] = "0"
-    # Missing TripleT3
-    end
-
-    puts "Bits (Gong and Message Type): #{byte1} #{byte2}"
-    messageContent = messageContent.toHex
-    byte1 = byte1.pack('H*')
-    byte2 = byte2.pack('H*')
-    puts "Hex (Gong and Message Type): #{byte1} #{byte2}"
-    puts "Message Content: #{messageContent}"
-    finishedMessage = []
-    finishedMessage[0] = byte1
-    finishedMessage[1] = byte2
-    messageContent.each { |x|
-      puts "Current Array Element: #{x}"
-      messageContent.push(messageContent.fetch(x))
-      puts "Size of messageContent: #{messageContent.length}"
-    }
-    puts "Finished Message: #{finishedMessage}"
-    return finishedMessage
-  end
-
-  # Pass in OBC Messge to the cluster as an array of hex bytes
-  def clusterMessageDecoder(bytes)
-    # TODO: Write toBinary method or find another way to convert a hex byte to binary.
-    byte1 = bytes[0].shift.toBinary
-    byte2 = bytes[1].shift.toBinary
-    messagePriority = ""
-    textLength = ""
-    displayType = ""
-    gongType = ""
-    messageContent = bytes.toAscii2
-
-    # Message Priority
-    case
-    when byte1[5] == "0" && byte1[6] == "0" && byte1[7] == "0"
-      messagePriority = "ClearMessage"
-    when byte1[5] == "1" && byte1[6] == "0" && byte1[7] == "1"
-      messagePriority = "Priority3"
-    when byte1[5] == "1" && byte1[6] == "1" && byte1[7] == "1"
-      messagePriority =  "Priority2"
-    when byte1[5] == "1" && byte1[6] == "0" && byte1[7] == "1"
-      messagePriority =  "Priority1"
-    when byte1[5] == "0" && byte1[6] == "0" && byte1[7] == "1"
-      messagePriority = "Unknown"
-    end
-
-    # Text Length
-    case
-    when byte1[4] == "0"
-      textLength = "LengthSpecified"
-    when byte1[4] == "1"
-      textLength = "LengthNotSpecified"
-    end
-
-    # Display Type
-    case
-    when byte1[2] == "0"
-      displayType = "NoChange"
-    when byte1[2] == "1" && byte2[6] == "0" && byte2[7] == "0"
-      displayType = "NoText"
-    when byte1[2] == "1" && byte2[6] == "1" && byte2[7] == "0"
-      displayType = "Text"
-    when byte1[2] == "1" && byte2[6] == "1" && byte2[7] == "1"
-      displayType = "TextFlashing"
-    end
-
-    # Gong Type
-    case
-    when byte1[3] == "0"
-      gongType = "NoGong"
-    when byte1[3] == "1" && byte2[2] == "0" && byte2[3] == "0" && byte2[4] == "0" && byte2[5] == "0"
-      gongType = "SilenceGong"
-    when byte1[3] == "1" && byte2[2] == "0" && byte2[3] == "0" && byte2[4] == "0" && byte2[5] == "1"
-      gongType = "SingleT3"
-    when byte1[3] == "1" && byte2[2] == "0" && byte2[3] == "0" && byte2[4] == "1" && byte2[5] == "0"
-      gongType = "ConstantT3"
-    when byte1[3] == "1" && byte2[2] == "0" && byte2[3] == "0" && byte2[4] == "1" && byte2[5] == "1"
-      gongType = "DoubleT3"
-    when byte1[3] == "1" && byte2[2] == "0" && byte2[3] == "1" && byte2[4] == "0" && byte2[5] == "1"
-      gongType = "SingleT2"
-    when byte1[3] == "1" && byte2[2] == "0" && byte2[3] == "1" && byte2[4] == "1" && byte2[5] == "0"
-      gongType = "SingleT1"
-    end
-    #puts "Cluster Message - Priority: #{messagePriority}, Text Length: #[textLength], Display Type: #{displayType}, Gong Type: #{gongType}. Message Content: #{messageContent}"
-    return [messagePriority, textLength, displayType, gongType, messageContent]
   end
 end
