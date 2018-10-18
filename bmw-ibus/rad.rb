@@ -130,11 +130,13 @@ class RAD
     byteCounter = 0
     puts "Message Data Length: #{@messageData.length}"
     @messageData.each { |currentByte|
+      bytesCheck.push(currentByte)
+      byteCounter = byteCounter + 1
       puts "Current Byte: #{currentByte}"
       puts "Byte Counter: #{byteCounter}"
       puts "Byte Check Array: #{bytesCheck}, #{bytesCheck.length}"
-      bytesCheck.push(currentByte)
-      byteCounter = byteCounter + 1
+      puts "#{bytesCheck.push(currentByte)}"
+      puts "#{byteCounter = byteCounter + 1}"
       if RADStaticMessagesIN.key?(bytesCheck) == true
         puts "In the if: Byte Check #{bytesCheck}, Byte Counter: #{byteCounter}"
         return "#{RADStaticMessagesIN.fetch(@messageData)}"
