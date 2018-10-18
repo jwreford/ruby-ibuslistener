@@ -20,10 +20,10 @@ class RAD
       ["04", "00"] => "DiagnosticsReadFaultMemory",
 
       # From the CD Changer. This is a bit of a guess - I might be stripping part of the message off unintentionally.
-      ["39", "00", "02", "00"] => "CDChangerStatusReply",
+      #["39", "00", "02", "00"] => "CDChangerStatusReply",
 
       # From the Board Monitor to the Radio
-      ["01"] => "RadioStatusRequest",
+      ["01"] => "Radio Status Request",
 
       # From the Steering Wheel Controls
       ["32", "10"] => "VolumeDownPress",
@@ -92,27 +92,27 @@ class RAD
       ["48", "A0"] => "SelectRelease",
       ["48", "80"] => "NextTrackRelease",
       ## Volume Knob
-      ["48", "06"] => "KnobPress",
-      ["48", "46"] => "KnobHold",
-      ["48", "86"] => "KnobRelease",
-      ["32", "10"] => "KnobRotateLeftSpeed1",
-      ["32", "20"] => "KnobRotateLeftSpeed2",
-      ["32", "30"] => "KnobRotateLeftSpeed3",
-      ["32", "40"] => "KnobRotateLeftSpeed4",
-      ["32", "50"] => "KnobRotateLeftSpeed5",
-      ["32", "60"] => "KnobRotateLeftSpeed6",
-      ["32", "70"] => "KnobRotateLeftSpeed7",
-      ["32", "80"] => "KnobRotateLeftSpeed8",
-      ["32", "90"] => "KnobRotateLeftSpeed9",
-      ["32", "11"] => "KnobRotateRightSpeed1",
-      ["32", "21"] => "KnobRotateRightSpeed2",
-      ["32", "31"] => "KnobRotateRightSpeed3",
-      ["32", "41"] => "KnobRotateRightSpeed4",
-      ["32", "51"] => "KnobRotateRightSpeed5",
-      ["32", "61"] => "KnobRotateRightSpeed6",
-      ["32", "71"] => "KnobRotateRightSpeed7",
-      ["32", "81"] => "KnobRotateRightSpeed8",
-      ["32", "91"] => "KnobRotateRightSpeed9",
+      ["48", "06"] => "Volume Pressed",
+      ["48", "46"] => "Volume Held Down",
+      ["48", "86"] => "Volume Released",
+      ["32", "10"] => "Volume Down (Speed 1)",
+      ["32", "20"] => "Volume Down (Speed 2)",
+      ["32", "30"] => "Volume Down (Speed 3)",
+      ["32", "40"] => "Volume Down (Speed 4)",
+      ["32", "50"] => "Volume Down (Speed 5)",
+      ["32", "60"] => "Volume Down (Speed 6)",
+      ["32", "70"] => "Volume Down (Speed 7)",
+      ["32", "80"] => "Volume Down (Speed 8)",
+      ["32", "90"] => "Volume Down (Speed 9)",
+      ["32", "11"] => "Volume Up (Speed 1)",
+      ["32", "21"] => "Volume Up (Speed 2)",
+      ["32", "31"] => "Volume Up (Speed 3)",
+      ["32", "41"] => "Volume Up (Speed 4)",
+      ["32", "51"] => "Volume Up (Speed 5)",
+      ["32", "61"] => "Volume Up (Speed 6)",
+      ["32", "71"] => "Volume Up (Speed 7)",
+      ["32", "81"] => "Volume Up (Speed 8)",
+      ["32", "91"] => "Volume Up (Speed 9)",
 
       # This is sent from the CD Changer
       ["02", "01"] => "CDChangerConnectedResponse"
@@ -125,25 +125,23 @@ class RAD
 
   def decodeMessage
     # Returns message as a string
-    puts "[RAD] Message: #{@sourceDeviceName} -> #{@destinationDeviceName}: #{@messageData}"
     bytesCheck = []
     byteCounter = 0
-    puts "Message Data Length: #{@messageData.length}"
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
-      puts "Current Byte: #{currentByte}"
-      puts "Byte Counter: #{byteCounter}"
-      puts "Byte Check Array: #{bytesCheck}, #{bytesCheck.length}"
       if RADStaticMessagesIN.key?(bytesCheck) == true
-        puts "In the if: Byte Check #{bytesCheck}, Byte Counter: #{byteCounter}"
         return "#{RADStaticMessagesIN.fetch(@messageData)}"
       elsif RADFunctionsIN.key?(bytesCheck) == true
+        # Push the 'function' bits off the front of the array, leaving the message content.
+        for i in 1..byteCounter do
+          @messageData.shift
+        end
         # IKEFunctionsIN.fetch(bytesCheck)[0] = the name of the function
         # IKEFunctionsIN.fetch(bytesCheck)[1] = the method's name for that function.
         # Do that thing here
       end
-      #@messageData.shift
+      #
     }
     return "--> Unknown Message"
   end
