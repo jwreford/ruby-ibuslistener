@@ -126,23 +126,24 @@ class RAD
   def decodeMessage
     # Returns message as a string
     puts "[RAD] Message: #{@sourceDeviceName} -> #{@destinationDeviceName}: #{@messageData}"
-    @bytesCheck = []
-    @byteCounter = 0
+    bytesCheck = []
+    byteCounter = 0
+    puts "Message Data Length: #{messageData.length}"
     @messageData.each { |currentByte|
-      puts "Current Byte: #{@currentByte}"
-      puts "Byte Counter: #{@byteCounter}"
-      puts "Byte Check Array: #{@bytesCheck}, #{@bytesCheck.length}"
-      @bytesCheck.push(@currentByte)
-      @byteCounter = @byteCounter + 1
-      if RADStaticMessagesIN.key?(@bytesCheck) == true
-        puts "In the if: Byte Check #{@bytesCheck}, Byte Counter: #{@byteCounter}"
+      puts "Current Byte: #{currentByte}"
+      puts "Byte Counter: #{byteCounter}"
+      puts "Byte Check Array: #{bytesCheck}, #{byteCheck.length}"
+      bytesCheck.push(currentByte)
+      byteCounter = byteCounter + 1
+      if RADStaticMessagesIN.key?(bytesCheck) == true
+        puts "In the if: Byte Check #{bytesCheck}, Byte Counter: #{byteCounter}"
         return "#{RADStaticMessagesIN.fetch(@messageData)}"
-      elsif RADFunctionsIN.key?(@bytesCheck) == true
+      elsif RADFunctionsIN.key?(bytesCheck) == true
         # IKEFunctionsIN.fetch(bytesCheck)[0] = the name of the function
         # IKEFunctionsIN.fetch(bytesCheck)[1] = the method's name for that function.
         # Do that thing here
       end
-      for i in 1..@byteCounter do
+      for i in 1..byteCounter do
         @messageData.shift
       end
     }
