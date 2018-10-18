@@ -135,8 +135,6 @@ class RAD
       puts "Current Byte: #{currentByte}"
       puts "Byte Counter: #{byteCounter}"
       puts "Byte Check Array: #{bytesCheck}, #{bytesCheck.length}"
-      puts "#{bytesCheck.push(currentByte)}"
-      puts "#{byteCounter = byteCounter + 1}"
       if RADStaticMessagesIN.key?(bytesCheck) == true
         puts "In the if: Byte Check #{bytesCheck}, Byte Counter: #{byteCounter}"
         return "#{RADStaticMessagesIN.fetch(@messageData)}"
