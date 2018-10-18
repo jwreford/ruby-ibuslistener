@@ -127,6 +127,7 @@ class RAD
 
   def decodeMessage
     # Returns message as a string
+    puts "[RAD] Message: #{@sourceDeviceName} -> #{@destinationDeviceName}: #{@messageData}"
     bytesCheck = []
     byteCounter = 0
     @messageData.each { |currentByte|
