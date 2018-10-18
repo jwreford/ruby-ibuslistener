@@ -42,15 +42,16 @@ class IKE
     # Returns message as a string
     bytesCheck = []
     byteCounter = 0
+    if IKEStaticMessagesIN.key?(@messageData) == true
+      return "#{IKEStaticMessagesIN.fetch(@messageData)}"
+    end
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
-      if IKEStaticMessagesIN.key?(bytesCheck) == true
-        return "#{IKEStaticMessagesIN.fetch(@messageData)}"
-      elsif IKEFunctionsIN.key?(bytesCheck) == true
+      if IKEFunctionsIN.key?(bytesCheck) == true
         # IKEFunctionsIN.fetch(bytesCheck)[0] = the name of the function
         # IKEFunctionsIN.fetch(bytesCheck)[1] = the method's name for that function.
-        # Do that thing here
+        return "#{IKEFunctionsIN.fetch(bytesCheck)[0]}"
       end
       for i in 1..byteCounter do
         @messageData.shift

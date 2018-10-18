@@ -432,9 +432,6 @@ class IBusMessage
     @processedData = @data.clone
     bytesCheck = []
     byteCounter = 0
-    methodType = ""
-    # This is used to tell the constructor for IKE whether it is decoding or building a message
-    messageFunction = "decode"
     # Check and see whether this device has any methods in the hash, and if not, skip to the end.
     if @destinationName == "IKE"
           @methodMessage = IKE.new # Create new IKE object
