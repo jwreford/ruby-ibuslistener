@@ -110,7 +110,7 @@ class GLO
         puts "[2] --> Bytes Check: #{bytesCheck}. Message Data: #{@messageData}"
         # Need to write the code to process messages that make it to here.
         decodedMessage = @messageData
-        puts "[2] --> Decoded Message Variable: #{decodeMessage}"
+        puts "[2] --> Decoded Message Variable: #{decodedMessage}"
       end
       puts "Outside If"
     }
@@ -118,7 +118,7 @@ class GLO
     if decodedMessage == ""
       decodedMessage = "Unknown Message. Bytes: #{@messageData}"
     end
-    puts "Decoded Message Variable (before return): #{decodeMessage}"
+    puts "Decoded Message Variable (before return): #{decodedMessage}"
     return "#{decodedMessage}"
   end
 end
