@@ -111,6 +111,7 @@ class GLO
         # Need to write the code to process messages that make it to here.
         decodedMessage = @messageData
         puts "[2] --> Decoded Message Variable: #{decodedMessage}"
+        break
       end
       puts "Outside If"
     }
