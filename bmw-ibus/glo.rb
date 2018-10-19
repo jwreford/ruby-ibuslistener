@@ -103,11 +103,11 @@ class GLO
         puts "--> Words: #{GLOFunctionsIN.fetch(bytesCheck)[0]}"
         puts "--> Function: #{GLOFunctionsIN.fetch(bytesCheck)[1]}"
         puts "--> Bytes Check: #{bytesCheck}. Message Data: #{@messageData}"
-        return @messageData
+        return "#{@messageData}"
       end
       puts "Outside If"
     }
     puts "Outside 'For each array item'"
-    return "--> Unknown Message. #{@messageData}"
+    return "--> [In Method]: Unknown Message. #{@messageData}"
   end
 end
