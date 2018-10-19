@@ -297,7 +297,7 @@ class IBusMessage
       @methodMessage.decodeMessage
       puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
-    elsif @destinationName == "VIC"
+    elsif @destinationName == "VID"
       @methodMessage = VID.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
       @methodMessage.decodeMessage
@@ -428,7 +428,7 @@ IBusDevices = {
   ["18"] => "CDC",
   ["28"] => "RCC",
   ["30"] => "CCM",
-  ["3B"] => "GT ",
+  ["3B"] => "GT",
   ["3F"] => "DIA",
   ["40"] => "LOC",
   ["43"] => "RVD",
@@ -440,7 +440,7 @@ IBusDevices = {
   ["60"] => "PDC",
   ["68"] => "RAD",
   ["6A"] => "DSP",
-  ["72"] => "SM ",
+  ["72"] => "SM",
   ["73"] => "SIR",
   ["76"] => "CDD",
   ["7F"] => "NAV",
@@ -461,7 +461,7 @@ IBusDevices = {
   ["E7"] => "OBC", # Also known as ANZV
   ["E8"] => "RLS",
   ["ED"] => "VID",
-  ["F0"] => "BM ",
+  ["F0"] => "BM",
   ["F5"] => "CSU",
   ["FF"] => "BRD",
   ["100"] => "Unset",
