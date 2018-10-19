@@ -94,7 +94,7 @@ class GLO
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
-      puts "[-] -> Checking if #{GLOStaticMessagesIN.key?(bytesCheck)} (Static Message) or #{GLOFunctionsIN.key?(@messageData)} (Function) is True"
+      puts "[-] -> Checking if #{GLOStaticMessagesIN.key?(bytesCheck)} (Static Message) or #{GLOFunctionsIN.key?(bytesCheck)} (Function) is True"
       if GLOStaticMessagesIN.key?(bytesCheck) == true
         puts "[1] --> Static Message was True. Returning #{GLOStaticMessagesIN.fetch(@messageData)}"
         return "#{GLOStaticMessagesIN.fetch(@messageData)}"
