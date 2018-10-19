@@ -57,7 +57,7 @@ class IKE
       end
     }
     return "--> Unknown Message"
-
+  end
   def clusterMessageBuilder
     # Creates the Message to send to the cluster.
     ## Options for the messagePriority:

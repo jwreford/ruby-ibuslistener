@@ -4,6 +4,17 @@ require_relative 'ike'
 require_relative 'rad'
 require_relative 'glo'
 require_relative 'nav'
+require_relative 'bm'
+require_relative 'cdc'
+require_relative 'cdd'
+require_relative 'dia'
+require_relative 'dsp'
+require_relative 'gt'
+require_relative 'lcm'
+require_relative 'obc'
+require_relative 'tel'
+require_relative 'vid'
+
 
 ## Note: iBus Message Structure:
 # Source, Length, Destination, Data, Checksum
