@@ -49,6 +49,7 @@ class TEL
       if TELStaticMessagesIN.key?(bytesCheck) == true
         puts "Message Data: #{@messageData}"
         if bytesCheck.length == @messageData.length
+          puts "In IF"
           return "#{TELStaticMessagesIN.fetch(@messageData)}"
         else
           puts "Bytes Check #{bytesCheck.length} and Message Data #{@messageData.length} were different. I think that was supposed to be a function."
@@ -57,7 +58,7 @@ class TEL
         for i in 1..byteCounter do
           @messageData.shift # Remove the 'function' bits from the front of the array, leaving the bits to process.
         end
-        puts "--> Array:  #{TELFunctionsIN.fetch(bytesCheck)}"
+        puts "--> Array:  #{TELFunctionsIN.fetch(bytesCheck)}. Length: #{TELFunctionsIN.fetch(bytesCheck).length}"
         puts "--> Words: #{TELFunctionsIN.fetch(bytesCheck)[0]}"
         puts "--> Function: #{TELFunctionsIN.fetch(bytesCheck[1])}"
         return "#{TELFunctionsIN.fetch(bytesCheck)[0]}: TODO: Plug in Decoder"
