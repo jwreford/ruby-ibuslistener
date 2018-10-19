@@ -50,4 +50,5 @@ class BM
       end
     }
     return "--> Unknown Message"
+  end
 end

@@ -54,4 +54,5 @@ class LCM
       end
     }
     return "--> Unknown Message"
+  end
 end

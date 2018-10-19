@@ -49,4 +49,5 @@ class VID
       end
     }
     return "--> Unknown Message"
+  end
 end
