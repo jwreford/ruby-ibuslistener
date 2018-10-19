@@ -99,7 +99,7 @@ class GLO
         puts "[1] --> Static Message was True. Returning #{GLOStaticMessagesIN.fetch(@messageData)}"
         return "#{GLOStaticMessagesIN.fetch(@messageData)}"
       elsif GLOFunctionsIN.key?(bytesCheck) == true
-        puts "[2] --> Function was True. Returning #{GLOFunctionsIN.fetch(@messageData)}"
+        puts "[2] --> Function was True."
         for i in 1..byteCounter do
           @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
         end
