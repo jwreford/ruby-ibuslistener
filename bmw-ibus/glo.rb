@@ -39,14 +39,15 @@ class GLO
     ## From Various Devices
     ["02", "00"] => "Device Connected and Ready",
 
-    ## From the Cluster
-    ["19", "80", "80"] => "Temperature Reading"
+
 
   }
 
   GLOFunctionsIN = {
     ## From the Cluster broadcasting some general information
-    ["18"] => ["Current Speed And RPM", "speedAndRPM"]
+    ["18"] => ["Current Speed And RPM", "speedAndRPM"],
+    ## From the Cluster
+    ["19", "80", "80"] => ["Temperature Reading", "temperatureStatusUpdate"]
   }
 
   def speedAndRPM(hex)
@@ -63,6 +64,27 @@ class GLO
     return cleanOutput
   end
 
+  # Decode Cluster Temperature Status Update
+  def temperatureStatusUpdate(hex)
+    exteriorTemperature = hex[0]  # Range is from -128 Degrees Celcius to +127 Degrees Celcius
+    # As coolant temperature range is greater than 255 steps (-128 to +255 Degrees Celcius), two bytes are required.
+    coolantTemperature1 = hex[1]  # Range is from -128 to +127 Degrees Celcius
+    coolantTemperature2 = hex[2]  # Anything above +127 Degrees Celcuis will be added on with this byte
+    if exteriorTemperature == "00"
+      exteriorTemperature = "Sensor Not Connected"
+    else
+      exteriorTemperature = exteriorTemperature.to_i(16) - 128
+      exteriorTemperature << "°"
+    end
+    if coolantTemperature1 == "00" && coolantTemperature2 == "00"
+      coolantTemperatureTotal = "Sensor Not Connected"
+    else
+      coolantTemperatureTotal = "To Be Calculated"
+      #coolantTemperatureTotal = coolantTemperature1.to_i(16) + coolantTemperature2.to_i(16) - 128
+    end
+    cleanOutput = "Exterior Temperature: #{exteriorTemperature}, Coolant Temperature: #{coolantTemperatureTotal}"
+    return cleanOutput
+  end
 
   def decodeMessage
     # Returns message as a string

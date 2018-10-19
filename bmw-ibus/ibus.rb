@@ -244,6 +244,7 @@ class IBusMessage
 
   # Decode the data part of the message.
   def decodeData
+    begin
     #puts "In Decode Data"
     @processedData = @data.clone
     bytesCheck = []
@@ -387,6 +388,8 @@ class IBusMessage
     end
     return "Device has no method, sozzle. #{@data}"
     @methodMessage = nil
+  rescue Exception => ex
+      puts "  --> [x] Problem looking for this message in the Functions Hash. #{ex.class}: #{ex.message}"
   end
 
 
