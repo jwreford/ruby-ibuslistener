@@ -26,12 +26,12 @@ class IKE
 
   IKEStaticMessagesIN = {
     # Messages that devices can send to the Instrument CLuster
-        ["10"] => "Requesting Terminal Status",
-        ["12"] => "Requesting Sensor Data",
-        ["01"] => "Requesting Cluster Status",
+    ["10"] => "Requesting Terminal Status",
+    ["12"] => "Requesting Sensor Data",
+    ["01"] => "Requesting Cluster Status",
 
-        # Sent from the Video Controller (presumably to know whether to show the logo when a door is opened)
-        ["10"] => "Ignition Status Request"
+    # Sent from the Video Controller (presumably to know whether to show the logo when a door is opened)
+    ["10"] => "Ignition Status Request"
   }
   IKEFunctionsIN = {
     ["1A"] => ["Cluster Message","clusterMessageDecoder"]
@@ -46,24 +46,17 @@ class IKE
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
       if IKEStaticMessagesIN.key?(bytesCheck) == true
-        puts "Byte Check #{bytesCheck}, Byte Counter: #{byteCounter}"
         return "#{IKEStaticMessagesIN.fetch(@messageData)}"
       elsif IKEFunctionsIN.key?(bytesCheck) == true
+        for i in 1..byteCounter do
+          @messageData.shift # Remove the 'function' bits from the front of the array, leaving the bits to process.
+        end
         # IKEFunctionsIN.fetch(bytesCheck)[0] = the name of the function
         # IKEFunctionsIN.fetch(bytesCheck)[1] = the method's name for that function.
         # Do that thing here
       end
-      for i in 1..byteCounter do
-        @messageData.shift
-      end
     }
     return "--> Unknown Message"
-  end
-
-
-
-## To do: Write code to iterate over hash checking for groups of hex, increasing if not found. EG: check for AA, then AA BB, then AA BB CC, etc.
-## Then remember to exclude those bits from the actual function.
 
   def clusterMessageBuilder
     # Creates the Message to send to the cluster.

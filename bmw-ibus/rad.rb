@@ -1,4 +1,4 @@
-# Ruby Library for the Instrument Cluster (IKE)
+# Ruby Library for the RADIO
 
 class RAD
   def initialize
@@ -7,7 +7,6 @@ class RAD
 
   def setDecode(sourceDeviceName, messageData, messageLength)
     # Decoding a message
-    puts "[RAD] - Setting Message Decode Variables"
     @sourceDeviceName = sourceDeviceName
     @messageData = messageData
     @messageLength = messageLength
@@ -16,8 +15,8 @@ class RAD
   RADStaticMessagesIN = {
     # Messages that other devices can send to the Radio
       # Diagnostics Data
-      ["00"] => "DiagnosticsReadID",
-      ["04", "00"] => "DiagnosticsReadFaultMemory",
+      ["00"] => "Diagnostic: Reading ID",
+      ["04", "00"] => "Diagnostic: Reading Fault Memory",
 
       # From the CD Changer. This is a bit of a guess - I might be stripping part of the message off unintentionally.
       #["39", "00", "02", "00"] => "CDChangerStatusReply",
@@ -26,71 +25,71 @@ class RAD
       ["01"] => "Radio Status Request",
 
       # From the Steering Wheel Controls
-      ["32", "10"] => "VolumeDownPress",
-      ["32", "11"] => "VolumeUpPress",
-      ["3B", "01"] => "NextTrackPress",
-      ["3B", "21"] => "NextTrackRelease",
-      ["3B", "08"] => "PreviousTrackPress",
-      ["3B", "28"] => "PreviousTrackRelease",
+      ["32", "10"] => "Volume Down (Steering Wheel)",
+      ["32", "11"] => "Volume Up (Steering Wheel)",
+      ["3B", "01"] => "Next Track Pressed(Steering Wheel)",
+      ["3B", "21"] => "Next Track Released (Steering Wheel)",
+      ["3B", "08"] => "Previous Track Pressed (Steering Wheel)",
+      ["3B", "28"] => "Previous Track Released (Steering Wheel)",
 
       # From the Board Monitor
       ## Buttons
-      ["48", "14"] => "ReverseTapePress",
-      ["48", "11"] => "1Press",
-      ["48", "12"] => "3Press",
-      ["48", "13"] => "5Press",
-      ["48", "32"] => "TPPress",
-      ["48", "31"] => "FMPress",
-      ["48", "33"] => "DolbyPress",
-      ["48", "04"] => "TonePress",
-      ["48", "10"] => "PreviousTrackPress",
-      ["48", "30"] => "MenuPress",
-      ["48", "54"] => "ReverseTapeHold",
-      ["48", "51"] => "1Hold",
-      ["48", "52"] => "3Hold",
-      ["48", "53"] => "5Hold",
-      ["48", "72"] => "TPHold",
-      ["48", "71"] => "FMHold",
-      ["48", "73"] => "DolbyHold",
-      ["48", "44"] => "ToneHold",
-      ["48", "50"] => "PreviousTrackHold",
-      ["48", "70"] => "MenuHold",
-      ["48", "94"] => "ReverseTapeRelease",
-      ["48", "91"] => "1Release",
-      ["48", "92"] => "3Release",
-      ["48", "93"] => "5Release",
-      ["48", "B2"] => "TPRelease",
-      ["48", "B1"] => "FMRelease",
-      ["48", "84"] => "DolbyRelease",
-      ["48", "90"] => "NextTrackRelease",
-      ["48", "B0"] => "MenuRelease",
-      ["48", "24"] => "EjectPress",
-      ["48", "01"] => "2Press",
-      ["48", "02"] => "4Press",
-      ["48", "03"] => "6Press",
-      ["48", "22"] => "RDSPress",
-      ["48", "21"] => "AMPress",
-      ["48", "23"] => "ModePress",
-      ["48", "20"] => "SelectPress",
-      ["48", "00"] => "NextTrackPress",
-      ["48", "64"] => "EjectHold",
-      ["48", "41"] => "2Hold",
-      ["48", "42"] => "4Hold",
-      ["48", "43"] => "6Hold",
-      ["48", "62"] => "RDSHold",
-      ["48", "61"] => "AMHold",
-      ["48", "63"] => "ModeHold",
-      ["48", "60"] => "SelectHold",
-      ["48", "40"] => "NextTrackHold",
-      ["48", "A4"] => "EjectRelease",
-      ["48", "81"] => "2Release",
-      ["48", "82"] => "4Release",
-      ["48", "83"] => "6Release",
-      ["48", "A2"] => "RDSRelease",
-      ["48", "A1"] => "AMRelease",
-      ["48", "A3"] => "ModeRelease",
-      ["48", "A0"] => "SelectRelease",
-      ["48", "80"] => "NextTrackRelease",
+      ["48", "14"] => "Tape Change Direction Pressed",
+      ["48", "11"] => "1 Key Pressed",
+      ["48", "12"] => "3 Key Pressed",
+      ["48", "13"] => "5 Key Pressed",
+      ["48", "32"] => "TP Pressed",
+      ["48", "31"] => "FM Pressed",
+      ["48", "33"] => "Audio Effects Pressed",
+      ["48", "04"] => "Tone Pressed",
+      ["48", "10"] => "Previous Track Pressed",
+      ["48", "30"] => "Menu Pressed",
+      ["48", "54"] => "Tape Change Direction Held Down",
+      ["48", "51"] => "1 Key Held Down",
+      ["48", "52"] => "3 Key Held Down",
+      ["48", "53"] => "5 Key Held Down",
+      ["48", "72"] => "TP Held Down",
+      ["48", "71"] => "FM Held Down",
+      ["48", "73"] => "Audio Effects Held Down",
+      ["48", "44"] => "Tone Held Down",
+      ["48", "50"] => "Previous Track Held Down",
+      ["48", "70"] => "Menu Held Down",
+      ["48", "94"] => "Tape Change Direction Released",
+      ["48", "91"] => "1 Key Released",
+      ["48", "92"] => "3 Key Released",
+      ["48", "93"] => "5 Key Released",
+      ["48", "B2"] => "TP Released",
+      ["48", "B1"] => "FM Released",
+      ["48", "84"] => "Audio Effects Released",
+      ["48", "90"] => "Next Track Released",
+      ["48", "B0"] => "Menu Released",
+      ["48", "24"] => "Eject Pressed",
+      ["48", "01"] => "2 Key Pressed",
+      ["48", "02"] => "4 Key Pressed",
+      ["48", "03"] => "6 Key Pressed",
+      ["48", "22"] => "RDS Pressed",
+      ["48", "21"] => "AM Pressed",
+      ["48", "23"] => "Mode Pressed",
+      ["48", "20"] => "Select Pressed",
+      ["48", "00"] => "Next Track Pressed",
+      ["48", "64"] => "Eject Held Down",
+      ["48", "41"] => "2 Key Held Down",
+      ["48", "42"] => "4 Key Held Down",
+      ["48", "43"] => "6 Key Held Down",
+      ["48", "62"] => "RDS Held Down",
+      ["48", "61"] => "AM Held Down",
+      ["48", "63"] => "Mode Held Down",
+      ["48", "60"] => "Select Held Down",
+      ["48", "40"] => "Next Track Held Down",
+      ["48", "A4"] => "Eject Released",
+      ["48", "81"] => "2 Key Released",
+      ["48", "82"] => "4 Key Released",
+      ["48", "83"] => "6 Key Released",
+      ["48", "A2"] => "RDS Released",
+      ["48", "A1"] => "AM Released",
+      ["48", "A3"] => "Mode Released",
+      ["48", "A0"] => "Select Released",
+      ["48", "80"] => "Next Track Released",
       ## Volume Knob
       ["48", "06"] => "Volume Pressed",
       ["48", "46"] => "Volume Held Down",
@@ -115,7 +114,7 @@ class RAD
       ["32", "91"] => "Volume Up (Speed 9)",
 
       # This is sent from the CD Changer
-      ["02", "01"] => "CDChangerConnectedResponse"
+      ["02", "01"] => "CD Changer Connected and Ready"
 
   }
   RADFunctionsIN = {
@@ -133,9 +132,8 @@ class RAD
       if RADStaticMessagesIN.key?(bytesCheck) == true
         return "#{RADStaticMessagesIN.fetch(@messageData)}"
       elsif RADFunctionsIN.key?(bytesCheck) == true
-        # Push the 'function' bits off the front of the array, leaving the message content.
         for i in 1..byteCounter do
-          @messageData.shift
+          @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
         end
         # IKEFunctionsIN.fetch(bytesCheck)[0] = the name of the function
         # IKEFunctionsIN.fetch(bytesCheck)[1] = the method's name for that function.
