@@ -67,6 +67,7 @@ class TEL
         puts "After the Return"
       end
     }
-    return "--> Unknown Message"
+return "--> Unknown Message. #{@messageData}"
+
   end
 end

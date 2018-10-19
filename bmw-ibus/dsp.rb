@@ -49,6 +49,7 @@ class DSP
         # Do that thing here
       end
     }
-    return "--> Unknown Message"
+return "--> Unknown Message. #{@messageData}"
+
   end
 end

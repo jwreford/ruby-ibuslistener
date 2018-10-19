@@ -56,7 +56,8 @@ class IKE
         # Do that thing here
       end
     }
-    return "--> Unknown Message"
+return "--> Unknown Message. #{@messageData}"
+
   end
   def clusterMessageBuilder
     # Creates the Message to send to the cluster.
