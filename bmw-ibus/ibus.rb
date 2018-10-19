@@ -268,7 +268,7 @@ class IBusMessage
       puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
     elsif @destinationName == "TEL"
-      @methodMessage = TLE.new
+      @methodMessage = TEL.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
       @methodMessage.decodeMessage
       puts "Decoded Message: #{@methodMessage.decodeMessage}"
