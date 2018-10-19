@@ -390,6 +390,7 @@ class IBusMessage
     @methodMessage = nil
   rescue Exception => ex
       puts "  --> [x] Problem looking for this message in the Functions Hash. #{ex.class}: #{ex.message}"
+    end
   end
 
 
