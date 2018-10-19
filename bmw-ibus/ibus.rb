@@ -244,7 +244,7 @@ class IBusMessage
 
   # Decode the data part of the message.
   def decodeData
-    begin
+    #begin
     #puts "In Decode Data"
     @processedData = @data.clone
     bytesCheck = []
@@ -380,7 +380,7 @@ class IBusMessage
           elsif methodType == "none"
             # puts "No specific instructions for decoding message."
             puts "Message: #{DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)}"
-          end
+          #end
         end
       }
       puts "#{@sourceName} #{@length} #{@destinationName} #{@data} #{@checksum}"
@@ -388,9 +388,9 @@ class IBusMessage
     end
     return "Device has no method, sozzle. #{@data}"
     @methodMessage = nil
-  rescue Exception => ex
-      puts "  --> [x] Problem looking for this message in the Functions Hash. #{ex.class}: #{ex.message}"
-    end
+  #rescue Exception => ex
+  #    puts "  --> [x] Problem looking for this message in the Functions Hash. #{ex.class}: #{ex.message}"
+  #  end
   end
 
 
