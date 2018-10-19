@@ -33,9 +33,6 @@ class GLO
     ## I think this is from the IHKA
     ["48", "07"] => "Auxilliary Heating Key Press",
 
-    ## From the Cluster broadcasting some general information
-    ["18"] => "Current Speed And RPM",
-
     ## From the Radio broadcasting that it's ready.
     ["02", "01", "D1"] => "Radio Connected and Ready",
 
@@ -48,8 +45,23 @@ class GLO
   }
 
   GLOFunctionsIN = {
-
+    ## From the Cluster broadcasting some general information
+    ["18"] => ["Current Speed And RPM", "speedAndRPM"]
   }
+
+  def speedAndRPM(hex)
+    speed = hex[0]
+    speed = speed.to_i(16) * 2  # Speed is Hex value converted to Decimal multiplied by 2
+    rpm = hex[1]
+    # If the DME isn't supplying the RPM (either via the tacho wire or the CAN Bus) the IKE will send FF (which converts to 25500 RPM.)
+    if rpm == "FF"
+      rpm = " Sensor Not Connected"
+    else
+      rpm = rpm.to_i(16) * 100    # RPM is hex value converted to decimal multiplied by 100
+    end
+    cleanOutput = "Speed: #{speed} KM/H, RPM: #{rpm}"
+    return cleanOutput
+  end
 
 
   def decodeMessage
@@ -65,9 +77,10 @@ class GLO
         for i in 1..byteCounter do
           @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
         end
-        # XXXFunctionsIN.fetch(bytesCheck)[0] = the name of the function
-        # XXXFunctionsIN.fetch(bytesCheck)[1] = the method's name for that function.
-        # Do that thing here
+        puts "--> Array:  #{GLOFunctionsIN.fetch(bytesCheck)}. Length: #{GLOFunctionsIN.fetch(bytesCheck).length}"
+        puts "--> Words: #{GLOFunctionsIN.fetch(bytesCheck)[0]}"
+        puts "--> Function: #{GLOFunctionsIN.fetch(bytesCheck)[1]}"
+        return "#{GLOFunctionsIN.fetch(bytesCheck)[0]}: TODO: Plug in method"
       end
       #
     }

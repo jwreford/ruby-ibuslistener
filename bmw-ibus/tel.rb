@@ -66,7 +66,6 @@ class TEL
         return "#{TELFunctionsIN.fetch(bytesCheck)[0]}: TODO: Plug in Decoder"
         puts "After the Return"
       end
-      puts "Outside the IF"
     }
     return "--> Unknown Message"
   end
