@@ -31,7 +31,6 @@ class TEL
     ["A9", "03", "30", "30"] => "Cell Network Status Request"
 
   }
-    ["1A"] => ["Cluster Message","clusterMessageDecoder"]
   TELFunctionsIN = {
     ["A2", "00", "00"] => ["Current Location: Coordinates", "coordinateDecoder"],
     ["A4", "00", "01"] => ["Current Location: Suburb", "toAscii2"],
