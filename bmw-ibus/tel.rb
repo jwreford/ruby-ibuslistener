@@ -57,6 +57,7 @@ class TEL
         for i in 1..byteCounter do
           @messageData.shift # Remove the 'function' bits from the front of the array, leaving the bits to process.
         end
+        puts "--> Array:  #{TELFunctionsIN.fetch(bytesCheck)}"
         puts "--> Words: #{TELFunctionsIN.fetch(bytesCheck)[0]}"
         puts "--> Function: #{TELFunctionsIN.fetch(bytesCheck[1])}"
         return "#{TELFunctionsIN.fetch(bytesCheck)[0]}: TODO: Plug in Decoder"
