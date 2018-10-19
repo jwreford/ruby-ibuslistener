@@ -263,8 +263,11 @@ class IBusMessage
       #puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
     elsif @destinationName == "GLO"
+      puts "Making GLO"
       @methodMessage = GLO.new
+      puts "Setting Decode"
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
+      puts "Decoding:"
       @methodMessage.decodeMessage
       puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
