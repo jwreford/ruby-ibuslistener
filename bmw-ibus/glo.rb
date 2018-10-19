@@ -107,7 +107,7 @@ class GLO
       end
       puts "Outside If"
     }
-    pus "Outside 'For each array item'"
+    push "Outside 'For each array item'"
     return "--> Unknown Message. #{@messageData}"
   end
 end
