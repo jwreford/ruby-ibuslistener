@@ -105,8 +105,9 @@ class GLO
         puts "--> Bytes Check: #{bytesCheck}. Message Data: #{@messageData}"
         return "#{GLOFunctionsIN.fetch(bytesCheck)[0]}: TODO: Plug in method"
       end
-      #
+      puts "Outside If"
     }
+    pus "Outside 'For each array item'"
     return "--> Unknown Message. #{@messageData}"
   end
 end
