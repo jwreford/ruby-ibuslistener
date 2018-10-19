@@ -114,7 +114,7 @@ class GLO
       puts "Outside If"
     }
     puts "Outside 'For each array item'"
-    if decodeMessage = ""
+    if decodedMessage = ""
       decodedMessage = "Unknown Message. Bytes: #{messageData}"
     end
     return "#{decodedMessage}"
