@@ -8,7 +8,7 @@ class CDD
 
   def setDecode(sourceDeviceName, messageData, messageLength)
     # Decoding a message
-    puts "[CDD] - Setting Message Decode Variables"
+    #puts "[CDD] - Setting Message Decode Variables"
     @sourceDeviceName = sourceDeviceName
     @messageData = messageData
     @messageLength = messageLength

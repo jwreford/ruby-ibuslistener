@@ -8,7 +8,7 @@ class DSP
 
   def setDecode(sourceDeviceName, messageData, messageLength)
     # Decoding a message
-    puts "[DSP] - Setting Message Decode Variables"
+    #puts "[DSP] - Setting Message Decode Variables"
     @sourceDeviceName = sourceDeviceName
     @messageData = messageData
     @messageLength = messageLength

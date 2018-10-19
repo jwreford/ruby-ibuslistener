@@ -8,7 +8,7 @@ class LCM
 
   def setDecode(sourceDeviceName, messageData, messageLength)
     # Decoding a message
-    puts "[LCM] - Setting Message Decode Variables"
+    #puts "[LCM] - Setting Message Decode Variables"
     @sourceDeviceName = sourceDeviceName
     @messageData = messageData
     @messageLength = messageLength

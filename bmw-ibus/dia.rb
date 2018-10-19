@@ -8,7 +8,7 @@ class DIA
 
   def setDecode(sourceDeviceName, messageData, messageLength)
     # Decoding a message
-    puts "[DIA] - Setting Message Decode Variables"
+    #puts "[DIA] - Setting Message Decode Variables"
     @sourceDeviceName = sourceDeviceName
     @messageData = messageData
     @messageLength = messageLength

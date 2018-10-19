@@ -8,7 +8,7 @@ class VID
 
   def setDecode(sourceDeviceName, messageData, messageLength)
     # Decoding a message
-    puts "[VID] - Setting Message Decode Variables"
+    #puts "[VID] - Setting Message Decode Variables"
     @sourceDeviceName = sourceDeviceName
     @messageData = messageData
     @messageLength = messageLength

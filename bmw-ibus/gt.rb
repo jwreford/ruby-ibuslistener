@@ -8,7 +8,7 @@ class GT
 
   def setDecode(sourceDeviceName, messageData, messageLength)
     # Decoding a message
-    puts "[GT] - Setting Message Decode Variables"
+    #puts "[GT] - Setting Message Decode Variables"
     @sourceDeviceName = sourceDeviceName
     @messageData = messageData
     @messageLength = messageLength

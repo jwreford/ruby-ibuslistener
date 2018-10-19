@@ -10,7 +10,7 @@ class IKE
 
   def setDecode(sourceDeviceName, messageData, messageLength)
     # Decoding a message
-    puts "[IKE] - Setting Message Decode Variables"
+    #puts "[IKE] - Setting Message Decode Variables"
     @sourceDeviceName = sourceDeviceName
     @messageData = messageData
     @messageLength = messageLength

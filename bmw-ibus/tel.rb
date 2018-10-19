@@ -8,7 +8,7 @@ class TEL
 
   def setDecode(sourceDeviceName, messageData, messageLength)
     # Decoding a message
-    puts "[TEL] - Setting Message Decode Variables"
+    #puts "[TEL] - Setting Message Decode Variables"
     @sourceDeviceName = sourceDeviceName
     @messageData = messageData
     @messageLength = messageLength

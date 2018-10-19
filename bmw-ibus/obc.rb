@@ -8,7 +8,7 @@ class OBC
 
   def setDecode(sourceDeviceName, messageData, messageLength)
     # Decoding a message
-    puts "[OBC] - Setting Message Decode Variables"
+    #puts "[OBC] - Setting Message Decode Variables"
     @sourceDeviceName = sourceDeviceName
     @messageData = messageData
     @messageLength = messageLength
