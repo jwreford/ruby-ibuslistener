@@ -60,7 +60,7 @@ class TEL
         end
         puts "--> Array:  #{TELFunctionsIN.fetch(bytesCheck)}. Length: #{TELFunctionsIN.fetch(bytesCheck).length}"
         puts "--> Words: #{TELFunctionsIN.fetch(bytesCheck)[0]}"
-        puts "--> Function: #{TELFunctionsIN.fetch(bytesCheck[1])}"
+        puts "--> Function: #{TELFunctionsIN.fetch(bytesCheck)[1]}"
         return "#{TELFunctionsIN.fetch(bytesCheck)[0]}: TODO: Plug in Decoder"
         # Do that thing here
       end
