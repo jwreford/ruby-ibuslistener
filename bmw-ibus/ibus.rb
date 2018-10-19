@@ -385,7 +385,7 @@ class IBusMessage
       puts "#{@sourceName} #{@length} #{@destinationName} #{@data} #{@checksum}"
       return "Unknown Message"
     end
-    return "Device has no method, sozzle"
+    return "Device has no method, sozzle. #{@data}"
     @methodMessage = nil
   end
 
