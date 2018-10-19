@@ -27,15 +27,15 @@ class TEL
     ["3B", "80"] => "Speech Key Pressed (Steering Wheel)",
     ["3B", "A0"] => "Speech Key Released (Steering Wheel)",
     ["3B", "40"] => "R/T Key Pressed (Steering Wheel)",
-    ["A2", "00", "00"] => "Current Location: Coordinates",
-    ["A4", "00", "01"] => "Current Location: Suburb",
-    ["A4", "00", "02"] => "Current Location: Street Address",
     ["A9", "0A", "30", "30"] => "Phone Status Request",
     ["A9", "03", "30", "30"] => "Cell Network Status Request"
 
   }
-
+    ["1A"] => ["Cluster Message","clusterMessageDecoder"]
   TELFunctionsIN = {
+    ["A2", "00", "00"] => ["Current Location: Coordinates", "coordinateDecoder"],
+    ["A4", "00", "01"] => ["Current Location: Suburb", "toAscii2"],
+    ["A4", "00", "02"] => ["Current Location: Street Address", "toAscii2"]
   }
 
 
@@ -49,13 +49,18 @@ class TEL
       puts "Byte Check: #{bytesCheck}"
       if TELStaticMessagesIN.key?(bytesCheck) == true
         puts "Message Data: #{@messageData}"
-        return "#{TELStaticMessagesIN.fetch(@messageData)}"
+        if bytesCheck.length == @messageData.length
+          return "#{TELStaticMessagesIN.fetch(@messageData)}"
+        else
+          puts "Bytes Check #{bytesCheck.length} and Message Data #{@messageData.length} were different. I think that was supposed to be a function."
+        end
       elsif TELFunctionsIN.key?(bytesCheck) == true
         for i in 1..byteCounter do
           @messageData.shift # Remove the 'function' bits from the front of the array, leaving the bits to process.
         end
-        # XXXFunctionsIN.fetch(bytesCheck)[0] = the name of the function
-        # XXXFunctionsIN.fetch(bytesCheck)[1] = the method's name for that function.
+        puts "--> Words: #{TELFunctionsIN.fetch(bytesCheck)[0]}"
+        puts "--> Function: #{TELFunctionsIN.fetch(bytesCheck[1])}"
+        return "#{TELFunctionsIN.fetch(bytesCheck)[0]}: TODO: Plug in Decoder"
         # Do that thing here
       end
     }
