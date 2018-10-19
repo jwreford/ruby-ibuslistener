@@ -46,6 +46,7 @@ class TEL
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
+      puts "Byte Check: #{bytesCheck}"
       if TELStaticMessagesIN.key?(bytesCheck) == true
         puts "Message Data: #{@messageData}"
         return "#{TELStaticMessagesIN.fetch(@messageData)}"
