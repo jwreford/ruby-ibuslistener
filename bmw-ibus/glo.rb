@@ -90,6 +90,7 @@ class GLO
     # Returns message as a string
     bytesCheck = []
     byteCounter = 0
+    decodedMessage = ""
     puts "[-] In Decode Message"
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
@@ -97,7 +98,7 @@ class GLO
       puts "[-] -> Checking if #{GLOStaticMessagesIN.key?(bytesCheck)} (Static Message) or #{GLOFunctionsIN.key?(bytesCheck)} (Function) is True"
       if GLOStaticMessagesIN.key?(bytesCheck) == true
         puts "[1] --> Static Message was True. Returning #{GLOStaticMessagesIN.fetch(@messageData)}"
-        return "#{GLOStaticMessagesIN.fetch(@messageData)}"
+        decodedMessage = "#{GLOStaticMessagesIN.fetch(@messageData)}"
       elsif GLOFunctionsIN.key?(bytesCheck) == true
         puts "[2] --> Function was True."
         for i in 1..byteCounter do
@@ -107,11 +108,15 @@ class GLO
         puts "[2] --> Words: #{GLOFunctionsIN.fetch(bytesCheck)[0]}"
         puts "[2] --> Function: #{GLOFunctionsIN.fetch(bytesCheck)[1]}"
         puts "[2] --> Bytes Check: #{bytesCheck}. Message Data: #{@messageData}"
-        return "#{@messageData}"
+        # Need to write the code to process messages that make it to here.
+        decodedMessage = @messageData
       end
       puts "Outside If"
     }
     puts "Outside 'For each array item'"
-    return "--> [In Method]: Unknown Message. #{@messageData}"
+    if decodeMessage = ""
+      decodedMessage = "Unknown Message. Bytes: #{messageData}"
+    end
+    return "#{decodedMessage}"
   end
 end
