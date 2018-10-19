@@ -39,6 +39,7 @@ class TEL
 
 
   def decodeMessage
+    puts "In decodeMessage"
     # Returns message as a string
     bytesCheck = []
     byteCounter = 0
