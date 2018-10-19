@@ -55,6 +55,7 @@ class TEL
           puts "Bytes Check #{bytesCheck.length} and Message Data #{@messageData.length} were different. I think that was supposed to be a function."
         end
       elsif TELFunctionsIN.key?(bytesCheck) == true
+        puts "It's a Function, Harry"
         for i in 1..byteCounter do
           @messageData.shift # Remove the 'function' bits from the front of the array, leaving the bits to process.
         end
@@ -62,8 +63,9 @@ class TEL
         puts "--> Words: #{TELFunctionsIN.fetch(bytesCheck)[0]}"
         puts "--> Function: #{TELFunctionsIN.fetch(bytesCheck)[1]}"
         return "#{TELFunctionsIN.fetch(bytesCheck)[0]}: TODO: Plug in Decoder"
-        # Do that thing here
+        puts "After the Return"
       end
+      puts "Outside the IF"
     }
     return "--> Unknown Message"
   end
