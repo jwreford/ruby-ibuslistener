@@ -102,6 +102,7 @@ class GLO
         puts "--> Array:  #{GLOFunctionsIN.fetch(bytesCheck)}. Length: #{GLOFunctionsIN.fetch(bytesCheck).length}"
         puts "--> Words: #{GLOFunctionsIN.fetch(bytesCheck)[0]}"
         puts "--> Function: #{GLOFunctionsIN.fetch(bytesCheck)[1]}"
+        puts "--> Bytes Check: #{bytesCheck}. Message Data: #{@messageData}"
         return "#{GLOFunctionsIN.fetch(bytesCheck)[0]}: TODO: Plug in method"
       end
       #
