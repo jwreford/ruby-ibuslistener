@@ -380,7 +380,7 @@ class IBusMessage
           elsif methodType == "none"
             # puts "No specific instructions for decoding message."
             puts "Message: #{DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)}"
-          #end
+          end
         end
       }
       puts "#{@sourceName} #{@length} #{@destinationName} #{@data} #{@checksum}"
