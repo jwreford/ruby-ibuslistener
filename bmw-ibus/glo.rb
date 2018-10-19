@@ -90,12 +90,16 @@ class GLO
     # Returns message as a string
     bytesCheck = []
     byteCounter = 0
+    puts "[-] In Decode Message"
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
+      puts "[-] -> Checking if #{GLOStaticMessagesIN.key?(bytesCheck)} (Static Message) or #{GLOStaticMessagesIN.fetch(@messageData)} (Function) is True"
       if GLOStaticMessagesIN.key?(bytesCheck) == true
+        puts "[-] --> Static Message was True. Returning #{GLOStaticMessagesIN.fetch(@messageData)}"
         return "#{GLOStaticMessagesIN.fetch(@messageData)}"
       elsif GLOFunctionsIN.key?(bytesCheck) == true
+        puts "[-] --> Function was True. Returning #{GLOStaticMessagesIN.fetch(@messageData)}"
         for i in 1..byteCounter do
           @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
         end
