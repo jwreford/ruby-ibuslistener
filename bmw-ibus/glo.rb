@@ -103,8 +103,7 @@ class GLO
         puts "--> Words: #{GLOFunctionsIN.fetch(bytesCheck)[0]}"
         puts "--> Function: #{GLOFunctionsIN.fetch(bytesCheck)[1]}"
         puts "--> Bytes Check: #{bytesCheck}. Message Data: #{@messageData}"
-        return "STUFFFFFFF"
-        break
+        return @messageData
       end
       puts "Outside If"
     }
