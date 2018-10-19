@@ -47,6 +47,7 @@ class TEL
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
       if TELStaticMessagesIN.key?(bytesCheck) == true
+        puts "Message Data: #{@messageData}"
         return "#{TELStaticMessagesIN.fetch(@messageData)}"
       elsif TELFunctionsIN.key?(bytesCheck) == true
         for i in 1..byteCounter do

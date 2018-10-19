@@ -1,14 +1,14 @@
-# Ruby Library for the Telephone Module
+# Ruby Library for the Navigation Module
 
 
-class TEL
+class NAV
   def initialize
     # Nothing to do here for now.
   end
 
   def setDecode(sourceDeviceName, messageData, messageLength)
     # Decoding a message
-    puts "[TEL] - Setting Message Decode Variables"
+    puts "[NAV] - Setting Message Decode Variables"
     @sourceDeviceName = sourceDeviceName
     @messageData = messageData
     @messageLength = messageLength
