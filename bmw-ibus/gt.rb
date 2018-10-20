@@ -94,7 +94,7 @@ class GT
     # Determine Flags
     #TODO
     #Determine Layout
-    puts "Class: #{currentBit.class}"
+    puts "Class: #{@currentBit.class}"
     puts "Current Bit 1: #{@currentBit}"
 
     @currentBit = data.shift
