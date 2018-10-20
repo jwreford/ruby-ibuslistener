@@ -99,6 +99,7 @@ class GT
     @currentBit = data.shift
     puts "Current Bit 2: #{@currentBit}"
     puts "Is Layout in Hash? #{Layouts.key?(@currentBit)}"
+    puts "Manually specifying Layout: #{Layouts.key?(01)}"
     if Layouts.key?(@currentBit) == true
       messageLayout = Layouts.fetch(@currentBit)
     else
