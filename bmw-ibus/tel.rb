@@ -37,15 +37,13 @@ class TEL
     ["A4", "00", "02"] => ["Current Location: Street Address", "toAscii2"]
   }
 
-
   def decodeMessage
     # Returns message as a string
     bytesCheck = []
     byteCounter = 0
     decodedMessage = ""
-    puts "[-] In Decode Message (TEL)"
+    #puts "[-] In Decode Message"
     @messageData.each { |currentByte|
-      " "
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
       if TELStaticMessagesIN.key?(bytesCheck) == true
@@ -54,23 +52,15 @@ class TEL
         for i in 1..byteCounter do
           @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
         end
-        puts "[2] --> Array:  #{TELFunctionsIN.fetch(bytesCheck)}. Length: #{TELFunctionsIN.fetch(bytesCheck).length}"
-        puts "[2] --> Words: #{TELFunctionsIN.fetch(bytesCheck)[0]}"
-        puts "[2] --> Function: #{TELFunctionsIN.fetch(bytesCheck)[1]}"
-        puts "[2] --> Bytes Check: #{bytesCheck}. Message Data: #{@messageData}"
-        # Need to write the code to process messages that make it to here.
+        # Need to write the code to process messages that make it to here instead of setting it to @messageData
         decodedMessage = @messageData
-        return "#{@messageData}"
-        puts "[2] --> After the Return: Decoded Message Variable: #{decodedMessage}"
         break
-        puts "After the Break"
       end
     }
     if decodedMessage == ""
-      puts "decodeMessage was empty, apparently? Setting to unknown."
       decodedMessage = "Unknown Message. Bytes: #{@messageData}"
     end
-    puts "[!] Didn't return? Decoded Message Variable (before return): #{decodedMessage}"
+    #puts "[!] Didn't return? Decoded Message Variable (before return): #{decodedMessage}"
     return "#{decodedMessage}"
   end
 end
