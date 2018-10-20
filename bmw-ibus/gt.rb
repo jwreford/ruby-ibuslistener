@@ -94,10 +94,10 @@ class GT
     # Determine Flags
     #TODO
     #Determine Layout
-    puts "Class: #{@currentBit.class}"
+    puts "Class 1: #{@currentBit.class}"
     puts "Current Bit 1: #{@currentBit}"
-
     @currentBit = data.shift
+    puts "Class 2: #{@currentBit.class}"
     puts Layouts
     if Layouts.key?(@currentBit) == true
       messageLayout = Layouts.fetch(@currentBit)
