@@ -37,13 +37,13 @@ class GT
   }
 
   HeadingFields = {
-    ["41"] => "HeadingField1", # 5 Characters
-    ["42"] => "HeadingField2", # 5 Characters
-    ["43"] => "HeadingField3", # 5 Characters
-    ["44"] => "HeadingField4", # 5 Characters
-    ["45"] => "HeadingField5", # 7 Characters
-    ["46"] => "HeadingField6", # 20 Characters
-    ["47"] => "HeadingField7" # 20 Characters
+    ["41"] => "Heading Field 1 (Lower-Right)", # 5 Characters
+    ["42"] => "Heading Field 2 (Upper-Right)", # 5 Characters
+    ["43"] => "Heading Field 3", # 5 Characters
+    ["44"] => "Heading Field 4", # 5 Characters
+    ["45"] => "Heading Field 5 (Lower-Center)", # 7 Characters
+    ["46"] => "Heading Field 6", # 20 Characters
+    ["47"] => "Heading Field 7" # 20 Characters
   }
 
   LowerFields = {
@@ -95,6 +95,8 @@ class GT
     #TODO
     #Determine Layout
     currentBit = data.shift
+    puts "Current Bit: #{currentBit}"
+    puts "Is Layout in Hash? #{Layouts.key?(currentBit}"
     if Layouts.key?(currentBit) == true
       messageLayout = Layouts.fetch(currentBit)
     else
@@ -103,6 +105,7 @@ class GT
     # Determine Field
     currentBit = data.shift
     puts "Current Bit: #{currentBit}"
+    puts "Is Field in Hash? #{HeadingFields.key?(currentBit}"
     if HeadingFields.key?(currentBit) == true
       messageField = HeadingFields.fetch(currentBit)
     else
