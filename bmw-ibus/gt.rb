@@ -96,7 +96,7 @@ class GT
     #Determine Layout
     currentBit = data.shift
     puts "Current Bit: #{currentBit}"
-    puts "Is Layout in Hash? #{Layouts.key?(currentBit}"
+    puts "Is Layout in Hash? #{Layouts.key?(currentBit)}"
     if Layouts.key?(currentBit) == true
       messageLayout = Layouts.fetch(currentBit)
     else
@@ -105,7 +105,7 @@ class GT
     # Determine Field
     currentBit = data.shift
     puts "Current Bit: #{currentBit}"
-    puts "Is Field in Hash? #{HeadingFields.key?(currentBit}"
+    puts "Is Field in Hash? #{HeadingFields.key?(currentBit)}"
     if HeadingFields.key?(currentBit) == true
       messageField = HeadingFields.fetch(currentBit)
     else
