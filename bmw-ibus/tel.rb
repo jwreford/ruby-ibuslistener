@@ -37,6 +37,11 @@ class TEL
     ["A4", "00", "02"] => ["Current Location: Street Address", "toAscii2"]
   }
 
+  def coordinateDecoder(coordinates)
+    # TODO: Work out how to decode the coordinates.
+    return "000 000"
+  end
+
   def decodeMessage
     # Returns message as a string
     bytesCheck = []
