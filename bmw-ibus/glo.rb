@@ -100,7 +100,7 @@ class GLO
         #puts "[1] --> Static Message was True. Returning #{GLOStaticMessagesIN.fetch(@messageData)}"
         decodedMessage = "#{GLOStaticMessagesIN.fetch(@messageData)}"
       elsif GLOFunctionsIN.key?(bytesCheck) == true
-        puts "[2] --> Function was True."
+        #puts "[2] --> Function was True."
         for i in 1..byteCounter do
           @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
         end
@@ -118,7 +118,7 @@ class GLO
     if decodedMessage == ""
       decodedMessage = "Unknown Message. Bytes: #{@messageData}"
     end
-    puts "Decoded Message Variable (before return): #{decodedMessage}"
+    puts "[!] Didn't return? Decoded Message Variable (before return): #{decodedMessage}"
     return "#{decodedMessage}"
   end
 end

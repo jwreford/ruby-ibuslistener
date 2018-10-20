@@ -39,35 +39,28 @@ class TEL
 
 
   def decodeMessage
-    puts "In decodeMessage"
     # Returns message as a string
     bytesCheck = []
     byteCounter = 0
+    decodedMessage = ""
+    puts "[-] In Decode Message"
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
-      puts "Byte Check: #{bytesCheck}"
       if TELStaticMessagesIN.key?(bytesCheck) == true
-        puts "Message Data: #{@messageData}"
-        if bytesCheck.length == @messageData.length
-          puts "In IF"
-          return "#{TELStaticMessagesIN.fetch(@messageData)}"
-        else
-          puts "Bytes Check #{bytesCheck.length} and Message Data #{@messageData.length} were different. I think that was supposed to be a function."
-        end
+        decodedMessage = "#{TELStaticMessagesIN.fetch(@messageData)}"
       elsif TELFunctionsIN.key?(bytesCheck) == true
-        puts "It's a Function, Harry"
         for i in 1..byteCounter do
-          @messageData.shift # Remove the 'function' bits from the front of the array, leaving the bits to process.
+          @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
         end
-        puts "--> Array:  #{TELFunctionsIN.fetch(bytesCheck)}. Length: #{TELFunctionsIN.fetch(bytesCheck).length}"
-        puts "--> Words: #{TELFunctionsIN.fetch(bytesCheck)[0]}"
-        puts "--> Function: #{TELFunctionsIN.fetch(bytesCheck)[1]}"
-        return "#{TELFunctionsIN.fetch(bytesCheck)[0]}: TODO: Plug in Decoder"
-        puts "After the Return"
+        decodedMessage = @messageData
+        return "#{@messageData}"
       end
     }
-return "--> Unknown Message. #{@messageData}"
-
+    if decodedMessage == ""
+      decodedMessage = "Unknown Message. Bytes: #{@messageData}"
+    end
+    puts "[!] Didn't return? Decoded Message Variable (before return): #{decodedMessage}"
+    return "#{decodedMessage}"
   end
 end
