@@ -1,8 +1,6 @@
 # Ruby Library for the Broadcast (Global) Messages
 
-require_relative 'ibus'
-
-class GLO < IBusMessage
+class GLO
   def initialize
   end
 
