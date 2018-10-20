@@ -24,7 +24,7 @@ class IKE
     @messageContent = messageContent
   end
 
-  IKEStaticMessagesIN = {
+  StaticMessagesIN = {
     # Messages that devices can send to the Instrument CLuster
     ["10"] => "Requesting Terminal Status",
     ["12"] => "Requesting Sensor Data",
@@ -33,7 +33,7 @@ class IKE
     # Sent from the Video Controller (presumably to know whether to show the logo when a door is opened)
     ["10"] => "Ignition Status Request"
   }
-  IKEFunctionsIN = {
+  FunctionsIN = {
     ["1A"] => ["Cluster Message","clusterMessageDecoder"]
   }
 
@@ -42,21 +42,29 @@ class IKE
     # Returns message as a string
     bytesCheck = []
     byteCounter = 0
+    decodedMessage = ""
+    functionToPerform = ""
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
-      if IKEStaticMessagesIN.key?(bytesCheck) == true
-        return "#{IKEStaticMessagesIN.fetch(@messageData)}"
-      elsif IKEFunctionsIN.key?(bytesCheck) == true
+      if StaticMessagesIN.key?(bytesCheck) == true
+        decodedMessage = "#{StaticMessagesIN.fetch(@messageData)}"
+      elsif FunctionsIN.key?(bytesCheck) == true
         for i in 1..byteCounter do
-          @messageData.shift # Remove the 'function' bits from the front of the array, leaving the bits to process.
+          @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
         end
-        # IKEFunctionsIN.fetch(bytesCheck)[0] = the name of the function
-        # IKEFunctionsIN.fetch(bytesCheck)[1] = the method's name for that function.
-        # Do that thing here
+        #puts "--> Words: #{FunctionsIN.fetch(bytesCheck)[0]}"
+        #puts "--> Function: #{FunctionsIN.fetch(bytesCheck)[1]}"
+        functionToPerform = FunctionsIN.fetch(bytesCheck)[1]
+        decodedMessage = send(functionToPerform, @messageData) # Execute whatever functionToPerform ended up as, and use @messageData as a parameter.
+        break
       end
     }
-return "--> Unknown Message. #{@messageData}"
+    if decodedMessage == ""
+      decodedMessage = "Unknown Message. Bytes: #{@messageData}"
+    end
+    return "#{decodedMessage}"
+  end
 
   end
   def clusterMessageBuilder
@@ -194,7 +202,11 @@ return "--> Unknown Message. #{@messageData}"
     return finishedMessage
   end
 
-  # Pass in OBC Messge to the cluster as an array of hex bytes
+  def toBinary(hexChomp)
+    puts "[!] - Here's the Binary: #{hexChomp.hex.to_s(2).rjust(num.size*4, '0')}"
+    return hexChomp.hex.to_s(2).rjust(num.size*4, '0')
+  end
+
   def clusterMessageDecoder(bytes)
     # TODO: Write toBinary method or find another way to convert a hex byte to binary.
     byte1 = bytes[0].shift.toBinary
