@@ -17,7 +17,7 @@ class GT
     @text = textLength
   end
 
-  GTStaticMessagesIN = {
+  StaticMessagesIN = {
     ["01"] => "GT Status Request",
     ["02", "30"] => "General Device Status Reply(?)",
     ["A5", "61", "01"] => "Partial Write Complete",
@@ -29,13 +29,13 @@ class GT
     ["02", "00", "D0"] => "Video Module Connected and Ready"
   }
 
-  GTFunctionsIN = {
+  FunctionsIN = {
     ["23", "62", "10", "03", "20"] => ["Write to Title", "readFields", "title"],    # This is the big text area as part of the banner at the top left of the screen.
     ["A5", "62", "01"] => ["Write To Heading", "readFields", "heading"],
     ["21", "61", "00"] => ["Partial Write To Lower Field", "readFields", "lower"],
     ["A5", "60", "01", "00"] => ["Clear Lower Fields", "readFields","clearLower"]
   }
-  
+
   TextFields = {
     [""] => "Title", # 11 Characters
     ["01"] => "HeadingField1", # 5 Characters
