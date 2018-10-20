@@ -91,7 +91,7 @@ class GLO
     bytesCheck = []
     byteCounter = 0
     decodedMessage = ""
-    puts "[-] In Decode Message"
+    #puts "[-] In Decode Message"
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
@@ -110,7 +110,6 @@ class GLO
         #puts "[2] --> Bytes Check: #{bytesCheck}. Message Data: #{@messageData}"
         # Need to write the code to process messages that make it to here.
         decodedMessage = @messageData
-        return "#{@messageData}"
         #puts "[2] --> Decoded Message Variable: #{decodedMessage}"
         break
       end
@@ -118,7 +117,7 @@ class GLO
     if decodedMessage == ""
       decodedMessage = "Unknown Message. Bytes: #{@messageData}"
     end
-    puts "[!] Didn't return? Decoded Message Variable (before return): #{decodedMessage}"
+    #puts "[!] Didn't return? Decoded Message Variable (before return): #{decodedMessage}"
     return "#{decodedMessage}"
   end
 end
