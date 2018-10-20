@@ -94,7 +94,8 @@ class GT
     # Determine Flags
     #TODO
     #Determine Layout
-    currentBit = data.shift
+    currentBit = data[0]
+    data.shift
     puts "Current Bit: #{currentBit}"
     puts "Is Layout in Hash? #{Layouts.key?(currentBit)}"
     if Layouts.key?(currentBit) == true
@@ -103,8 +104,8 @@ class GT
       messageLayout = "Unknown Layout (#{currentBit})"
     end
     # Determine Field
-    data.shift
     currentBit = data[0]
+    data.shift
     puts "Current Bit: #{currentBit}"
     puts "Is Field in Hash?. #{HeadingFields.key?(currentBit)}"
     if HeadingFields.key?(currentBit) == true
