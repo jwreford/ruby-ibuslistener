@@ -2,8 +2,6 @@
 
 class GLO
   def initialize
-    @nameOfMessagesHash = "GLOStaticMessagesIN"
-    @nameOfFunctionsHash = "GLOFunctionsIN"
   end
 
   def setDecode(sourceDeviceName, messageData, messageLength)
@@ -13,7 +11,7 @@ class GLO
     @messageLength = messageLength
   end
 
-  GLOStaticMessagesIN = {
+  StaticMessagesIN = {
     # Messages that other devices can send to ALL devices (Global)
 
     ## From the Instrument Cluster
@@ -44,7 +42,7 @@ class GLO
 
   }
 
-  GLOFunctionsIN = {
+  FunctionsIN = {
     ## From the Cluster broadcasting some general information
     ["18"] => ["Current Speed And RPM", "speedAndRPM"],
     ## From the Cluster
@@ -97,15 +95,15 @@ class GLO
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
       if @nameOfMessagesHash.key?(bytesCheck) == true
-        decodedMessage = "#{eval(@nameOfMessagesHash).fetch(@messageData)}"
-      elsif GLOFunctionsIN.key?(bytesCheck) == true
+        decodedMessage = "#{StaticMessagesIN.fetch(@messageData)}"
+      elsif FunctionsIN.key?(bytesCheck) == true
         for i in 1..byteCounter do
           @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
         end
-        puts "--> Words: #{GLOFunctionsIN.fetch(bytesCheck)[0]}"
-        puts "--> Function: #{GLOFunctionsIN.fetch(bytesCheck)[1]}"
-        functionToPerform = GLOFunctionsIN.fetch(bytesCheck)[1]
-        decodedMessage = send(functionToPerform, @messageData)
+        puts "--> Words: #{FunctionsIN.fetch(bytesCheck)[0]}"
+        puts "--> Function: #{FunctionsIN.fetch(bytesCheck)[1]}"
+        functionToPerform = FunctionsIN.fetch(bytesCheck)[1]
+        decodedMessage = send(functionToPerform, @messageData) # Execute whatever functionToPerform ended up as, and use @messageData as a parameter.
         break
       end
     }
