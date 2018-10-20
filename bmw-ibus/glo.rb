@@ -94,7 +94,7 @@ class GLO
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
-      if @nameOfMessagesHash.key?(bytesCheck) == true
+      if StaticMessagesIN.key?(bytesCheck) == true
         decodedMessage = "#{StaticMessagesIN.fetch(@messageData)}"
       elsif FunctionsIN.key?(bytesCheck) == true
         for i in 1..byteCounter do
