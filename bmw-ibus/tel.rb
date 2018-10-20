@@ -37,9 +37,19 @@ class TEL
     ["A4", "00", "02"] => ["Current Location: Street Address", "toAscii2"]
   }
 
+  # Decode the GPS Coordinates
   def coordinateDecoder(coordinates)
     # TODO: Work out how to decode the coordinates.
     return "000 000"
+  end
+
+  # Convert Hex to ASCII
+  def toAscii2(hex)
+    if hex.length > 2
+      hex = hex.join("")
+    end
+    hex = [hex]
+    return hex.pack('H*')
   end
 
   def decodeMessage
