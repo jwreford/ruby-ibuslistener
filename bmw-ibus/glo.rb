@@ -2,7 +2,8 @@
 
 class GLO
   def initialize
-    # Nothing to do here for now.
+    @nameOfMessagesHash = "GLOStaticMessagesIN"
+    @nameOfFunctionsHash = "GLOFunctionsIN"
   end
 
   def setDecode(sourceDeviceName, messageData, messageLength)
@@ -95,8 +96,8 @@ class GLO
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
-      if GLOStaticMessagesIN.key?(bytesCheck) == true
-        decodedMessage = "#{GLOStaticMessagesIN.fetch(@messageData)}"
+      if @nameOfMessagesHash.key?(bytesCheck) == true
+        decodedMessage = "#{@nameOfMessagesHash.fetch(@messageData)}"
       elsif GLOFunctionsIN.key?(bytesCheck) == true
         for i in 1..byteCounter do
           @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
