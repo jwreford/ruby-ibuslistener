@@ -63,7 +63,7 @@ class TEL
     if decodedMessage == ""
       decodedMessage = "Unknown Message. Bytes: #{@messageData}"
     end
-    #puts "[!] Didn't return? Decoded Message Variable (before return): #{decodedMessage}"
+    puts "[!] Didn't return? Decoded Message Variable (before return): #{decodedMessage}"
     return "#{decodedMessage}"
   end
 end
