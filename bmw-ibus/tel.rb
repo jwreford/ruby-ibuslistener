@@ -22,7 +22,7 @@ class TEL
     @messageContent = messageContent
   end
 
-  TELStaticMessagesIN = {
+  StaticMessagesIN = {
     # Messages that devices can send to the Telephone
     ["3B", "80"] => "Speech Key Pressed (Steering Wheel)",
     ["3B", "A0"] => "Speech Key Released (Steering Wheel)",
@@ -31,7 +31,7 @@ class TEL
     ["A9", "03", "30", "30"] => "Cell Network Status Request"
 
   }
-  TELFunctionsIN = {
+  FunctionsIN = {
     ["A2", "00", "00"] => ["Current Location: Coordinates", "coordinateDecoder"],
     ["A4", "00", "01"] => ["Current Location: Suburb", "toAscii2"],
     ["A4", "00", "02"] => ["Current Location: Street Address", "toAscii2"]
@@ -42,28 +42,26 @@ class TEL
     bytesCheck = []
     byteCounter = 0
     decodedMessage = ""
-    #puts "[-] In Decode Message"
+    functionToPerform = ""
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
-      if TELStaticMessagesIN.key?(bytesCheck) == true
-        puts "  [!] It's a Message, Harry"
-        decodedMessage = "#{TELStaticMessagesIN.fetch(@messageData)}"
-      elsif TELFunctionsIN.key?(bytesCheck) == true
-        puts "  [!] It's a Function, Harry"
+      if StaticMessagesIN.key?(bytesCheck) == true
+        decodedMessage = "#{StaticMessagesIN.fetch(@messageData)}"
+      elsif FunctionsIN.key?(bytesCheck) == true
         for i in 1..byteCounter do
           @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
         end
-        # Need to write the code to process messages that make it to here instead of setting it to @messageData
-        decodedMessage = @messageData
+        puts "--> Words: #{FunctionsIN.fetch(bytesCheck)[0]}"
+        puts "--> Function: #{FunctionsIN.fetch(bytesCheck)[1]}"
+        functionToPerform = FunctionsIN.fetch(bytesCheck)[1]
+        decodedMessage = send(functionToPerform, @messageData) # Execute whatever functionToPerform ended up as, and use @messageData as a parameter.
         break
       end
     }
-    #puts "  [*] - DecodedMessage #{decodedMessage}"
     if decodedMessage == ""
       decodedMessage = "Unknown Message. Bytes: #{@messageData}"
     end
-    #puts "[!] Didn't return? Decoded Message Variable (before return): #{decodedMessage}"
     return "#{decodedMessage}"
   end
 end
