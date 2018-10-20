@@ -253,14 +253,10 @@ class IBusMessage
     if @destinationName == "IKE"
       @methodMessage = IKE.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in IKE object ready for Decoding a message
-      @methodMessage.decodeMessage
-      #puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
     elsif @destinationName == "RAD"
       @methodMessage = RAD.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
-      #@methodMessage.decodeMessage
-      #puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
     elsif @destinationName == "GLO"
       @methodMessage = GLO.new
@@ -269,67 +265,46 @@ class IBusMessage
     elsif @destinationName == "TEL"
       @methodMessage = TEL.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
-      @methodMessage.decodeMessage
       return "#{@methodMessage.decodeMessage}"
     elsif @destinationName == "NAV"
       @methodMessage = NAV.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
-      @methodMessage.decodeMessage
-      #puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
     elsif @destinationName == "CDD"
       @methodMessage = CDD.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
-      @methodMessage.decodeMessage
-      #puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
     elsif @destinationName == "GT"
       @methodMessage = GT.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
-      @methodMessage.decodeMessage
-      #puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
     elsif @destinationName == "CDC"
       @methodMessage = CDC.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
-      @methodMessage.decodeMessage
-      #puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
     elsif @destinationName == "VID"
       @methodMessage = VID.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
-      @methodMessage.decodeMessage
-      #puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
     elsif @destinationName == "BM"
       @methodMessage = BM.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
-      @methodMessage.decodeMessage
-      #puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
     elsif @destinationName == "DSP"
       @methodMessage = DSP.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
-      @methodMessage.decodeMessage
-      #puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
     elsif @destinationName == "OBC"
       @methodMessage = OBC.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
-      @methodMessage.decodeMessage
-      #puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
     elsif @destinationName == "DIA"
       @methodMessage = DIA.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
-      @methodMessage.decodeMessage
-      #puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
     elsif @destinationName == "LCM"
       @methodMessage = LCM.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
-      @methodMessage.decodeMessage
-      #puts "Decoded Message: #{@methodMessage.decodeMessage}"
       return "#{@methodMessage.decodeMessage}"
     elsif DeviceFunctionsIN.key?(@destinationName) == true && @destinationName != "GT"
       # Iterate through the message, starting with on byte. If we don't find a valid method, add the next byte to the end and try again
