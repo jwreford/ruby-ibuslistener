@@ -51,7 +51,7 @@ class GT
   }
 
   Layouts = {
-    ["01"] => "RadioDisplay" # 14 Characters
+    ["01"] => "Radio Display"
   }
 
   # Not sure what this is
@@ -86,7 +86,7 @@ class GT
   end
 
   def readHeading(data)
-    currentBit = ""
+    @currentBit = ""
     messageLayout = ""
     messageFlags = "None Set"
     messageField = ""
@@ -94,24 +94,25 @@ class GT
     # Determine Flags
     #TODO
     #Determine Layout
-    currentBit = data[0]
-    data.shift
-    puts "Current Bit: #{currentBit}"
-    puts "Is Layout in Hash? #{Layouts.key?(currentBit)}"
-    if Layouts.key?(currentBit) == true
-      messageLayout = Layouts.fetch(currentBit)
+    puts "Current Bit 1: #{currentBit}"
+
+    @currentBit = data.shift
+    puts "Current Bit 2: #{currentBit}"
+    puts "Is Layout in Hash? #{Layouts.key?(@currentBit)}"
+    if Layouts.key?(@currentBit) == true
+      messageLayout = Layouts.fetch(@currentBit)
     else
-      messageLayout = "Unknown Layout (#{currentBit})"
+      messageLayout = "Unknown Layout (#{@currentBit})"
     end
     # Determine Field
     currentBit = data[0]
     data.shift
-    puts "Current Bit: #{currentBit}"
-    puts "Is Field in Hash?. #{HeadingFields.key?(currentBit)}"
-    if HeadingFields.key?(currentBit) == true
-      messageField = HeadingFields.fetch(currentBit)
+    puts "Current Bit 3: #{@currentBit}"
+    puts "Is Field in Hash?. #{HeadingFields.key?(@currentBit)}"
+    if HeadingFields.key?(@currentBit) == true
+      messageField = HeadingFields.fetch(@currentBit)
     else
-      messageField = "Unknown Field (#{currentBit})"
+      messageField = "Unknown Field (#{@currentBit})"
     end
     # Decode Hex
     messageASCII = toAscii2(data)
