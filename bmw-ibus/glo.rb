@@ -97,7 +97,7 @@ class GLO
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
       if @nameOfMessagesHash.key?(bytesCheck) == true
-        decodedMessage = "#{@nameOfMessagesHash.fetch(@messageData)}"
+        decodedMessage = "#{eval(@nameOfMessagesHash).fetch(@messageData)}"
       elsif GLOFunctionsIN.key?(bytesCheck) == true
         for i in 1..byteCounter do
           @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
