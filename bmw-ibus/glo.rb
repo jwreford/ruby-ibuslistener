@@ -104,8 +104,8 @@ class GLO
         for i in 1..byteCounter do
           @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
         end
-        puts "--> Words: #{FunctionsIN.fetch(bytesCheck)[0]}"
-        puts "--> Function: #{FunctionsIN.fetch(bytesCheck)[1]}"
+        #puts "--> Words: #{FunctionsIN.fetch(bytesCheck)[0]}"
+        #puts "--> Function: #{FunctionsIN.fetch(bytesCheck)[1]}"
         functionToPerform = FunctionsIN.fetch(bytesCheck)[1]
         decodedMessage = send(functionToPerform, @messageData) # Execute whatever functionToPerform ended up as, and use @messageData as a parameter.
         break
