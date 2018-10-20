@@ -65,8 +65,7 @@ class IKE
     end
     return "#{decodedMessage}"
   end
-
-  end
+  
   def clusterMessageBuilder
     # Creates the Message to send to the cluster.
     ## Options for the messagePriority:
