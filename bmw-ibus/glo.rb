@@ -20,10 +20,10 @@ class GLO
 
     ## From the Instrument Cluster
     # Terminal Status
-    ["11", "00"] => "TerminalKL30", # KL 0 = OFF (ignition off position)
-    ["11", "01"] => "TerminalKLR", # KL R = ignition position 1 ("run" - some electonics & modules are powered up, such as the RAD, NAV and ULF)
-    ["11", "03"] => "TerminalKLRAndKL15", # KL 15 = ignition position 2 ("accessory" - all electronics & modules are powered)
-    ["11", "07"] => "TerminalKLRAndKL15AndKL50", # KL 30 = ignition position 3 (where the ignition defauts after starting the engine), # KL 50 = ignition start position
+    ["11", "00"] => "Terminal KL0 (Ignition Off)", # KL 00 = OFF (ignition off position)
+    ["11", "01"] => "Terminal KLR (Position 1, Info Systems On)", # KL R = ignition position 1 ("run" - some electonics & modules are powered up, such as the RAD, NAV and ULF)
+    ["11", "03"] => "Terminals KLR and KL15 (Position 2, Accessory)", # KL 15 = ignition position 2 ("accessory" - all electronics & modules are powered)
+    ["11", "07"] => "Terminals KLR, KL15 And KL50 (Position 3, Engine Running)", # KL 30 = ignition position 3 (where the ignition defauts after starting the engine), # KL 50 = ignition start position
 
     ## From the Board Monitor.
     ["48", "08"] => "Phone Key Pressed",

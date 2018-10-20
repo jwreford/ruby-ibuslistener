@@ -51,7 +51,7 @@ class GT
   }
 
   Layouts = {
-    ["A5", "62"] => "RadioDisplay" # 14 Characters
+    ["01"] => "RadioDisplay" # 14 Characters
   }
 
   # Not sure what this is
@@ -73,7 +73,6 @@ class GT
     messageASCII = ""
     # Determine Flags
     #TODO
-
     #Determine Layout
     currentBit = data.shift
     if Layouts.key?(currentBit) == true
@@ -81,11 +80,37 @@ class GT
     else
       messageLayout = "Unknown Layout (#{currentBit})"
     end
+    # Decode Hex
+    messageASCII = toAscii2(data)
+    return "Writing to #{messageField}. Content: #{messageASCII}. Layout: #{messageLayout}, Flags: #{messageFlags}"
+  end
 
+  def readHeading(data)
+    currentBit = ""
+    messageLayout = ""
+    messageFlags = "None Set"
+    messageField = ""
+    messageASCII = ""
+    # Determine Flags
+    #TODO
+    #Determine Layout
+    currentBit = data.shift
+    if Layouts.key?(currentBit) == true
+      messageLayout = Layouts.fetch(currentBit)
+    else
+      messageLayout = "Unknown Layout (#{currentBit})"
+    end
+    # Determine Field
+    currentBit = data.shift
+    if HeadingFields.key?(currentBit) == true
+      messageField = HeadingFields.fetch(currentBit)
+    else
+      messageField = "Unknown Field (#{currentBit})"
+    end
     # Decode Hex
     messageASCII = toAscii2(data)
 
-    return "Field: #{messageField}, Content: #{messageASCII}. Layout: #{messageLayout}, Flags: #{messageFlags}"
+    return "Writing to #{messageField}. Content: #{messageASCII}. Layout: #{messageLayout}, Flags: #{messageFlags}"
   end
 
   def toAscii2(hex)
