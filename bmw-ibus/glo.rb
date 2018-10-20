@@ -91,33 +91,26 @@ class GLO
     bytesCheck = []
     byteCounter = 0
     decodedMessage = ""
-    #puts "[-] In Decode Message"
+    functionToPerform = ""
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
-      #puts "[-] -> Checking if #{GLOStaticMessagesIN.key?(bytesCheck)} (Static Message) or #{GLOFunctionsIN.key?(bytesCheck)} (Function) is True"
       if GLOStaticMessagesIN.key?(bytesCheck) == true
-        #puts "[1] --> Static Message was True. Returning #{GLOStaticMessagesIN.fetch(@messageData)}"
         decodedMessage = "#{GLOStaticMessagesIN.fetch(@messageData)}"
       elsif GLOFunctionsIN.key?(bytesCheck) == true
-        #puts "[2] --> Function was True."
         for i in 1..byteCounter do
           @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
         end
-        #puts "[2] --> Array:  #{GLOFunctionsIN.fetch(bytesCheck)}. Length: #{GLOFunctionsIN.fetch(bytesCheck).length}"
-        #puts "[2] --> Words: #{GLOFunctionsIN.fetch(bytesCheck)[0]}"
-        #puts "[2] --> Function: #{GLOFunctionsIN.fetch(bytesCheck)[1]}"
-        #puts "[2] --> Bytes Check: #{bytesCheck}. Message Data: #{@messageData}"
-        # Need to write the code to process messages that make it to here.
-        decodedMessage = @messageData
-        #puts "[2] --> Decoded Message Variable: #{decodedMessage}"
+        puts "--> Words: #{GLOFunctionsIN.fetch(bytesCheck)[0]}"
+        puts "--> Function: #{GLOFunctionsIN.fetch(bytesCheck)[1]}"
+        functionToPerform = GLOFunctionsIN.fetch(bytesCheck)[1]
+        decodedMessage = send(functionToPerform, @messageData)
         break
       end
     }
     if decodedMessage == ""
       decodedMessage = "Unknown Message. Bytes: #{@messageData}"
     end
-    #puts "[!] Didn't return? Decoded Message Variable (before return): #{decodedMessage}"
     return "#{decodedMessage}"
   end
 end
