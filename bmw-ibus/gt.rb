@@ -121,11 +121,6 @@ class GT
     return hex.pack('H*')
   end
 
-  def readHeading(data)
-    puts "It's a Heading, Harry"
-    puts "#{data}"
-  end
-
   def readLower(data)
     puts "It's a Lower Text Field, Harry"
     puts "#{data}"

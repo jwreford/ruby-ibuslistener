@@ -4,10 +4,6 @@ class GLO
   def initialize
   end
 
-  def decodeMessage
-    super
-  end
-
   def setDecode(sourceDeviceName, messageData, messageLength)
     # Decoding a message
     @sourceDeviceName = sourceDeviceName
