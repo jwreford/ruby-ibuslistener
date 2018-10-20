@@ -54,9 +54,9 @@ class TEL
         for i in 1..byteCounter do
           @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
         end
-        puts "[2] --> Array:  #{GLOFunctionsIN.fetch(bytesCheck)}. Length: #{GLOFunctionsIN.fetch(bytesCheck).length}"
-        puts "[2] --> Words: #{GLOFunctionsIN.fetch(bytesCheck)[0]}"
-        puts "[2] --> Function: #{GLOFunctionsIN.fetch(bytesCheck)[1]}"
+        puts "[2] --> Array:  #{TELFunctionsIN.fetch(bytesCheck)}. Length: #{TELFunctionsIN.fetch(bytesCheck).length}"
+        puts "[2] --> Words: #{TELFunctionsIN.fetch(bytesCheck)[0]}"
+        puts "[2] --> Function: #{TELFunctionsIN.fetch(bytesCheck)[1]}"
         puts "[2] --> Bytes Check: #{bytesCheck}. Message Data: #{@messageData}"
         # Need to write the code to process messages that make it to here.
         decodedMessage = @messageData
