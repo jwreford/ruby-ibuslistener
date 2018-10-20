@@ -43,7 +43,7 @@ class TEL
     bytesCheck = []
     byteCounter = 0
     decodedMessage = ""
-    puts "[-] In Decode Message"
+    puts "[-] In Decode Message (TEL)"
     @messageData.each { |currentByte|
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
@@ -55,6 +55,7 @@ class TEL
         end
         decodedMessage = @messageData
         return "#{@messageData}"
+        break
       end
     }
     if decodedMessage == ""
