@@ -24,7 +24,8 @@ class CDD
 
   CDDStaticMessagesIN = {
     # From the RAD
-    ["01"] => "Front CD Status Request"
+    ["38", "00", "00"] => "Front (BM) CD Player Status Request"
+
   }
 
   CDDFunctionsIN = {

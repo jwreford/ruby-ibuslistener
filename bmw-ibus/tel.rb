@@ -47,8 +47,10 @@ class TEL
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
       if TELStaticMessagesIN.key?(bytesCheck) == true
+        puts "  [!] It's a Message, Harry"
         decodedMessage = "#{TELStaticMessagesIN.fetch(@messageData)}"
       elsif TELFunctionsIN.key?(bytesCheck) == true
+        puts "  [!] It's a Function, Harry"
         for i in 1..byteCounter do
           @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
         end

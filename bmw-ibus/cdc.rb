@@ -24,7 +24,7 @@ class CDC
 
   CDCStaticMessagesIN = {
     # This is sent from the Radio (BM53, BM54, and a couple of others)
-    ["38", "00", "00"] => "CDChangerStatusRequest"
+    ["38", "00", "00"] => "CD Changer Status Request"
   }
 
   CDCFunctionsIN = {
