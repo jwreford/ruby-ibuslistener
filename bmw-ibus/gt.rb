@@ -60,7 +60,7 @@ class GT
   }
 
   TransmissionType = {
-    ["00"] => "Continues Next Packet.."
+    ["00"] => "Continues Next Packet..",
     ["FF"] => "Transmission Complete"
   }
 
