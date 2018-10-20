@@ -1,7 +1,11 @@
 # Ruby Library for the Broadcast (Global) Messages
 
-class GLO
+class GLO < iBusMessage
   def initialize
+  end
+
+  def decodeMessage
+    super
   end
 
   def setDecode(sourceDeviceName, messageData, messageLength)
@@ -85,31 +89,31 @@ class GLO
     return cleanOutput
   end
 
-  def decodeMessage
-    # Returns message as a string
-    bytesCheck = []
-    byteCounter = 0
-    decodedMessage = ""
-    functionToPerform = ""
-    @messageData.each { |currentByte|
-      bytesCheck.push(currentByte)
-      byteCounter = byteCounter + 1
-      if StaticMessagesIN.key?(bytesCheck) == true
-        decodedMessage = "#{StaticMessagesIN.fetch(@messageData)}"
-      elsif FunctionsIN.key?(bytesCheck) == true
-        for i in 1..byteCounter do
-          @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
-        end
-        puts "--> Words: #{FunctionsIN.fetch(bytesCheck)[0]}"
-        puts "--> Function: #{FunctionsIN.fetch(bytesCheck)[1]}"
-        functionToPerform = FunctionsIN.fetch(bytesCheck)[1]
-        decodedMessage = send(functionToPerform, @messageData) # Execute whatever functionToPerform ended up as, and use @messageData as a parameter.
-        break
-      end
-    }
-    if decodedMessage == ""
-      decodedMessage = "Unknown Message. Bytes: #{@messageData}"
-    end
-    return "#{decodedMessage}"
-  end
+  # def decodeMessage2
+  #   # Returns message as a string
+  #   bytesCheck = []
+  #   byteCounter = 0
+  #   decodedMessage = ""
+  #   functionToPerform = ""
+  #   @messageData.each { |currentByte|
+  #     bytesCheck.push(currentByte)
+  #     byteCounter = byteCounter + 1
+  #     if StaticMessagesIN.key?(bytesCheck) == true
+  #       decodedMessage = "#{StaticMessagesIN.fetch(@messageData)}"
+  #     elsif FunctionsIN.key?(bytesCheck) == true
+  #       for i in 1..byteCounter do
+  #         @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
+  #       end
+  #       puts "--> Words: #{FunctionsIN.fetch(bytesCheck)[0]}"
+  #       puts "--> Function: #{FunctionsIN.fetch(bytesCheck)[1]}"
+  #       functionToPerform = FunctionsIN.fetch(bytesCheck)[1]
+  #       decodedMessage = send(functionToPerform, @messageData) # Execute whatever functionToPerform ended up as, and use @messageData as a parameter.
+  #       break
+  #     end
+  #   }
+  #   if decodedMessage == ""
+  #     decodedMessage = "Unknown Message. Bytes: #{@messageData}"
+  #   end
+  #   return "#{decodedMessage}"
+  # end
 end
