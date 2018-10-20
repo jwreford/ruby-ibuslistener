@@ -102,6 +102,7 @@ class GT
     end
     # Determine Field
     currentBit = data.shift
+    puts "Current Bit: #{currentBit}"
     if HeadingFields.key?(currentBit) == true
       messageField = HeadingFields.fetch(currentBit)
     else
