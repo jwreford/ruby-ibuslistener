@@ -335,8 +335,6 @@ class IBusMessage
 
 
   def lengthInAscii
-    #puts "in findDestination"
-    #puts "#{self.toAscii2(@length)}"
     return self.toAscii2(@length)
   end
 end
@@ -436,30 +434,6 @@ IBusDevicesFriendly = {
   ["FF"] => "Broadcast Message",
   ["100"] => "Unset",
   ["101"] => "Unknown '101'"
-}
-
-
-
-# The fields that can be written to on the board monitor.
-VideoControllerFields = {
-  [""] => "Title", # 11 Characters
-  ["01"] => "HeadingField1", # 5 Characters
-  ["02"] => "HeadingField2", # 5 Characters
-  ["03"] => "HeadingField3", # 5 Characters
-  ["04"] => "HeadingField4", # 5 Characters
-  ["05"] => "HeadingField5", # 7 Characters
-  ["06"] => "HeadingField6", # 20 Characters
-  ["07"] => "HeadingField7", # 20 Characters
-  ["40"] => "LowerField1", # 14 Characters
-  ["41"] => "LowerField2", # 14 Characters
-  ["42"] => "LowerField3", # 14 Characters
-  ["43"] => "LowerField4", # 14 Characters
-  ["44"] => "LowerField5", # 14 Characters
-  ["45"] => "LowerField6", # 14 Characters
-  ["46"] => "LowerField7", # 14 Characters
-  ["47"] => "LowerField8", # 14 Characters
-  ["48"] => "LowerField9", # 14 Characters
-  ["49"] => "LowerField10", # 14 Characters
 }
 
 BoardMonitorLED = {

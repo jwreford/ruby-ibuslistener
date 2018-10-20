@@ -57,7 +57,7 @@ class GT
       ["46"] => "LowerField7", # 14 Characters
       ["47"] => "LowerField8", # 14 Characters
       ["48"] => "LowerField9", # 14 Characters
-      ["49"] => "LowerField10", # 14 Characters
+      ["49"] => "LowerField10" # 14 Characters
     }
 
     if TextFields.key?(data[0]) == true
