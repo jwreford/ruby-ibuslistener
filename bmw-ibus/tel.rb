@@ -59,6 +59,7 @@ class TEL
         break
       end
     }
+    puts "  [*] - DecodedMessage #{decodedMessage}"
     if decodedMessage == ""
       decodedMessage = "Unknown Message. Bytes: #{@messageData}"
     end
