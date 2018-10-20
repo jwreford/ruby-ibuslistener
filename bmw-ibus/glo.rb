@@ -1,6 +1,6 @@
 # Ruby Library for the Broadcast (Global) Messages
 
-class GLO < iBusMessage
+class GLO < IBusMessage
   def initialize
   end
 
