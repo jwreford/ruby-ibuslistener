@@ -45,6 +45,7 @@ class TEL
     decodedMessage = ""
     puts "[-] In Decode Message (TEL)"
     @messageData.each { |currentByte|
+      " "
       bytesCheck.push(currentByte)
       byteCounter = byteCounter + 1
       if TELStaticMessagesIN.key?(bytesCheck) == true
@@ -53,12 +54,20 @@ class TEL
         for i in 1..byteCounter do
           @messageData.shift # Push the 'function' bits off the front of the array, leaving the message content.
         end
+        puts "[2] --> Array:  #{GLOFunctionsIN.fetch(bytesCheck)}. Length: #{GLOFunctionsIN.fetch(bytesCheck).length}"
+        puts "[2] --> Words: #{GLOFunctionsIN.fetch(bytesCheck)[0]}"
+        puts "[2] --> Function: #{GLOFunctionsIN.fetch(bytesCheck)[1]}"
+        puts "[2] --> Bytes Check: #{bytesCheck}. Message Data: #{@messageData}"
+        # Need to write the code to process messages that make it to here.
         decodedMessage = @messageData
         return "#{@messageData}"
+        puts "[2] --> After the Return: Decoded Message Variable: #{decodedMessage}"
         break
+        puts "After the Break"
       end
     }
     if decodedMessage == ""
+      puts "decodeMessage was empty, apparently? Setting to unknown."
       decodedMessage = "Unknown Message. Bytes: #{@messageData}"
     end
     puts "[!] Didn't return? Decoded Message Variable (before return): #{decodedMessage}"
