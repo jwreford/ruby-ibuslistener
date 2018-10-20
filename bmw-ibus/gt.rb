@@ -103,9 +103,10 @@ class GT
       messageLayout = "Unknown Layout (#{currentBit})"
     end
     # Determine Field
-    currentBit = data.shift
+    data.shift
+    currentBit = data[0]
     puts "Current Bit: #{currentBit}"
-    puts "Is Field in Hash? #{HeadingFields.key?(currentBit)}"
+    puts "Is Field in Hash?. #{HeadingFields.key?(currentBit)}"
     if HeadingFields.key?(currentBit) == true
       messageField = HeadingFields.fetch(currentBit)
     else
