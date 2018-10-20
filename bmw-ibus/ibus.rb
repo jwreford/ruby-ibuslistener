@@ -244,12 +244,10 @@ class IBusMessage
 
   # Decode the data part of the message.
   def decodeData
-    #begin
-    #puts "In Decode Data"
+    begin
     @processedData = @data.clone
     bytesCheck = []
     byteCounter = 0
-    # Check and see whether this device has any methods in the hash, and if not, skip to the end.
     if @destinationName == "IKE"
       @methodMessage = IKE.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in IKE object ready for Decoding a message
@@ -306,63 +304,12 @@ class IBusMessage
       @methodMessage = LCM.new
       @methodMessage.setDecode(@sourceName,@data,@length) # Set variables in RAD object ready for Decoding a message
       return "#{@methodMessage.decodeMessage}"
-    elsif DeviceFunctionsIN.key?(@destinationName) == true && @destinationName != "GT"
-      # Iterate through the message, starting with on byte. If we don't find a valid method, add the next byte to the end and try again
-      @processedData.each { |currentByte|
-        bytesCheck.push(currentByte)
-        byteCounter = byteCounter + 1
-        if DeviceFunctionsIN.fetch(@destinationName).key?(bytesCheck) == true
-          #puts "--> Known Message Type: #{bytesCheck}!"
-          # Check if message type is inside the FunctionDetailsDecode hash
-          begin
-             FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
-               methodType = "function"
-               #puts "  --> [✓] Message Found in Functions Hash. It says: #{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
-          rescue Exception => ex
-              methodType = "none"
-              #puts "  --> [x] Problem looking for this message in the Functions Hash. #{ex.class}: #{ex.message}"
-          end
-          if methodType == "none"
-            begin
-              StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
-                methodType = "static"
-                #puts "  --> [✓] Message Found in Static Hash. It says: #{StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))}"
-            rescue Exception => ex
-              methodType = "none"
-              #puts "  --> [x] Problem looking for this message in the Staic Hash. #{ex.class}: #{ex.message}"
-            end
-          end
-          #puts "  ---> Bytes Used: #{byteCounter}"
-          for i in 1..byteCounter do
-            @processedData.shift
-          end
-          # Check if this message type needs converting (the whole or part) of the message into ASCII
-          #puts " ---> Method Type: #{methodType}"
-          if methodType == "function"
-            functionToPerform = FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))[1]
-            #puts "Function: #{functionToPerform}"
-            #puts send(functionToPerform, @processedData)
-            messageOutput = send(functionToPerform, @processedData)
-            return "#{FunctionDetailsDecode.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))[0]}: #{messageOutput}"
-          # Check if this message type is just some form of identifier that we have statically recorded
-          elsif methodType == "static"
-            staticMessage = StaticMessages.fetch(DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck))
-            #puts "Static Message: #{staticMessage}"
-            return staticMessage
-          elsif methodType == "none"
-            # puts "No specific instructions for decoding message."
-            puts "Message: #{DeviceFunctionsIN.fetch(@destinationName).fetch(bytesCheck)}"
-          end
-        end
-      }
-      puts "#{@sourceName} #{@length} #{@destinationName} #{@data} #{@checksum}"
-      return "Unknown Message"
     end
     return "Device has no method, sozzle. #{@data}"
     @methodMessage = nil
-  #rescue Exception => ex
-  #    puts "  --> [x] Problem looking for this message in the Functions Hash. #{ex.class}: #{ex.message}"
-  #  end
+    rescue Exception => ex
+        puts "  --> [x] Ran into a problem doing something. Sorry about that. #{ex.class}: #{ex.message}"
+    end
   end
 
 
