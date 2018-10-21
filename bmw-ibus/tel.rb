@@ -32,16 +32,65 @@ class TEL
 
   }
   FunctionsIN = {
-    ["A2", "00", "00"] => ["Current Location: Coordinates", "coordinateDecoder"],
-    ["A4", "00", "01"] => ["Current Location: Suburb", "toAscii2"],
-    ["A4", "00", "02"] => ["Current Location: Street Address", "toAscii2"]
+    ["A2", "00"] => ["Current Location: Coordinates", "coordinateDecoder"],
+    ["A4", "00", "01"] => ["Current Location: Suburb", "suburbDecoder"],
+    ["A4", "00", "02"] => ["Current Location: Street Address", "streetDecoder"]
+  }
+
+  CardinalDirections = {
+    ["0"] => "E",
+    ["1"] => "S",
+    ["2"] => "W",
+    ["3"] => "N"
   }
 
   # Decode the GPS Coordinates
   def coordinateDecoder(coordinates)
-    # TODO: Work out how to decode the coordinates.
+    # Format is XX XX YY ZZ A, XX XX YY ZZ A # XX XX = Degrees, YY = Minutes, ZZ = Seconds, A = Cardinal Direction
+    # The hex are treated as base 10 standard digits.
+    degrees1 = 0
+    minutes1 = 0
+    seconds1 = 0
+    cardinalDirection1 - ""
+    degrees2 = 0
+    minutes2 = 0
+    seconds2 = 0
+    cardinalDirection2 - ""
+    tempSecondsArray = []
+    for i in 1..2 do
+      degrees1 = degrees1 + coordinates.shift
+    end
+    minutes1 = coordinates.shift
+    tempSecondsArray = coordinates.shift.scan(/./)
+    seconds1 = tempSecondsArray[0]
+    begin
+      cardinalDirection1 = CardinalDirections.fetch([tempSecondsArray[0]])
+    rescue
+    end
+    tempSecondsArray = []
+    for i in 1..2 do
+      degrees2 = degrees2 + coordinates.shift
+    end
+    minutes2 = coordinates.shift
+    tempSecondsArray = coordinates.shift.scan(/./)
+    seconds2 = tempSecondsArray[0]
+    begin
+      cardinalDirection2 = CardinalDirections.fetch([tempSecondsArray[0]])
+    rescue
+    end
+  end
+
     return "000 000"
   end
+
+  def suburbDecoder(locationHex)
+      return "City / Suburb: #{toAscii(locationHex)}"
+  end
+
+  def streetDecoder(locationHex)
+      return "Street: #{toAscii(locationHex)}"
+  end
+
 
   # Convert Hex to ASCII
   def toAscii2(hex)

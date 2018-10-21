@@ -24,7 +24,8 @@ class BM
 
   BMStaticMessagesIN = {
     # Sent from the Video Controller (GT)
-    ["01"] => "Board Monitor Status Request"
+    ["01"] => "Board Monitor Status Request",
+    ["4A" "48"] => "Cassette Player Status Request"
   }
 
   BMFunctionsIN = {

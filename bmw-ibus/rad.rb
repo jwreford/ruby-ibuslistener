@@ -23,6 +23,7 @@ class RAD
 
       # From the Board Monitor to the Radio
       ["01"] => "Radio Status Request",
+      ["4B", "05"] => "No Tape in Cassette Player",
 
       # From the Steering Wheel Controls
       ["32", "10"] => "Volume Down (Steering Wheel)",
@@ -118,9 +119,21 @@ class RAD
 
   }
   RADFunctionsIN = {
-
+    # From the GT
+    ["22", "0"] => ["Messages Received","messagesReceivedDecoder"]
   }
 
+  def messagesReceivedDecoder(messagesHex)
+    return "OK - Messages Recieved: #{toAscii2(messagesHex)}"
+  end
+
+  def toAscii2(hex)
+    if hex.length > 2
+      hex = hex.join("")
+    end
+    hex = [hex]
+    return hex.pack('H*')
+  end
 
   def decodeMessage
     # Returns message as a string

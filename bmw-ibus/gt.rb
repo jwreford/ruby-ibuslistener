@@ -26,14 +26,19 @@ class GT
     ["02", "30", "FD"] => "Board Monitor Connected and Ready",
 
     # Sent from the TV Module (VID)
-    ["02", "00", "D0"] => "Video Module Connected and Ready"
+    ["02", "00", "D0"] => "Video Module Connected and Ready",
+
+    # Sent from the Radio (RAD)
+    ["46", "02"] => "Switch to Information Display",
+    ["46", "0C"] => "Select Menu Off, Tone Menu Off (??)",
+    ["46", "08"] => "Tone Menu Off (??)"
   }
 
   FunctionsIN = {
     ["23", "62", "10"] => ["Write to Title", "readTitle"],    # This is the big text area as part of the banner at the top left of the screen.
     ["A5", "62"] => ["Write To Heading", "readHeading"],
     ["21", "61", "00"] => ["Partial Write To Lower Field", "readLower"],
-    ["A5", "60", "01", "00"] => ["Clear Lower Fields", "clearLower"]
+    ["A5", "60", "01", "00"] => ["Clear Lower Fields", "clearLower"],
   }
 
   HeadingFields = {
@@ -43,7 +48,7 @@ class GT
     ["44"] => "Heading Field 4", # 5 Characters
     ["45"] => "Heading Field 5 (Lower-Center)", # 7 Characters
     ["46"] => "Heading Field 6", # 20 Characters
-    ["47"] => "Heading Field 7" # 20 Characters
+    ["07"] => "Heading Field 7" # 20 Characters
   }
 
   LowerFields = {
@@ -87,7 +92,6 @@ class GT
   end
 
   def readHeading(data)
-    puts "Data: #{data}"
     currentBit = ""
     messageLayout = ""
     messageFlags = "None Set"
@@ -163,4 +167,5 @@ class GT
     end
     return "#{decodedMessage}"
   end
+
 end
