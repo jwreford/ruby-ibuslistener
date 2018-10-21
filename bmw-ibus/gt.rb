@@ -75,10 +75,9 @@ class GT
     #TODO
     #Determine Layout
     currentBit = data.shift
-    puts "Current Bit: #{currentBit.toP}"
 
-    if Layouts.key?(currentBit) == true
-      messageLayout = Layouts.fetch(currentBit)
+    if Layouts.key?([currentBit]) == true
+      messageLayout = Layouts.fetch([currentBit])
     else
       messageLayout = "Unknown Layout (#{currentBit})"
     end
@@ -89,7 +88,7 @@ class GT
 
   def readHeading(data)
     puts "Data: #{data}"
-    @currentBit = []
+    currentBit = ""
     messageLayout = ""
     messageFlags = "None Set"
     messageField = ""
@@ -97,21 +96,20 @@ class GT
     # Determine Flags
     #TODO
     #Determine Layout
-    puts "Current Bit 1: #{@currentBit}"
-    @currentBit = data.shift
-    if Layouts.key?(@currentBit) == true
-      messageLayout = Layouts.fetch([@currentBit])
+    currentBit = data.shift
+    puts "Layout Bit: #{currentBit}"
+    if Layouts.key?([currentBit]) == true
+      messageLayout = Layouts.fetch([currentBit])
     else
-      messageLayout = "Unknown Layout (#{@currentBit})"
+      messageLayout = "Unknown Layout (#{currentBit})"
     end
     # Determine Field
-    @currentBit = data.shift
-    puts "Current Bit 2: #{@currentBit}"
-    if HeadingFields.key?([@currentBit]) == true
-      messageField = HeadingFields.fetch([@currentBit])
-      puts "Message Field: #{messageField}"
+    currentBit = data.shift
+    puts "Heading Field Bit: #{currentBit}"
+    if HeadingFields.key?([currentBit]) == true
+      messageField = HeadingFields.fetch([currentBit])
     else
-      messageField = "Unknown Field (#{@currentBit})"
+      messageField = "Unknown Field (#{currentBit})"
     end
 
     # Decode Hex
