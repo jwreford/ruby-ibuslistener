@@ -97,7 +97,7 @@ class GT
     #TODO
     #Determine Layout
     currentBit = data.shift
-    puts "Layout Bit: #{currentBit}"
+    #puts "Layout Bit: #{currentBit}"
     if Layouts.key?([currentBit]) == true
       messageLayout = Layouts.fetch([currentBit])
     else
@@ -105,7 +105,7 @@ class GT
     end
     # Determine Field
     currentBit = data.shift
-    puts "Heading Field Bit: #{currentBit}"
+    #puts "Heading Field Bit: #{currentBit}"
     if HeadingFields.key?([currentBit]) == true
       messageField = HeadingFields.fetch([currentBit])
     else
@@ -115,7 +115,7 @@ class GT
     # Decode Hex
     messageASCII = toAscii2(data)
 
-    return "Writing to #{messageField}. Content: #{messageASCII}. Layout: #{messageLayout}, Flags: #{messageFlags}"
+    return "Writing to #{messageField} \"#{messageASCII}\". Layout: #{messageLayout}, Flags: #{messageFlags}"
   end
 
   def toAscii2(hex)
