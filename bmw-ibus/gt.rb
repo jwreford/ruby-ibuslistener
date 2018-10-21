@@ -107,8 +107,12 @@ class GT
     # Determine Field
     @currentBit = data[0]
     data.shift
+    puts "---------------------"
     puts "Is 41 in this hash?: #{HeadingFields.key?(41)}"
-    puts "#{HeadingFields.fetch(41)}"
+    puts "Fetching 41 anyway: #{HeadingFields.fetch(41)}"
+    puts "Fetching 41 with quotes: #{HeadingFields.fetch("41")}"
+    puts "The whole hash: #{HeadingFields}"
+    puts "---------------------"
     if HeadingFields.key?("41") == true
     #if HeadingFields.key?(@currentBit) == true
       messageField = HeadingFields.fetch(@currentBit)
