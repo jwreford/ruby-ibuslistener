@@ -108,6 +108,7 @@ class GT
     @currentBit = data[0]
     data.shift
     puts "Is 41 in this hash?: #{HeadingFields.key?(41)}"
+    puts "#{HeadingFields.fetch(41)}"
     if HeadingFields.key?("41") == true
     #if HeadingFields.key?(@currentBit) == true
       messageField = HeadingFields.fetch(@currentBit)
@@ -115,6 +116,7 @@ class GT
     else
       messageField = "Unknown Field (#{@currentBit})"
     end
+
     # Decode Hex
     messageASCII = toAscii2(data)
 
