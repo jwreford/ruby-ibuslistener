@@ -51,11 +51,11 @@ class TEL
     degrees1 = 0
     minutes1 = 0
     seconds1 = 0
-    cardinalDirection1 - ""
+    cardinalDirection1 = ""
     degrees2 = 0
     minutes2 = 0
     seconds2 = 0
-    cardinalDirection2 - ""
+    cardinalDirection2 = ""
     tempSecondsArray = []
     for i in 1..2 do
       degrees1 = degrees1 + coordinates.shift
@@ -66,6 +66,7 @@ class TEL
     begin
       cardinalDirection1 = CardinalDirections.fetch([tempSecondsArray[0]])
     rescue
+
     end
     tempSecondsArray = []
     for i in 1..2 do
@@ -78,15 +79,15 @@ class TEL
       cardinalDirection2 = CardinalDirections.fetch([tempSecondsArray[0]])
     rescue
     end
-    return "#{degrees1}° #{minutes1}' #{seconds1}\" #{cardinalDirection1}, #{degrees1}° #{minutes1}' #{seconds1}\" #{cardinalDirection1}" 
+    return "#{degrees1}° #{minutes1}' #{seconds1}\" #{cardinalDirection1}, #{degrees2}° #{minutes2}' #{seconds2}\" #{cardinalDirection2}"
   end
 
   def suburbDecoder(locationHex)
-      return "City / Suburb: #{toAscii(locationHex)}"
+      return "City / Suburb: #{toAscii2(locationHex)}"
   end
 
   def streetDecoder(locationHex)
-      return "Street: #{toAscii(locationHex)}"
+      return "Street: #{toAscii2(locationHex)}"
   end
 
 
