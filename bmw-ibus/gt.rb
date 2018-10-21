@@ -109,8 +109,16 @@ class GT
     data.shift
     puts "---------------------"
     puts "Is 41 in this hash?: #{HeadingFields.key?(41)}"
-    puts "Fetching 41 anyway: #{HeadingFields.fetch(41)}"
-    puts "Fetching 41 with quotes: #{HeadingFields.fetch("41")}"
+    begin
+      puts "Fetching 41 anyway: #{HeadingFields.fetch(41)}"
+    rescue Exception => ex
+        puts "  --> Nope. #{ex.class}: #{ex.message}"
+    end
+    begin
+      puts "Fetching 41 with quotes: #{HeadingFields.fetch("41")}"
+    rescue Exception => ex
+        puts "  --> Nope. #{ex.class}: #{ex.message}"
+    end
     puts "The whole hash: #{HeadingFields}"
     puts "---------------------"
     if HeadingFields.key?("41") == true
