@@ -97,38 +97,18 @@ class GT
     # Determine Flags
     #TODO
     #Determine Layout
-    puts "Class 1: #{@currentBit.class}"
     puts "Current Bit 1: #{@currentBit}"
     @currentBit = data.shift
-    puts "Class 2: #{@currentBit.class}"
-    puts Layouts
     if Layouts.key?(@currentBit) == true
-      messageLayout = Layouts.fetch(@currentBit)
+      messageLayout = Layouts.fetch([@currentBit])
     else
       messageLayout = "Unknown Layout (#{@currentBit})"
     end
     # Determine Field
-    #@currentBit = data[0]
-    puts "Current Bit before shifting: #{@currentBit}"
-    data.shift
-    puts "Current Bit after shifting: #{@currentBit}"
-    puts "---------------------"
-    puts "Is 41 in this hash?: #{HeadingFields.key?(Array(@currentBit))}"
-    begin
-      puts "Fetching 41 in an array: #{HeadingFields.fetch()}"
-    rescue Exception => ex
-        puts "  --> Nope. #{ex.class}: #{ex.message}"
-    end
-    begin
-      puts "Fetching 41 with quotes: #{HeadingFields.fetch("41")}"
-    rescue Exception => ex
-        puts "  --> Nope. #{ex.class}: #{ex.message}"
-    end
-    puts "The whole hash: #{HeadingFields}"
-    puts "---------------------"
-    if HeadingFields.key?("41") == true
-    #if HeadingFields.key?(@currentBit) == true
-      messageField = HeadingFields.fetch(@currentBit)
+    @currentBit = data.shift
+    puts "Current Bit 2: #{@currentBit}"
+    if HeadingFields.key?([@currentBit]) == true
+      messageField = HeadingFields.fetch([@currentBit])
       puts "Message Field: #{messageField}"
     else
       messageField = "Unknown Field (#{@currentBit})"
