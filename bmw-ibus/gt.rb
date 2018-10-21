@@ -86,6 +86,7 @@ class GT
   end
 
   def readHeading(data)
+    puts "Data: #{data}"
     @currentBit = ""
     messageLayout = ""
     messageFlags = "None Set"
@@ -105,12 +106,14 @@ class GT
       messageLayout = "Unknown Layout (#{@currentBit})"
     end
     # Determine Field
-    @currentBit = data[0]
+    #@currentBit = data[0]
+    puts "Current Bit before shifting: #{@currentBit}"
     data.shift
+    puts "Current Bit after shifting: #{@currentBit}"
     puts "---------------------"
     puts "Is 41 in this hash?: #{HeadingFields.key?(41)}"
     begin
-      puts "Fetching 41 anyway: #{HeadingFields.fetch(41)}"
+      puts "Fetching 41 in an array: #{HeadingFields.fetch()}"
     rescue Exception => ex
         puts "  --> Nope. #{ex.class}: #{ex.message}"
     end
