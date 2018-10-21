@@ -107,7 +107,7 @@ class GT
     # Determine Field
     @currentBit = data[0]
     data.shift
-    puts "Is the Heading in the Array?: #{HeadingFields.key?(@currentBit)}"
+    puts "Is the Heading in the Array?: #{HeadingFields.key?(41)}"
     if HeadingFields.key?(41) == true
     #if HeadingFields.key?(@currentBit) == true
       messageField = HeadingFields.fetch(@currentBit)
