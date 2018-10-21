@@ -14,6 +14,7 @@ require_relative 'lcm'
 require_relative 'obc'
 require_relative 'tel'
 require_relative 'vid'
+require_relative 'gtf'
 
 
 ## Note: iBus Message Structure:

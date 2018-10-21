@@ -1,7 +1,7 @@
 # Ruby Library for the Graphics Driver (for the Board Monitor Text)
 
 
-class GT
+class GTF
   def initialize
     # Nothing to do here for now.
   end

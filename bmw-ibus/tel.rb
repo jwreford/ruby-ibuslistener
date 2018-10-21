@@ -78,9 +78,7 @@ class TEL
       cardinalDirection2 = CardinalDirections.fetch([tempSecondsArray[0]])
     rescue
     end
-  end
-
-    return "000 000"
+    return "#{degrees1}° #{minutes1}' #{seconds1}\" #{cardinalDirection1}, #{degrees1}° #{minutes1}' #{seconds1}\" #{cardinalDirection1}" 
   end
 
   def suburbDecoder(locationHex)
