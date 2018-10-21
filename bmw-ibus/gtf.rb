@@ -25,7 +25,7 @@ class GTF
 
   def requestDecoder(hexRequest)
     if Statuses.key?([hexRequest]) == true
-      return "#{Statuses.fetch([currentBit]}"
+      return "#{Statuses.fetch([currentBit])}"
     else
       return "Unknown Request (#{hexRequest})"
     end
