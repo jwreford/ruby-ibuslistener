@@ -309,7 +309,8 @@ class IBusMessage
     return "Device has no method, sozzle. #{@data}"
     @methodMessage = nil
     rescue Exception => ex
-        puts "  --> [x] Ran into a problem doing something. Sorry about that. #{ex.class}: #{ex.message}"
+        puts "  --> [x] Ran into a problem doing something. Sorry about that. #{ex.class}: #{ex.message}."
+        puts "#{ex.backtrace}"
     end
   end
 
