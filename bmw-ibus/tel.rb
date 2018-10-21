@@ -57,28 +57,21 @@ class TEL
     seconds2 = 0
     cardinalDirection2 = ""
     tempSecondsArray = []
-    for i in 1..2 do
-      degrees1 = degrees1 + coordinates.shift
-    end
+    degrees1 = coordinates.shift
+    degrees1 = degrees1 + coordinates.shift
+    degrees1.sub!(/^00/, "")
     minutes1 = coordinates.shift
     tempSecondsArray = coordinates.shift.scan(/./)
     seconds1 = tempSecondsArray[0]
-    begin
-      cardinalDirection1 = CardinalDirections.fetch([tempSecondsArray[0]])
-    rescue
-
-    end
+    cardinalDirection1 = CardinalDirections.fetch([tempSecondsArray[0]])
     tempSecondsArray = []
-    for i in 1..2 do
-      degrees2 = degrees2 + coordinates.shift
-    end
+    degrees1 = coordinates.shift
+    degrees1 = degrees1 + coordinates.shift
+    degrees2.sub!(/^00/, "")
     minutes2 = coordinates.shift
     tempSecondsArray = coordinates.shift.scan(/./)
     seconds2 = tempSecondsArray[0]
-    begin
-      cardinalDirection2 = CardinalDirections.fetch([tempSecondsArray[0]])
-    rescue
-    end
+    cardinalDirection2 = CardinalDirections.fetch([tempSecondsArray[0]])
     return "#{degrees1}° #{minutes1}' #{seconds1}\" #{cardinalDirection1}, #{degrees2}° #{minutes2}' #{seconds2}\" #{cardinalDirection2}"
   end
 
