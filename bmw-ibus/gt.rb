@@ -75,6 +75,8 @@ class GT
     #TODO
     #Determine Layout
     currentBit = data.shift
+    puts "Current Bit: #{currentBit.toP}"
+
     if Layouts.key?(currentBit) == true
       messageLayout = Layouts.fetch(currentBit)
     else
@@ -87,7 +89,7 @@ class GT
 
   def readHeading(data)
     puts "Data: #{data}"
-    @currentBit = ""
+    @currentBit = []
     messageLayout = ""
     messageFlags = "None Set"
     messageField = ""
@@ -111,7 +113,7 @@ class GT
     data.shift
     puts "Current Bit after shifting: #{@currentBit}"
     puts "---------------------"
-    puts "Is 41 in this hash?: #{HeadingFields.key?(41)}"
+    puts "Is 41 in this hash?: #{HeadingFields.key?(Array(@currentBit))}"
     begin
       puts "Fetching 41 in an array: #{HeadingFields.fetch()}"
     rescue Exception => ex
