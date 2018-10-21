@@ -48,11 +48,11 @@ class TEL
   def coordinateDecoder(coordinates)
     # Format is XX XX YY ZZ A, XX XX YY ZZ A # XX XX = Degrees, YY = Minutes, ZZ = Seconds, A = Cardinal Direction
     # The hex are treated as base 10 standard digits.
-    degrees1 = 0
+    degrees1 = ""
     minutes1 = 0
     seconds1 = 0
     cardinalDirection1 = ""
-    degrees2 = 0
+    degrees2 = ""
     minutes2 = 0
     seconds2 = 0
     cardinalDirection2 = ""
