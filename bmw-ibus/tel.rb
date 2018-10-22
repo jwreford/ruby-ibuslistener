@@ -65,11 +65,7 @@ class TEL
     degrees1.sub!(/^0/, "")
     minutes1 = coordinates.shift
     seconds1 = coordinates.shift
-    puts "Coordinates Array: #{coordinates}"
-    puts "Coordinates at Index 0 #{coordinates[0]}"
-    puts tempSecondsArray
     tempSecondsArray = coordinates.shift.scan(/./)
-    puts tempSecondsArray
     decimalSeconds1 = tempSecondsArray[0]
     cardinalDirection1 = CardinalDirections.fetch([tempSecondsArray[1]])
     tempSecondsArray = []
@@ -82,7 +78,7 @@ class TEL
     tempSecondsArray = coordinates.shift.scan(/./)
     decimalSeconds2 = tempSecondsArray[0]
     cardinalDirection2 = CardinalDirections.fetch([tempSecondsArray[1]])
-    return "#{degrees1}° #{minutes1}' #{seconds1}.#{decimalSeconds1}\" #{cardinalDirection1}, #{degrees2}° #{minutes2}' #{seconds2}.#{decimalSeconds2}\" #{cardinalDirection2}"
+    return "GPS Coordinates: #{degrees1}° #{minutes1}' #{seconds1}.#{decimalSeconds1}\" #{cardinalDirection1}, #{degrees2}° #{minutes2}' #{seconds2}.#{decimalSeconds2}\" #{cardinalDirection2}"
   end
 
   def suburbDecoder(locationHex)

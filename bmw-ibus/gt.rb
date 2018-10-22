@@ -27,16 +27,32 @@ class GT
     ## Control Knob
     ["48", "05"] => "Control Knob Pressed",
     ["48", "85"] => "Control Knob Released",
-    ["49", "01"] => "Control Down Turned Left" ,
-    ["49", "81"] => "Control Knob Turned Right",
+    ["49", "01"] => "Control Down Turned Left (Speed 1)" ,
+    ["49", "02"] => "Control Down Turned Left (Speed 2)" ,
+    ["49", "03"] => "Control Down Turned Left (Speed 3)" ,
+    ["49", "04"] => "Control Down Turned Left (Speed 4)" ,
+    ["49", "05"] => "Control Down Turned Left (Speed 5)" ,
+    ["49", "06"] => "Control Down Turned Left (Speed 6)" ,
+    ["49", "81"] => "Control Knob Turned Right (Speed 1)",
+    ["49", "82"] => "Control Knob Turned Right (Speed 2)",
+    ["49", "83"] => "Control Knob Turned Right (Speed 3)",
+    ["49", "84"] => "Control Knob Turned Right (Speed 4)",
+    ["49", "85"] => "Control Knob Turned Right (Speed 5)",
+    ["49", "86"] => "Control Knob Turned Right (Speed 6)",
 
     # Sent from the TV Module (VID)
     ["02", "00"] => "Video Module Connected and Ready",
 
-    # Sent from the Radio (RAD)
+    ## Sent from the Radio (RAD)
     ["46", "02"] => "Switch to Information Display",
     ["46", "0C"] => "Select Menu Off, Tone Menu Off (??)",
     ["46", "08"] => "Tone Menu Off (??)"
+    # What's selected on the Tone Menu
+    ["48", "F0"] => "Cursor Over Balance",
+    ["48", "E0"] => "Cursor Over Fader",
+    ["49", "C0"] => "Cursor Over Bass" ,
+    ["49", "D0"] => "Cursor Over Treble",
+
   }
 
   FunctionsIN = {
