@@ -48,10 +48,10 @@ class GT
     ["46", "0C"] => "Select Menu Off, Tone Menu Off (??)",
     ["46", "08"] => "Tone Menu Off (??)",
     # What's selected on the Tone Menu
-    ["48", "F0"] => "Cursor Over Balance",
-    ["48", "E0"] => "Cursor Over Fader",
-    ["49", "C0"] => "Cursor Over Bass" ,
-    ["49", "D0"] => "Cursor Over Treble",
+    ["37", "F0"] => "Cursor Over Balance",
+    ["37", "E0"] => "Cursor Over Fader",
+    ["37", "C0"] => "Cursor Over Bass" ,
+    ["37", "D0"] => "Cursor Over Treble",
 
   }
 
