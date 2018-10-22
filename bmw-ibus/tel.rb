@@ -80,7 +80,7 @@ class TEL
     tempSecondsArray = coordinates.shift.scan(/./)
     decimalSeconds2 = tempSecondsArray[0]
     cardinalDirection2 = CardinalDirections.fetch([tempSecondsArray[1]])
-    return "#{degrees1}° #{minutes1}' #{seconds1}\" #{cardinalDirection1}, #{degrees2}° #{minutes2}' #{seconds2}\" #{cardinalDirection2}"
+    return "#{degrees1}° #{minutes1}' #{seconds1}.#{decimalSeconds1}\" #{cardinalDirection1}, #{degrees2}° #{minutes2}' #{seconds2}.#{decimalSeconds2}\" #{cardinalDirection2}"
   end
 
   def suburbDecoder(locationHex)
