@@ -73,7 +73,7 @@ class TEL
     cardinalDirection1 = CardinalDirections.fetch([tempSecondsArray[1]])
     tempSecondsArray = []
     degrees2 = coordinates.shift
-    degrees2 = degrees1 + coordinates.shift
+    degrees2 = degrees2 + coordinates.shift
     degrees2.sub!(/^00/, "")
     minutes2 = coordinates.shift
     seconds2 = coordinates.shift
