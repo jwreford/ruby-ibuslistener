@@ -61,7 +61,8 @@ class TEL
     degrees1 = degrees1 + coordinates.shift
     degrees1.sub!(/^00/, "")
     minutes1 = coordinates.shift
-    puts coordinates[0[0]]
+    puts "Coordinates Array: #{coordinates}"
+    puts "Coordinates at Index 0 #{coordinates[0]}"
     puts tempSecondsArray
     tempSecondsArray = coordinates.shift.scan(/./)
     puts tempSecondsArray
