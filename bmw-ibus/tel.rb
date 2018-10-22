@@ -70,7 +70,7 @@ class TEL
     tempSecondsArray = coordinates.shift.scan(/./)
     puts tempSecondsArray
     decimalSeconds1 = tempSecondsArray[0]
-    cardinalDirection1 = CardinalDirections.fetch([tempSecondsArray[0]])
+    cardinalDirection1 = CardinalDirections.fetch([tempSecondsArray[1]])
     tempSecondsArray = []
     degrees2 = coordinates.shift
     degrees2 = degrees1 + coordinates.shift
@@ -79,7 +79,7 @@ class TEL
     seconds2 = coordiates.shift
     tempSecondsArray = coordinates.shift.scan(/./)
     decimalSeconds2 = tempSecondsArray[0]
-    cardinalDirection2 = CardinalDirections.fetch([tempSecondsArray[0]])
+    cardinalDirection2 = CardinalDirections.fetch([tempSecondsArray[1]])
     return "#{degrees1}° #{minutes1}' #{seconds1}\" #{cardinalDirection1}, #{degrees2}° #{minutes2}' #{seconds2}\" #{cardinalDirection2}"
   end
 
