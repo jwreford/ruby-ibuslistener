@@ -61,7 +61,8 @@ class TEL
     tempSecondsArray = []
     degrees1 = coordinates.shift
     degrees1 = degrees1 + coordinates.shift
-    degrees1.sub!(/^00/, "")
+    degrees1.sub!(/^0/, "")
+    degrees1.sub!(/^0/, "")
     minutes1 = coordinates.shift
     seconds1 = coordinates.shift
     puts "Coordinates Array: #{coordinates}"
@@ -74,7 +75,8 @@ class TEL
     tempSecondsArray = []
     degrees2 = coordinates.shift
     degrees2 = degrees2 + coordinates.shift
-    degrees2.sub!(/^00/, "")
+    degrees2.sub!(/^0/, "")
+    degrees2.sub!(/^0/, "")
     minutes2 = coordinates.shift
     seconds2 = coordinates.shift
     tempSecondsArray = coordinates.shift.scan(/./)
