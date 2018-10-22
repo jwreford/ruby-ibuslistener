@@ -26,7 +26,7 @@ class GT
     ["02", "30", "FD"] => "Board Monitor Connected and Ready",
 
     # Sent from the TV Module (VID)
-    ["02", "00", "D0"] => "Video Module Connected and Ready",
+    ["02", "00"] => "Video Module Connected and Ready",
 
     # Sent from the Radio (RAD)
     ["46", "02"] => "Switch to Information Display",
