@@ -61,7 +61,7 @@ class RAD
       ["48", "93"] => "5 Key Released",
       ["48", "B2"] => "TP Released",
       ["48", "B1"] => "FM Released",
-      ["48", "84"] => "Audio Effects Released",
+      ["48", "84"] => "Tone Released",
       ["48", "90"] => "Next Track Released",
       ["48", "B0"] => "Menu Released",
       ["48", "24"] => "Eject Pressed",

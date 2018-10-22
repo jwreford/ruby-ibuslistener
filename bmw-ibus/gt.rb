@@ -174,7 +174,7 @@ class GT
   def decodeAudioControls(hex)
     audioStateResponse = ""
     if AudioStates.key?(hex) == true
-      audioStateResponse = "Audio Settings Changed: #{Layouts.fetch(hex)}"
+      audioStateResponse = "Audio Settings Changed: #{AudioStates.fetch(hex)}"
     else
       audioStateResponse = "Audio State Changed: Unknown (#{hex})"
     end
