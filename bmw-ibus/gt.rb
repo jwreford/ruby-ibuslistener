@@ -22,8 +22,13 @@ class GT
     ["02", "30"] => "General Device Status Reply(?)",
     ["A5", "61", "01"] => "Partial Write Complete",
 
-    # Sent from the Board Monitor
+    ## Sent from the Board Monitor
     ["02", "30", "FD"] => "Board Monitor Connected and Ready",
+    ## Control Knob
+    ["48", "05"] => "Control Knob Pressed",
+    ["48", "85"] => "Control Knob Released",
+    ["49", "01"] => "Control Down Turned Left" ,
+    ["49", "81"] => "Control Knob Turned Right",
 
     # Sent from the TV Module (VID)
     ["02", "00"] => "Video Module Connected and Ready",
@@ -39,7 +44,7 @@ class GT
     ["A5", "62"] => ["Write To Heading", "readHeading"],
     ["21", "61", "00"] => ["Partial Write To Lower Field", "readLower"],
     ["A5", "60", "01", "00"] => ["Clear Lower Fields", "clearLower"],
-    ["36"] => ["Audio Controls", "decodeAudioControls"]
+    ["36"] => ["Audio Controls", "decodeAudioControls"],
 
   }
 
@@ -168,7 +173,6 @@ class GT
     ["68"] => "Bass: +8",
     ["6A"] => "Bass: +10",
     ["6C"] => "Bass: +12"
-
   }
 
   def decodeAudioControls(hex)

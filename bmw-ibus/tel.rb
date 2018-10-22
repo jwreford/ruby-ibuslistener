@@ -51,30 +51,34 @@ class TEL
     degrees1 = ""
     minutes1 = 0
     seconds1 = 0
+    decimalSeconds1 = 0
     cardinalDirection1 = ""
     degrees2 = ""
     minutes2 = 0
     seconds2 = 0
+    decimalSeconds2 = 0
     cardinalDirection2 = ""
     tempSecondsArray = []
     degrees1 = coordinates.shift
     degrees1 = degrees1 + coordinates.shift
     degrees1.sub!(/^00/, "")
     minutes1 = coordinates.shift
+    seconds1 = coordinates.shift
     puts "Coordinates Array: #{coordinates}"
     puts "Coordinates at Index 0 #{coordinates[0]}"
     puts tempSecondsArray
     tempSecondsArray = coordinates.shift.scan(/./)
     puts tempSecondsArray
-    seconds1 = tempSecondsArray[0]
+    decimalSeconds1 = tempSecondsArray[0]
     cardinalDirection1 = CardinalDirections.fetch([tempSecondsArray[0]])
     tempSecondsArray = []
     degrees2 = coordinates.shift
     degrees2 = degrees1 + coordinates.shift
     degrees2.sub!(/^00/, "")
     minutes2 = coordinates.shift
+    seconds2 = coordiates.shift
     tempSecondsArray = coordinates.shift.scan(/./)
-    seconds2 = tempSecondsArray[0]
+    decimalSeconds2 = tempSecondsArray[0]
     cardinalDirection2 = CardinalDirections.fetch([tempSecondsArray[0]])
     return "#{degrees1}° #{minutes1}' #{seconds1}\" #{cardinalDirection1}, #{degrees2}° #{minutes2}' #{seconds2}\" #{cardinalDirection2}"
   end
