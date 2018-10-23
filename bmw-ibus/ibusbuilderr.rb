@@ -18,7 +18,7 @@ require_relative 'gtf'
 
 
 
-class IBusMessageBuilder
+class IBusBuilder
   def initialize(@sourceDeviceName, @destinationDeviceName, @messageDetails)
     # sourceDeviceName = The 2-4 letter abbreviated name from the table of the Source Device
     # destinationDeviceName = The 2-4 letter abbreviated name from the table of the Destiation Device
