@@ -19,11 +19,14 @@ require_relative 'gtf'
 
 
 class IBusBuilder
-  def initialize(@sourceDeviceName, @destinationDeviceName, @messageDetails)
+  def initialize(sourceDeviceName, destinationDeviceName, messageDetails)
     # sourceDeviceName = The 2-4 letter abbreviated name from the table of the Source Device
     # destinationDeviceName = The 2-4 letter abbreviated name from the table of the Destiation Device
     # function = a hash containing all the requirements of a the function in quesiton.
     #     EG (for the Cluster Message Builder): ["Gong Type", "Priority" "Message ASCII", "LengthSpecified"]
+    @sourceDeviceName = sourceDeviceName
+    @destinationDeviceName = destinationDeviceName
+    @messageDetails = messageDetails
     @sourceDeviceHex = IBusDevices.key(sourceDeviceName)
     @destinationDeviceHex = IBusDevices.key(destinationDeviceName)
   end
