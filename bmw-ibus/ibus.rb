@@ -35,7 +35,7 @@ class IBusMessage
     @sourceNameFriendly = self.findDeviceFriendly(@source)
     ## Find the destination device's Module Name
     @destinationName = self.findDevice(@destination)
-    @destinationNameFriendly = self.findDeviceFriendly(@destination)s
+    @destinationNameFriendly = self.findDeviceFriendly(@destination)
   end
 
   # Print the message, but the data will be in hex.
