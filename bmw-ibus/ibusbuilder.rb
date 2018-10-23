@@ -74,55 +74,55 @@ class IBusBuilder
   end
 end
 
-# iBus Checksum Bit Starting Hex value
-ChecksumBitStart = ["00"]
-
-# iBus Device HEX values and their module names
-IBusDevices = {
-  ["00"] => "BOD",
-  ["08"] => "SUN",
-  ["18"] => "CDC",
-  ["28"] => "RCC",
-  ["30"] => "CCM",
-  ["3B"] => "GT",
-  ["3F"] => "DIA",
-  ["40"] => "LOC",
-  ["43"] => "GTF",
-  ["44"] => "IMM",
-  ["46"] => "CID",
-  ["50"] => "MFL",
-  ["51"] => "MMY",
-  ["5B"] => "IHKA",
-  ["60"] => "PDC",
-  ["68"] => "RAD",
-  ["6A"] => "DSP",
-  ["72"] => "SM",
-  ["73"] => "SIR",
-  ["76"] => "CDD",
-  ["7F"] => "NAV",
-  ["80"] => "IKE",
-  ["9B"] => "MMS",
-  ["9C"] => "MMT",
-  ["A0"] => "RMID",
-  ["A4"] => "AIR",
-  ["A8"] => "UNK5",
-  ["B0"] => "SPCH",
-  ["BB"] => "NAVJ",
-  ["BF"] => "GLO",
-  ["C0"] => "MID",
-  ["C8"] => "TEL",
-  ["CA"] => "ASST",
-  ["D0"] => "LCM",
-  ["E0"] => "IRIS",
-  ["E7"] => "OBC", # Also known as ANZV
-  ["E8"] => "RLS",
-  ["ED"] => "VID",
-  ["F0"] => "BM",
-  ["F5"] => "CSU",
-  ["FF"] => "BRD",
-  ["100"] => "Unset",
-  ["101"] => "Unknown"
-}
+# # iBus Checksum Bit Starting Hex value
+# ChecksumBitStart = ["00"]
+#
+# # iBus Device HEX values and their module names
+# IBusDevices = {
+#   ["00"] => "BOD",
+#   ["08"] => "SUN",
+#   ["18"] => "CDC",
+#   ["28"] => "RCC",
+#   ["30"] => "CCM",
+#   ["3B"] => "GT",
+#   ["3F"] => "DIA",
+#   ["40"] => "LOC",
+#   ["43"] => "GTF",
+#   ["44"] => "IMM",
+#   ["46"] => "CID",
+#   ["50"] => "MFL",
+#   ["51"] => "MMY",
+#   ["5B"] => "IHKA",
+#   ["60"] => "PDC",
+#   ["68"] => "RAD",
+#   ["6A"] => "DSP",
+#   ["72"] => "SM",
+#   ["73"] => "SIR",
+#   ["76"] => "CDD",
+#   ["7F"] => "NAV",
+#   ["80"] => "IKE",
+#   ["9B"] => "MMS",
+#   ["9C"] => "MMT",
+#   ["A0"] => "RMID",
+#   ["A4"] => "AIR",
+#   ["A8"] => "UNK5",
+#   ["B0"] => "SPCH",
+#   ["BB"] => "NAVJ",
+#   ["BF"] => "GLO",
+#   ["C0"] => "MID",
+#   ["C8"] => "TEL",
+#   ["CA"] => "ASST",
+#   ["D0"] => "LCM",
+#   ["E0"] => "IRIS",
+#   ["E7"] => "OBC", # Also known as ANZV
+#   ["E8"] => "RLS",
+#   ["ED"] => "VID",
+#   ["F0"] => "BM",
+#   ["F5"] => "CSU",
+#   ["FF"] => "BRD",
+#   ["100"] => "Unset",
+#   ["101"] => "Unknown"
+# }
 
 # This method will calculate the message's length and return the value in Hex.
 def calculateMessageLength(data)
