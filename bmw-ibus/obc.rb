@@ -23,28 +23,47 @@ class OBC
   end
 
   OBCStaticMessagesIN = {
-    # Messages that devices can send to the Telephone
-    ["24", "01", "00"] => "Time",
-    ["24", "02", "00"] => "Date",
-    ["24", "03", "00"] => "Outside Temperature",
-    ["24", "04", "00"] => "Fuel Consumption 1",
-    ["24", "05", "00"] => "Fuel Consumption 2",
-    ["24", "06", "00"] => "Range",
-    ["24", "07", "00"] => "Distance To Destination",
-    ["24", "08", "00"] => "Time To Destination",
-    ["24", "09", "00"] => "Speed Limit",
-    ["24", "0A", "00"] => "Average Speed",
-    ["24", "0E", "00"] => "Timer",
-    ["24", "0F", "00"] => "Auxilliary Air Circulation Timer 1",
-    ["24", "10", "00"] => "AuxHeating Air Circulation Timer 2",
-    ["24", "1A", "00"] => "Unknown Function",
     # Not sure about this one
     ["2B"] => "Board Monitor LED"
   }
 
   OBCFunctionsIN = {
+    # Sent from the IKE, at least some of them.
+    ["24"] => ["OBC Data Update", "obcDataUpdateDecoder"],
   }
 
+  OBCDataTypes = {
+    ["01", "00"] => ["Time"],
+    ["02", "00"] => ["Date"],
+    ["03", "00"] => ["Outside Temperature", "obcUpdateDecoder"],
+    ["04", "00"] => ["Fuel Consumption 1", "obcUpdateDecoder"],
+    ["05", "00"] => ["Fuel Consumption 2", "obcUpdateDecoder"],
+    ["06", "00"] => ["Range", "obcUpdateDecoder"],
+    ["07", "00"] => ["Distance To Destination", "obcUpdateDecoder"],
+    ["08", "00"] => ["Time To Destination", "obcUpdateDecoder"],
+    ["09", "00"] => ["Speed Limit", "obcUpdateDecoder"],
+    ["0A", "00"] => ["Average Speed", "obcUpdateDecoder"],
+    ["0E", "00"] => ["Timer", "obcUpdateDecoder"],
+    ["0F", "00"] => ["Auxilliary Air Circulation Timer 1", "obcUpdateDecoder"],
+    ["10", "00"] => ["AuxHeating Air Circulation Timer 2", "obcUpdateDecoder"],
+    ["1A", "00"] => ["Unknown Function", "obcUpdateDecoder"]
+  }
+
+
+
+  def obcDataUpdateDecoder(hex)
+    obcMessageTypeHex = []
+    obcMessageTypeHex[0] = hex.shift
+    obcMessageTypeHex[1] = hex.shift
+    finalMessage
+    ## send(toAscii2, hex)
+    if OBCDataTypes.key?(obcMessageTypeHex) == true
+      audioStateResponse = "OBC #{OBCDataTypes.fetch(obcMessageTypeHex)[0]}:  "
+    else
+      audioStateResponse = "OBC Data Update (#{hex})"
+    end
+    return audioStateResponse
+  end
 
   def decodeMessage
     # Returns message as a string

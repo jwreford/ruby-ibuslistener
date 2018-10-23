@@ -21,12 +21,9 @@ require_relative 'gtf'
 # Source, Length, Destination, Data, Checksum
 
 
-# The Class for an iBus Message. This contains all the methods for decoding a message.
+# The Class for an iBus Message. This contains the logic for decoding messages
 class IBusMessage
-  # What happens when a new iBusMessage object is created
   def initialize(rawMessage)
-    #puts "In Initialise"
-    # Instance variables
     @source = rawMessage.shift
     @length = rawMessage.shift
     @destination = rawMessage.shift
@@ -38,8 +35,7 @@ class IBusMessage
     @sourceNameFriendly = self.findDeviceFriendly(@source)
     ## Find the destination device's Module Name
     @destinationName = self.findDevice(@destination)
-    @destinationNameFriendly = self.findDeviceFriendly(@destination)
-    #puts "Here's what I have for the IBusMessage: #{@source} #{@destination} #{@checksum} #{@data}"
+    @destinationNameFriendly = self.findDeviceFriendly(@destination)s
   end
 
   # Print the message, but the data will be in hex.
@@ -93,7 +89,7 @@ class IBusMessage
   # Decode Cluster Temperature Status Update
   def temperatureStatusUpdate(hex)
     exteriorTemperature = hex[0]  # Range is from -128 Degrees Celcius to +127 Degrees Celcius
-    # As coolant temperature range is greater than 255 steps (-128 to +255 Degrees Celcius), two bytes are required.
+    # As coolant temperature range is greater than 255 steps (-128 to +255 Degrees Celcius), two chomps are required.
     coolantTemperature1 = hex[1]  # Range is from -128 to +127 Degrees Celcius
     coolantTemperature2 = hex[2]  # Anything above +127 Degrees Celcuis will be added on with this byte
     if exteriorTemperature == "00"

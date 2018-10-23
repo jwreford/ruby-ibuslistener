@@ -30,8 +30,14 @@ class IKE
     ["12"] => "Requesting Sensor Data",
     ["01"] => "Requesting Cluster Status",
 
+    # From the GT to display OBC Data
+    ["41", "03", "01"] => "Outside Temperature Request",
+    ["41", "0A", "01"] => "Average Speed Request",
+    ["43", "09", "01"] => "Current User-Set Speed Limit",
+    ["43", "0E", "01"] => "Current Timer Value",
     # Sent from the Video Controller (presumably to know whether to show the logo when a door is opened)
-    ["10"] => "Ignition Status Request"
+    ["10"] => "Ignition Status Request",
+
   }
   FunctionsIN = {
     ["1A"] => ["Cluster Message","clusterMessageDecoder"]
@@ -65,7 +71,7 @@ class IKE
     end
     return "#{decodedMessage}"
   end
-  
+
   def clusterMessageBuilder
     # Creates the Message to send to the cluster.
     ## Options for the messagePriority:

@@ -56,7 +56,8 @@ class GT
   }
 
   FunctionsIN = {
-    ["23", "62", "10"] => ["Write to Title", "readTitle"],    # This is the big text area as part of the banner at the top left of the screen.
+    # Array in the Value: Readable Name of Function, function for decoding, function for building
+    ["23", "62", "10"] => ["Write to Title", "readTitle", "writeTitle"],    # This is the big text area as part of the banner at the top left of the screen.
     ["A5", "62"] => ["Write To Heading", "readHeading"],
     ["21", "61", "00"] => ["Partial Write To Lower Field", "readLower"],
     ["A5", "60", "01", "00"] => ["Clear Lower Fields", "clearLower"],
@@ -223,6 +224,19 @@ class GT
     return "Writing to #{messageField} \"#{messageASCII}\". Layout: #{messageLayout}, Flags: #{messageFlags}"
   end
 
+  def writeTitle(messageFunctionDetails, messageContent)
+    messageLayout = messageFunctionDetails[0]
+    messageFlags = messageFunctionDetails[1]
+    messageASCII = messageContent
+    messageHex = []
+    finnishedHex = []
+    commandHex = searchNestedHashForHex(FunctionsIN, __callee__)
+    messageHex = toHex(messageASCII)
+    finishedHex = commandHex
+    finishedHex.push(*messageHex)
+    return finishedHex
+  end
+
   def readHeading(data)
     currentBit = ""
     messageLayout = ""
@@ -271,6 +285,24 @@ class GT
     "Puts: Clearing Lower Fields, I think?"
     puts "#{data}"
   end
+
+  def buildMessage(messageFunctionName, messageFunctionDetails, messageContent)
+    messageArray = []
+    messageArray[0] = messageFunctionDetails
+    messageArray[1] = messageContent
+    send(messageFunctionName, messageArray)
+  end
+
+  def searchNestedHashForHex(hash, searchTerm)
+    hash.each_pair { |key, value |
+      if value.include?(searchTerm)
+        puts key.length
+        return key
+      end
+    }
+    return "[\"FF\"]"
+  end
+
 
   def decodeMessage
     # Returns message as a string
