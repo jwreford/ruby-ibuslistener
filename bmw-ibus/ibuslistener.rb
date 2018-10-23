@@ -30,7 +30,7 @@ class IBusListener
       @message.slice!(0,3)                     # Strip the first three characters (the "tx " or "rx ")
       @message.upcase!                         # Make the string uppercase
       @message = @message.scan(/.{1,2}/)       # Split the string into groups of two characters in an array.
-      @message = IBusMessage.new(@message, "decode")     # Shove them into a new ibus message object
+      @message = IBusMessage.new(@message)     # Shove them into a new ibus message object
       #@message.printRawMessage
       @message.printDecodedMessage
       @message = nil # Destroy the message, ready for the next one.
