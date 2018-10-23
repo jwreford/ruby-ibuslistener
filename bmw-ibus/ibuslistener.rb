@@ -1,6 +1,6 @@
 require 'socket'
 require_relative 'ibusmessage.rb'
-require_relative 'ibusbuilder'
+require_relative 'ibusbuilder.rb'
 
 # Open a Socket to the pibus Application (port 55537)
 class IBusListener
