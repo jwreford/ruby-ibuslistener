@@ -45,9 +45,11 @@ class IBusBuilder
     messageFunctionDetails = @messageDetails.fetch("functionDetails") # This is probably going to need to be an array with the appropriate parameters inside
     messageContent = @messageDetails.fetch("content")
     puts "====== Building Message ======"
-    puts "Source Device: #{@sourceDeviceName} (#{sourceDeviceHex})"
-    puts "Dest.. Device: #{@destinationDeviceName} (#{destinationDeviceHex})"
-    puts "Function Hash: #{function}"
+    puts "Source Device: #{@sourceDeviceName} (#{@sourceDeviceHex})"
+    puts "Dest.. Device: #{@destinationDeviceName} (#{@destinationDeviceHex})"
+    puts "Function Name: #{messageFunctionName}"
+    puts "Function Name: #{messageFunctionDetails}"
+    puts "Function Name: #{messageContent}"
     #iBusMessageBuildObject = @sourceDeviceName.new(messageFunctionName, messageFunctionDetails, messageContent)
     #iBusMessageBuildObject.writeTitle
   end
