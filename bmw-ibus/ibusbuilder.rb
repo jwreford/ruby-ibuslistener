@@ -40,9 +40,9 @@ class IBusBuilder
 
 
   def buildMessage
-    messageFunctionName = messageDetails.fetch(functionName)
-    messageFunctionDetails = messageDetails.fetch(functionDetails) # This is probably going to need to be an array with the appropriate parameters inside
-    messageContent = messageDetails.fetch(content)
+    messageFunctionName = @messageDetails.fetch(functionName)
+    messageFunctionDetails = @messageDetails.fetch(functionDetails) # This is probably going to need to be an array with the appropriate parameters inside
+    messageContent = @messageDetails.fetch(content)
     puts "====== Building Message ======"
     puts "Source Device: #{@sourceDeviceName} (#{sourceDeviceHex})"
     puts "Dest.. Device: #{@destinationDeviceName} (#{destinationDeviceHex})"
