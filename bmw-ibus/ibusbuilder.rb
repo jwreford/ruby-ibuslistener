@@ -47,7 +47,8 @@ class IBusBuilder
     puts "Source Device: #{@sourceDeviceName} (#{sourceDeviceHex})"
     puts "Dest.. Device: #{@destinationDeviceName} (#{destinationDeviceHex})"
     puts "Function Hash: #{function}"
-    iBusMessageBuildObject = @sourceDeviceName.new(messageFunctionName, messageFunctionDetails, messageContent)
+    #iBusMessageBuildObject = @sourceDeviceName.new(messageFunctionName, messageFunctionDetails, messageContent)
+    #iBusMessageBuildObject.writeTitle
   end
 
   # Decode the data part of the message.

@@ -38,9 +38,12 @@ class IBusMessage
     @destinationNameFriendly = self.findDeviceFriendly(@destination)
   end
 
-  # Print the message, but the data will be in hex.
   def printMessage
     puts "#{@sourceName} -> #{@destinationName}, Length: #{@length}, Data: #{@data}, Checksum: #{@checksum}."
+  end
+
+  def printSourceDestination
+    puts "#{@sourceName} -> #{@destinationName}"
   end
 
   def printRawMessage
