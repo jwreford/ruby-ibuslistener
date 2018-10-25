@@ -13,6 +13,8 @@ class IBusListener
   end
 
   def listen
+    @tempSourceDEvice = ""
+    @tempDestinationDevice = ""
     while @message = @ibusListener.gets # Read lines from socket
 
       # Flash the Green Board Monitor LED each time a messasge is sent on the iBus
@@ -33,6 +35,12 @@ class IBusListener
       @message = IBusMessage.new(@message)     # Shove them into a new ibus message object
       #@message.printRawMessage
       @message.printDecodedMessage
+      @message.printSourceDestination
+      sourceDeviceName, destinationDeviceName, messageDetails)
+      messageDetails = {"functionName" => "writeTitle", "functionDetails" => ["01",""], "content" => "#{@message.printSourceDestination}"}
+      puts "Message Details: #{messageDetails}"
+      @printMessage = IBusBuilder.new("ASST","GT",messageDetails)
+      @printMessage.buildMessage
       @message = nil # Destroy the message, ready for the next one.
     end
     ibusListener.close             # close socket when done
