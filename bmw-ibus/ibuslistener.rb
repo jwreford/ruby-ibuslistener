@@ -34,7 +34,7 @@ class IBusListener
       @message = @message.scan(/.{1,2}/)       # Split the string into groups of two characters in an array.
       @message = IBusMessage.new(@message)     # Shove them into a new ibus message object
       puts "Gap 1"
-      @messageContent = @message.printSourceDestination
+      @messageContent = "#{@message.printSourceDestination}"
       puts "Gap 2"
       puts "Message Content Variable: #{@messageContent}"
       messageDetails = {"functionName" => "writeTitle", "functionDetails" => ["01",""], "content" => @messageContent}
