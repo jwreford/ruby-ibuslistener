@@ -35,7 +35,7 @@ class IBusListener
       @message = IBusMessage.new(@message)     # Shove them into a new ibus message object
       #@message.printRawMessage
       @message.printDecodedMessage
-      @message.printSourceDestination
+      puts "Message printSourceDestination: #{@message.printSourceDestination}"
       messageDetails = {"functionName" => "writeTitle", "functionDetails" => ["01",""], "content" => @message.printSourceDestination}
       puts "Message Details: #{messageDetails}"
       @printMessage = IBusBuilder.new("ASST","GT",messageDetails)
