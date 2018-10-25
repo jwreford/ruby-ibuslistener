@@ -19,7 +19,7 @@ require_relative 'gtf'
 
 
 class IBusBuilder
-  def initialize(sourceDeviceName, destinationDeviceName, messageDetails)
+  def initialize(sourceDeviceName, destinationDeviceName, messageDetailsIn)
     # sourceDeviceName = The 2-4 letter abbreviated name from the table of the Source Device
     # destinationDeviceName = The 2-4 letter abbreviated name from the table of the Destiation Device
     # function = a hash containing all the requirements of a the function in quesiton.
@@ -29,6 +29,7 @@ class IBusBuilder
     @messageDetails = messageDetails
     @sourceDeviceHex = IBusDevices.key(sourceDeviceName)
     @destinationDeviceHex = IBusDevices.key(destinationDeviceName)
+    @messageDetails = messageDetailsIn
   end
 
   # Convert Convert ASCII to HEX
@@ -39,7 +40,7 @@ class IBusBuilder
   end
 
 
-  def buildMessage(messageDetails)
+  def buildMessage
     messageFunctionName = messageDetails.fetch(functionName)
     messageFunctionDetails = messageDetails.fetch(functionDetails) # This is probably going to need to be an array with the appropriate parameters inside
     messageContent = messageDetails.fetch(content)
