@@ -36,7 +36,7 @@ class IBusListener
       #@message.printRawMessage
       @message.printDecodedMessage
       @message.printSourceDestination
-      messageDetails = {"functionName" => "writeTitle", "functionDetails" => ["01",""], "content" => "#{@message.printSourceDestination}"}
+      messageDetails = {"functionName" => "writeTitle", "functionDetails" => ["01",""], "content" => @message.printSourceDestination}
       puts "Message Details: #{messageDetails}"
       @printMessage = IBusBuilder.new("ASST","GT",messageDetails)
       @printMessage.buildMessage
