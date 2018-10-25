@@ -40,7 +40,7 @@ class IBusListener
       messageDetails = {"functionName" => "writeTitle", "functionDetails" => ["01",""], "content" => messageContent}
       puts "Gap 3"
       puts "Message Details: #{messageDetails}"
-      printMessage = IBusBuilder.new("ASST","GT",messageDetails)
+      printMessage = IBusBuilder.new("ASST","GT",messageDetails{})
       printMessage.buildMessage
       @message = nil # Destroy the message, ready for the next one.
     end
