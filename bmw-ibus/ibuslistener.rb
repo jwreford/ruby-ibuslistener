@@ -34,9 +34,9 @@ class IBusListener
       @message = @message.scan(/.{1,2}/)       # Split the string into groups of two characters in an array.
       @message = IBusMessage.new(@message)     # Shove them into a new ibus message object
       #@message.printRawMessage
-      @message.printDecodedMessage
-      puts "Message printSourceDestination: #{@message.printSourceDestination}"
-      messageDetails = {"functionName" => "writeTitle", "functionDetails" => ["01",""], "content" => @message.printSourceDestination}
+      @messageContent = @message.printDecodedMessage
+      puts "Message Content Variable: #{@messageContent}"
+      messageDetails = {"functionName" => "writeTitle", "functionDetails" => ["01",""], "content" => @messageContent}
       puts "Message Details: #{messageDetails}"
       @printMessage = IBusBuilder.new("ASST","GT",messageDetails)
       @printMessage.buildMessage
