@@ -34,14 +34,14 @@ class IBusListener
       @message = @message.scan(/.{1,2}/)       # Split the string into groups of two characters in an array.
       @message = IBusMessage.new(@message)     # Shove them into a new ibus message object
       puts "Gap 1"
-      @messageContent = "#{@message.printSourceDestination}"
+      messageContent = "LOL"
       puts "Gap 2"
-      puts "Message Content Variable: #{@messageContent}"
-      messageDetails = {"functionName" => "writeTitle", "functionDetails" => ["01",""], "content" => @messageContent}
+      puts "Message Content Variable: #{messageContent}"
+      messageDetails = {"functionName" => "writeTitle", "functionDetails" => ["01",""], "content" => messageContent}
       puts "Gap 3"
       puts "Message Details: #{messageDetails}"
-      @printMessage = IBusBuilder.new("ASST","GT",messageDetails)
-      @printMessage.buildMessage
+      printMessage = IBusBuilder.new("ASST","GT",messageDetails)
+      printMessage.buildMessage
       @message = nil # Destroy the message, ready for the next one.
     end
     ibusListener.close             # close socket when done
