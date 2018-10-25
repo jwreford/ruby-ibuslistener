@@ -26,10 +26,9 @@ class IBusBuilder
     #     EG (for the Cluster Message Builder): ["Gong Type", "Priority" "Message ASCII", "LengthSpecified"]
     @sourceDeviceName = sourceDeviceName
     @destinationDeviceName = destinationDeviceName
-    @messageDetails = messageDetails
+    @messageDetails = messageDetailsIn
     @sourceDeviceHex = IBusDevices.key(sourceDeviceName)
     @destinationDeviceHex = IBusDevices.key(destinationDeviceName)
-    @messageDetails = messageDetailsIn
   end
 
   # Convert Convert ASCII to HEX
