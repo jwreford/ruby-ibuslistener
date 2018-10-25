@@ -40,6 +40,7 @@ class IBusBuilder
 
 
   def buildMessage
+    puts "Mssage Details 2: #{@messageDetails}"
     messageFunctionName = @messageDetails.fetch(functionName)
     messageFunctionDetails = @messageDetails.fetch(functionDetails) # This is probably going to need to be an array with the appropriate parameters inside
     messageContent = @messageDetails.fetch(content)
