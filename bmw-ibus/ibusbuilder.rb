@@ -50,7 +50,7 @@ class IBusBuilder
     puts "Function Name: #{messageFunctionName}"
     puts "Function Name: #{messageFunctionDetails}"
     puts "Function Name: #{messageContent}"
-    #iBusMessageBuildObject = @sourceDeviceName.new(messageFunctionName, messageFunctionDetails, messageContent)
+    iBusMessageBuildObject = @sourceDeviceName.new(messageFunctionName, messageFunctionDetails, messageContent)
     #iBusMessageBuildObject.writeTitle
   end
 

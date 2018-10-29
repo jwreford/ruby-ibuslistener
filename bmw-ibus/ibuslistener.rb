@@ -33,11 +33,7 @@ class IBusListener
       @message.upcase!                         # Make the string uppercase
       @message = @message.scan(/.{1,2}/)       # Split the string into groups of two characters in an array.
       @message = IBusMessage.new(@message)     # Shove them into a new ibus message object
-      messageContent = "LOL"
-      messageDetails = {"functionName" => "writeTitle", "functionDetails" => ["01",""], "content" => messageContent}
-      puts "Message Details: #{messageDetails}"
-      printMessage = IBusBuilder.new("ASST","GT",{"functionName" => "writeTitle", "functionDetails" => ["01",""], "content" => messageContent})
-      printMessage.buildMessage
+      @message.printDecodedMessage
       @message = nil # Destroy the message, ready for the next one.
     end
     ibusListener.close             # close socket when done
