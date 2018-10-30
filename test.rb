@@ -3,6 +3,6 @@ require_relative 'bmw-ibus/ibuscontroller'
 gem 'sidekiq'
 gem 'sinatra'
 
-redisInstance = system( "redis-server &" )
+#redisInstance = system( "redis-server &" )
 listener = IBusController.new
 listener.listen

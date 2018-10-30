@@ -3,7 +3,7 @@ require_relative 'ibusmessage'
 require_relative 'ibusbuilder'
 
 # Open a Socket to the pibus Application (port 55537)
-class IBusListener
+class IBusController
   # What happens when we make a listener
   def initialize
     #puts "In Initialise for IBusListener"
