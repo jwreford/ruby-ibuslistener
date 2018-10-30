@@ -1,5 +1,8 @@
-require_relative 'bmw-ibus/ibuslistener'
+require_relative 'bmw-ibus/ibuscontroller'
 #require_relative 'bmw-ibus/lib/bmw/ibus'
+gem 'sidekiq'
+gem 'sinatra'
 
-listener = IBusListener.new
+redisInstance = system( "redis-server &" )
+listener = IBusController.new
 listener.listen
